@@ -1,0 +1,44 @@
+/* Custom styles for koorevaar.com */
+body {
+    font-family: 'Arial', sans-serif;
+}
+
+.hero-section {
+    background-color: #007bff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.about-section, .experience-section, .skills-section, .certifications-section, .projects-section, .side-projects-section, .links-contact-section {
+    background-color: #ffffff;
+    border-top: 2px solid #e9ecef;
+}
+
+.footer {
+    background-color: #343a40;
+}
+
+.btn-link {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.btn-link:hover {
+    text-decoration: underline;
+}
+
+.card {
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.badge {
+    font-size: 0.8rem;
+    margin-right: 5px;
+}
+
+/* Custom styles for nested capability cards */
+.projects-section .card-body .card {
+    border-radius: 5px;
+    box-shadow: none;
+    border: 1px solid #e9ecef;
+}
