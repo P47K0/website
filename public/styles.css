@@ -42,3 +42,7 @@ body {
     box-shadow: none;
     border: 1px solid #e9ecef;
 }
+
+.about-section ul.list-unstyled li {
+    padding-left: 20px;
+}
