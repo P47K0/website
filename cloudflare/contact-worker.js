@@ -1,3 +1,13 @@
+/**
+ * Welcome to Cloudflare Workers! This is your first worker.
+ *
+ * - Run "npm run dev" in your terminal to start a development server
+ * - Open a browser tab at http://localhost:8787/ to see your worker in action
+ * - Run "npm run deploy" to publish your worker
+ *
+ * Learn more at https://developers.cloudflare.com/workers/
+ */
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -5,6 +15,10 @@ export default {
 
     if (path === "/api/contact" && request.method === "POST") {
       return await handleContactForm(request, env);
+    }
+
+    if (path === "/api/generate-cv-request" && request.method === "POST") {
+      return await generateCVRequestMessage(request, env);
     }
 
     return new Response(contactHTML, {
@@ -17,7 +31,7 @@ async function handleContactForm(request, env) {
   try {
     const data = await request.json();
     
-    console.log("Form data received:", data);
+    console.log("📥 Form data received:", data);
 
     if (!data.name || !data.email || !data.message) {
       console.log("Missing required fields");
@@ -65,6 +79,47 @@ async function handleContactForm(request, env) {
       success: false, 
       message: "Database error: " + err.message 
     }, { status: 500 });
+  }
+}
+
+async function generateCVRequestMessage(request, env) {
+  const prompt = `You are writing a short, natural message requesting a CV.
+
+Rules you MUST follow:
+- Do NOT use more than 3 sentences
+- Do NOT use more than 150 characters
+- Do NOT use any placeholders like [Your Name], [Company], [Position], etc.
+- Do NOT include signature, contact info.
+- Do NOT include "Best regards", "Sincerely", "Thanks in advance", or any closing.
+- Do NOT add hints or reasoning like 'Here is your message:'.
+- Do NOT repeat sentences.
+- Do NOT add any code blocks (\`\`\`)
+- Sound professional but friendly.
+- Mention something of his portfolio: 'Patrick Koorevaar is a senior Azure DevOps Engineer with a strong background in Azure, AKS, CI/CD, Kubernetes, and infrastructure automation. He focuses on practical engineering experience and uses side projects for learning and experimentation.'.
+- Return ONLY the message ONCE. No explanations, no quotes, no extra text, no hints.`;
+  
+  try {
+    const aiResponse = await env.AI.run("@cf/meta/llama-3.1-8b-instruct", {
+      prompt: prompt,
+      max_tokens: 150,
+      temperature: 0.70,
+    });
+
+    let message = aiResponse.response || aiResponse.text || "";
+    
+    message = message.replace(/\[(.*?)\]/g, '').trim(); // remove placeholders
+
+    return Response.json({
+      success: true,
+      message: message.trim()
+    });
+
+  } catch (err) {
+    console.error(err);
+    return Response.json({
+      success: true,
+      message: "Hi Patrick,\n\nI really enjoyed your portfolio and your Azure projects. I'd love to receive a copy of your CV if possible.\n\nThank you!"
+    });
   }
 }
 
@@ -116,6 +171,11 @@ const contactHTML = `<!DOCTYPE html>
             class="w-full px-4 py-3 border rounded-xl focus:outline-none focus:border-blue-500"></textarea>
         </div>
 
+        <button type="button" onclick="generateCVRequest()" 
+          class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 rounded-xl text-lg transition">
+          Generate Request for CV
+        </button>
+
         <button type="submit" 
           class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 rounded-xl text-lg transition">
           Send Message
@@ -131,7 +191,7 @@ const contactHTML = `<!DOCTYPE html>
       e.preventDefault();
 
       const statusDiv = document.getElementById('status');
-      const submitBtn = e.target.querySelector('button');
+      const submitBtn = e.target.querySelector('button[type="submit"]');
 
       const formData = {
         name: document.getElementById('name').value.trim(),
@@ -157,7 +217,7 @@ const contactHTML = `<!DOCTYPE html>
         if (result.success) {
           statusDiv.innerHTML = \`
             <div class="bg-green-50 border border-green-200 text-green-700 p-5 rounded-2xl">
-              Thank you! Your message has been saved successfully.
+              Thank you! Your message has been sent successfully.
             </div>\`;
           e.target.reset();
         } else {
@@ -173,6 +233,31 @@ const contactHTML = `<!DOCTYPE html>
         submitBtn.textContent = "Send Message";
       }
     });
+
+    async function generateCVRequest() {
+      const messageBox = document.getElementById('message');
+      const statusDiv = document.getElementById('status');
+
+      statusDiv.innerHTML = '<p class="text-blue-600">Generating nice message...</p>';
+
+      try {
+        const res = await fetch('/api/generate-cv-request', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({})   // No need to send data
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+          messageBox.value = data.message;
+          messageBox.focus();
+          statusDiv.innerHTML = '<p class="text-green-600">✅ Message generated by Llama 3.1 (Cloudflare AI)!</p>';
+        }
+      } catch (err) {
+        statusDiv.innerHTML = '<p class="text-red-500">Could not generate message. Please write manually.</p>';
+      }
+    }
   </script>
 </body>
 </html>`

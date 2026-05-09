@@ -106,7 +106,7 @@
                     and container orchestration.
                 </p>                            
 
-                <h3>Key areas</h3>
+                <h3><i class="fas fa-key"></i> Key areas</h3>
                 <ul class="list-unstyled">
                     <li><i class="fas fa-check"></i> Production AKS clusters (20+ microservices, multi-namespace TAPP)</li>
                     <li><i class="fas fa-check"></i> Azure DevOps CI/CD pipelines (automated test → manual prod)</li>
@@ -221,8 +221,8 @@
                     <ul>
                         <li><strong>Cloud:</strong> Azure</li>
                         <li><strong>Containers:</strong> Docker, Kubernetes, AKS</li>
-                        <li><strong>Integration:</strong> Azure Service Bus</li>
-                        <li><strong>CI/CD:</strong> Azure DevOps, YAML pipelines, GitHub</li>
+                        <li><strong>Integration:</strong> Azure Service Bus, Storage queues</li>
+                        <li><strong>CI/CD:</strong> Azure DevOps, YAML pipelines, GitHub Actions</li>
                         <li><strong>Infrastructure:</strong> Terraform, Helm, ingress, networking</li>
                     </ul>
                 </div>
@@ -232,7 +232,8 @@
                         <li><strong>Monitoring / Observability:</strong> Prometheus, Grafana</li>
                         <li><strong>Frameworks:</strong> .net 10, SignalR, ASP.NET Core, Entity Framework, Semantic Kernel, Agent Framework, gRPC, REST, react, bootstrap</li>
                         <li><strong>Database:</strong> Azure SQL Database</li>
-                        <li><strong>Tools:</strong> VS Pro, VS Code, GitHub, Keycloak</li>                        
+                        <li><strong>Tools:</strong> VS Pro, VS Code, GitHub, Cloudflare</li>
+                        <li><strong>OIDC:</strong> Keycloak</li>
                     </ul>
                 </div>
             </div>
@@ -306,7 +307,7 @@
                                 <div class="col-md-4 mb-3">
                                     <div class="card bg-light border shadow-sm">
                                         <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-docker"></i> Kubernetes Delivery</h6>
+                                            <h6 class="card-title"><i class="fas fa-cube"></i> Kubernetes Delivery</h6>
                                             <p class="card-text">Docker, manifests, probes, ConfigMaps, and resource limits.</p>
                                         </div>
                                     </div>
@@ -454,8 +455,16 @@
                                 <div class="col-md-4 mb-3">
                                     <div class="card bg-light border shadow-sm">
                                         <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-cloudflare"></i> Cloudflare Delivery</h6>
+                                            <h6 class="card-title"><i class="fas fa-cloud"></i> Cloudflare Delivery</h6>
                                             <p class="card-text">Exposed and delivered the site through Cloudflare as a lightweight static setup.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                 <div class="col-md-4 mb-3">
+                                    <div class="card bg-light border shadow-sm">
+                                        <div class="card-body">
+                                            <h6 class="card-title"><i class="fas fa-envelope"></i> Contact with AI generated message</h6>
+                                            <p class="card-text">'Generator Request for CV' functionality added on contact page, this uses a Cloudflare Workers AI (Llama 3.1) to instantly create a personalized, natural message asking for my CV</p>
                                         </div>
                                     </div>
                                 </div>
