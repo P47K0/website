@@ -1,6 +1,15 @@
 /* Custom styles for koorevaar.com */
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: 'Arial', sans-serif;
+    padding-top: 56px;
+}
+
+section[id] {
+    scroll-margin-top: 66px;
 }
 
 .hero-section {
@@ -43,6 +52,7 @@ body {
     border: 1px solid #e9ecef;
 }
 
-.about-section ul.list-unstyled li {
+.about-section ul.list-unstyled li,
+.certifications-section ul.list-unstyled li {
     padding-left: 20px;
 }

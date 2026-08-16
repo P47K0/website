@@ -49,6 +49,26 @@
   </script>
 </head>
 <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">Patrick Koorevaar</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item"><a class="nav-link" href="#about-section">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#experience-section">Experience</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#skills-section">Skills</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#certifications-section">Certifications</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#side-projects-section">Projects</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact-section">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
     <section class="hero-section py-5 text-center bg-primary text-white">
         <div class="container">
             <h1>Patrick Koorevaar</h1>
@@ -119,7 +139,7 @@
     </section>
 
     <!-- About section -->
-    <section class="about-section py-5">
+    <section class="about-section py-5" id="about-section">
         <div class="container">
             <h2><i class="fas fa-user"></i> About</h2>
             <p class="lead">Patrick Koorevaar is a senior Azure DevOps Engineer with a strong background in Azure, AKS, CI/CD, Kubernetes, and infrastructure automation. He focuses on practical engineering experience and uses side projects for learning and experimentation. Interested? <a href="https://contact.koorevaar.com/" class="btn-link">Get in touch!</a></p>
@@ -266,14 +286,14 @@
     <section class="certifications-section py-5 bg-light" id="certifications-section">
         <div class="container">
             <h2><i class="fas fa-certificate"></i> Certifications</h2>
-            <ul>
-                <li>AZ-900: Azure Fundamentals</li>
-                <li>AI-900: Azure AI Fundamentals</li>
-                <li>AZ-104: Azure Administrator Associate</li>
-                <li>AZ-204: Azure Developer Associate</li>                
-                <li>AI-102: Azure AI Engineer Associate (Jan 2026)</li>
-                <li><strong>AZ-305:</strong> Azure Solutions Architect Expert (Jul 2026)</li>
-                <li><strong>AZ-400:</strong> Azure DevOps Engineer Expert (May 2026)</li>
+            <ul class="list-unstyled">
+                <li><i class="fas fa-certificate"></i> <strong>AZ-900:</strong> Azure Fundamentals</li>
+                <li><i class="fas fa-certificate"></i> <strong>AI-900:</strong> Azure AI Fundamentals</li>
+                <li><i class="fas fa-certificate"></i> <strong>AZ-104:</strong> Azure Administrator Associate</li>
+                <li><i class="fas fa-certificate"></i> <strong>AZ-204:</strong> Azure Developer Associate</li>
+                <li><i class="fas fa-certificate"></i> <strong>AI-102:</strong> Azure AI Engineer Associate (Jan 2026)</li>
+                <li><i class="fas fa-certificate"></i> <strong>AZ-305:</strong> Azure Solutions Architect Expert (Jul 2026)</li>
+                <li><i class="fas fa-certificate"></i> <strong>AZ-400:</strong> Azure DevOps Engineer Expert (May 2026)</li>
             </ul>
         </div>
     </section>
@@ -287,6 +307,10 @@
                     <div class="card mb-3">
                         <div class="card-body">
                             <h5 class="card-title">Self-Hosted LLM-Powered Sentiment Analysis Platform on AKS</h5>
+                            <div class="d-flex flex-wrap align-items-center mb-2">
+                                <span class="badge badge-secondary mr-2"><i class="fas fa-code-branch"></i> Source Only</span>
+                                <span class="text-muted small"><i class="fas fa-calendar-alt mr-1"></i>May 1, 2026</span>
+                            </div>
                             <p class="card-text">Built a complete, production-oriented sentiment analysis solution running entirely on Azure Kubernetes Service (AKS) using a self-hosted Large Language Model.</p>
                             <div class="row mt-3">
                                 <div class="col-md-4 mb-3">
@@ -370,6 +394,10 @@
                     <div class="card mb-3">
                         <div class="card-body">
                             <h5 class="card-title">AI Multi-Agent Hangman Game</h5>
+                            <div class="d-flex flex-wrap align-items-center mb-2">
+                                <span class="badge badge-secondary mr-2"><i class="fas fa-code-branch"></i> Source Only</span>
+                                <span class="text-muted small"><i class="fas fa-calendar-alt mr-1"></i>Jan 13 – 18, 2026</span>
+                            </div>
                             <p class="card-text">Experimental multi-agent Hangman game built with Semantic Kernel and local LLMs, focused on agent orchestration, tool use, and reliable turn-based interaction.</p>
                             <div class="row mt-3">
                                 <div class="col-md-4 mb-3">
@@ -438,6 +466,10 @@
                     <div class="card mb-3">
                         <div class="card-body">
                             <h5 class="card-title">AKS and ACA Capacity Advisor</h5>
+                            <div class="d-flex flex-wrap align-items-center mb-2">
+                                <span class="badge badge-secondary mr-2"><i class="fas fa-code-branch"></i> Source Only</span>
+                                <span class="text-muted small"><i class="fas fa-calendar-alt mr-1"></i>Jul 20, 2026</span>
+                            </div>
                             <p class="card-text">Practical AIOps demo transforming AKS telemetry into clear capacity recommendations. It helps identify when workloads are safely placed, when limits should be revisited, and when additional cluster headroom is needed. Uses Cloudflare Workers AI (Llama 3.1) for recommendations.</p>
                             <div class="row mt-3">
                                 <div class="col-md-4 mb-3">
@@ -474,6 +506,10 @@
                     <div class="card mb-3">
                         <div class="card-body">
                             <h5 class="card-title">Youtube channel monitor</h5>
+                            <div class="d-flex flex-wrap align-items-center mb-2">
+                                <span class="badge badge-secondary mr-2"><i class="fas fa-code-branch"></i> Source Only</span>
+                                <span class="text-muted small"><i class="fas fa-calendar-alt mr-1"></i>Jul 29, 2026</span>
+                            </div>
                             <p class="card-text">As a simple alternative to FamilyLink. This tool, deployed in my ACA environment, sends an email when a video is made public on a monitored channel.</p>
                             <div class="row mt-3">
                                 <div class="col-md-4 mb-3">
@@ -509,6 +545,10 @@
                     <div class="card mb-3">
                         <div class="card-body">
                             <h5 class="card-title">www.koorevaar.com Website</h5>
+                            <div class="d-flex flex-wrap align-items-center mb-2">
+                                <span class="badge badge-secondary mr-2"><i class="fas fa-code-branch"></i> Source Only</span>
+                                <span class="text-muted small"><i class="fas fa-calendar-alt mr-1"></i>May 5, 2026</span>
+                            </div>
                             <p class="card-text">AI-assisted portfolio website built with Aider, Qwen2.5, and Claude Code, managed in GitHub and delivered through Cloudflare, with planned extensions toward Azure Static Web Apps, Functions, and Cosmos DB.</p>
                             <div class="row mt-3">
                                 <div class="col-md-4 mb-3">
@@ -600,6 +640,10 @@
                     <div class="card mb-3">
                         <div class="card-body">
                             <h5 class="card-title">Live AI Demo for AZ-400 Practice</h5>
+                            <div class="d-flex flex-wrap align-items-center mb-2">
+                                <span class="badge badge-success mr-2"><i class="fas fa-play-circle"></i> Live Demo</span>
+                                <span class="text-muted small"><i class="fas fa-calendar-alt mr-1"></i>May 5, 2026</span>
+                            </div>
                             <p class="card-text">Live AI demo built for AZ-400 practice, deployed with GitHub Actions, Terraform, and Azure Container Apps. It showcases service integration between a frontend client, API, LLM adapter, and Cloudflare-hosted AI endpoint.</p>
                             <a href="https://text-analysis-demo.koorevaar.com/" target="_blank" class="btn btn-primary mt-3">View Demo</a>
                         </div>
@@ -609,6 +653,10 @@
                     <div class="card mb-3">
                         <div class="card-body">
                             <h5 class="card-title">Live AI Multi-Agent Hangman Demo (ACA)</h5>
+                            <div class="d-flex flex-wrap align-items-center mb-2">
+                                <span class="badge badge-success mr-2"><i class="fas fa-play-circle"></i> Live Demo</span>
+                                <span class="text-muted small"><i class="fas fa-calendar-alt mr-1"></i>May 31, 2026</span>
+                            </div>
                             <p class="card-text">Cloud-hosted evolution of the Multi-Agent Hangman project, deployed on Azure Container Apps. Two Cloudflare Workers AI LLM agents compete live to guess letters, with the game state, turns, and results streamed in real time over SignalR.</p>
                             <div class="row mt-3">
                                 <div class="col-md-4 mb-3">
@@ -661,6 +709,10 @@
                     <div class="card mb-3">
                         <div class="card-body">
                             <h5 class="card-title">Automated Kubernetes Cluster Provisioning (Azure Sandbox)</h5>
+                            <div class="d-flex flex-wrap align-items-center mb-2">
+                                <span class="badge badge-secondary mr-2"><i class="fas fa-code-branch"></i> Source Only</span>
+                                <span class="text-muted small"><i class="fas fa-calendar-alt mr-1"></i>Aug 16, 2026</span>
+                            </div>
                             <p class="card-text">Fully automated two-node Kubernetes cluster built in the Whizlabs Azure sandbox, provisioning in under 7 minutes end-to-end. Built as an on-demand, reproducible practice environment for CKA scenarios, with Calico as the CNI over VXLAN for pod-to-pod networking across nodes.</p>
                             <div class="row mt-3">
                                 <div class="col-md-4 mb-3">
@@ -721,7 +773,7 @@
     </section>
 
     <!-- Links and contact section -->
-    <section class="links-contact-section py-5 text-center bg-light">
+    <section class="links-contact-section py-5 text-center bg-light" id="contact-section">
         <div class="container">
             <h2><i class="fas fa-link"></i> Links &amp; Contact</h2>
             <a href="https://www.linkedin.com/in/patrickkoorevaar" target="_blank" class="btn btn-primary m-1"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
