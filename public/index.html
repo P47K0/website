@@ -98,7 +98,7 @@
                             <div class="card-body">
                                 <h5><i class="fas fa-code"></i></h5>
                                 <p class="mb-0">Side Projects</p>
-                                <strong>7</strong>
+                                <strong>8</strong>
                             </div>
                         </div>
                     </a>
@@ -654,6 +654,65 @@
                             </div>
                             <a href="https://llm-hangman-demo.koorevaar.com/" target="_blank" class="btn btn-primary mt-3">View Demo</a>
                             <a href="https://github.com/P47K0/Pat.Aca.HangmanApi" target="_blank" rel="noopener noreferrer" class="btn btn-dark mt-3 ml-2"><i class="fab fa-github"></i> View Source</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">Automated Kubernetes Cluster Provisioning (Azure Sandbox)</h5>
+                            <p class="card-text">Fully automated two-node Kubernetes cluster built in the Whizlabs Azure sandbox, provisioning in under 7 minutes end-to-end. Built as an on-demand, reproducible practice environment for CKA scenarios, with Calico as the CNI over VXLAN for pod-to-pod networking across nodes.</p>
+                            <div class="row mt-3">
+                                <div class="col-md-4 mb-3">
+                                    <div class="card bg-light border shadow-sm">
+                                        <div class="card-body">
+                                            <h6 class="card-title"><i class="fas fa-stopwatch"></i> Under 7-Minute Provisioning</h6>
+                                            <p class="card-text">Full two-node cluster stood up from scratch in under seven minutes, start to finish.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="card bg-light border shadow-sm">
+                                        <div class="card-body">
+                                            <h6 class="card-title"><i class="fas fa-robot"></i> End-to-End Automation</h6>
+                                            <p class="card-text">Scripts handle infrastructure deployment, Kubernetes init, worker joining, Calico install, and connectivity validation.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="card bg-light border shadow-sm">
+                                        <div class="card-body">
+                                            <h6 class="card-title"><i class="fas fa-network-wired"></i> Calico CNI over VXLAN</h6>
+                                            <p class="card-text">Cross-node pod-to-pod communication handled via Calico with VXLAN networking.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="card bg-light border shadow-sm">
+                                        <div class="card-body">
+                                            <h6 class="card-title"><i class="fas fa-route"></i> Cross-Node Networking Fix</h6>
+                                            <p class="card-text">Traced a pod-to-pod failure to Azure NIC IP forwarding being disabled by default; enabling it on both VM NICs fixed Calico's cross-node routing.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="card bg-light border shadow-sm">
+                                        <div class="card-body">
+                                            <h6 class="card-title"><i class="fas fa-search"></i> Network-First Troubleshooting</h6>
+                                            <p class="card-text">Testing direct pod-IP connectivity before DNS isolated the root cause; a fresh install also needed a CoreDNS restart before DNS worked.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="card bg-light border shadow-sm">
+                                        <div class="card-body">
+                                            <h6 class="card-title"><i class="fas fa-graduation-cap"></i> CKA Practice Ready</h6>
+                                            <p class="card-text">A reproducible, observable, quick-to-rebuild sandbox for running real admin and troubleshooting scenarios on demand.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="https://github.com/P47K0/k8s-whizlabs-sandbox" target="_blank" rel="noopener noreferrer" class="btn btn-dark mt-3"><i class="fab fa-github"></i> View Source</a>
                         </div>
                     </div>
                 </div>
