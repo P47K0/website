@@ -262,19 +262,21 @@
                 <div class="col-md-6">
                     <ul>
                         <li><strong>Cloud:</strong> Azure</li>
-                        <li><strong>Containers:</strong> Docker, Kubernetes, AKS</li>
+                        <li><strong>Containers:</strong> Docker, Kubernetes, AKS (production, work), Azure Container Apps (personal demo hosting)</li>
                         <li><strong>Integration:</strong> Azure Service Bus, Storage queues</li>
                         <li><strong>CI/CD:</strong> Azure DevOps, YAML pipelines, GitHub Actions</li>
                         <li><strong>Infrastructure:</strong> Terraform, Helm, ingress, networking</li>
+                        <li><strong>Deployment Strategies:</strong> Blue/Green, Canary, feature flags (Azure App Config)</li>
                     </ul>
                 </div>
                 <div class="col-md-6">
-                    <ul>                        
+                    <ul>
                         <li><strong>Languages / Scripts:</strong> C#, Python, Bash, PowerShell</li>
                         <li><strong>Monitoring / Observability:</strong> Prometheus, Grafana</li>
-                        <li><strong>Frameworks:</strong> .net 10, SignalR, ASP.NET Core, Entity Framework, Semantic Kernel, Agent Framework, gRPC, REST, react, bootstrap</li>
+                        <li><strong>AI / LLM:</strong> IPEX Ollama (local), Cloudflare Workers AI, Semantic Kernel, Agent Framework, multi-agent orchestration, prompt engineering</li>
+                        <li><strong>Frameworks:</strong> .net 10, SignalR, ASP.NET Core, Entity Framework, gRPC, REST, react, bootstrap</li>
                         <li><strong>Database:</strong> Azure SQL Database</li>
-                        <li><strong>Tools:</strong> VS Pro, VS Code, GitHub, Cloudflare</li>
+                        <li><strong>Tools:</strong> VS Pro, VS Code, GitHub, Cloudflare (Workers, Workers AI, Web Analytics, DNS/edge delivery)</li>
                         <li><strong>OIDC:</strong> Keycloak</li>
                     </ul>
                 </div>
@@ -287,11 +289,11 @@
         <div class="container">
             <h2><i class="fas fa-certificate"></i> Certifications</h2>
             <ul class="list-unstyled">
-                <li><i class="fas fa-certificate"></i> <strong>AZ-900:</strong> Azure Fundamentals</li>
-                <li><i class="fas fa-certificate"></i> <strong>AI-900:</strong> Azure AI Fundamentals</li>
-                <li><i class="fas fa-certificate"></i> <strong>AZ-104:</strong> Azure Administrator Associate</li>
-                <li><i class="fas fa-certificate"></i> <strong>AZ-204:</strong> Azure Developer Associate</li>
-                <li><i class="fas fa-certificate"></i> <strong>AI-102:</strong> Azure AI Engineer Associate (Jan 2026)</li>
+                <li><i class="fas fa-certificate"></i> AZ-900: Azure Fundamentals</li>
+                <li><i class="fas fa-certificate"></i> AI-900: Azure AI Fundamentals</li>
+                <li><i class="fas fa-certificate"></i> AZ-104: Azure Administrator Associate</li>
+                <li><i class="fas fa-certificate"></i> AZ-204: Azure Developer Associate</li>
+                <li><i class="fas fa-certificate"></i> AI-102: Azure AI Engineer Associate (Jan 2026)</li>
                 <li><i class="fas fa-certificate"></i> <strong>AZ-305:</strong> Azure Solutions Architect Expert (Jul 2026)</li>
                 <li><i class="fas fa-certificate"></i> <strong>AZ-400:</strong> Azure DevOps Engineer Expert (May 2026)</li>
             </ul>
@@ -644,7 +646,25 @@
                                 <span class="badge badge-success mr-2"><i class="fas fa-play-circle"></i> Live Demo</span>
                                 <span class="text-muted small"><i class="fas fa-calendar-alt mr-1"></i>May 5, 2026</span>
                             </div>
-                            <p class="card-text">Live AI demo built for AZ-400 practice, deployed with GitHub Actions, Terraform, and Azure Container Apps. It showcases service integration between a frontend client, API, LLM adapter, and Cloudflare-hosted AI endpoint.</p>
+                            <p class="card-text">Live AI demo built for AZ-400 practice, deployed with GitHub Actions, Terraform, and Azure Container Apps. It showcases service integration between a frontend client, API, LLM adapter, and Cloudflare-hosted AI endpoint. Later extended, as a one-time practice exercise, with a Blue/Green and Canary deployment setup.</p>
+                            <div class="row mt-3">
+                                <div class="col-md-6 mb-3">
+                                    <div class="card bg-light border shadow-sm">
+                                        <div class="card-body">
+                                            <h6 class="card-title"><i class="fas fa-exchange-alt"></i> Blue/Green Deployment</h6>
+                                            <p class="card-text">ACA revision-based blue/green setup, enabling fast rollback to the stable blue revision.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="card bg-light border shadow-sm">
+                                        <div class="card-body">
+                                            <h6 class="card-title"><i class="fas fa-flag"></i> Canary via Feature Flags</h6>
+                                            <p class="card-text">Within the green revision, a text summarization feature was gradually enabled using Azure App Config feature flags.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <a href="https://text-analysis-demo.koorevaar.com/" target="_blank" class="btn btn-primary mt-3">View Demo</a>
                         </div>
                     </div>
