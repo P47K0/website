@@ -801,6 +801,70 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-md-12">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">CKA Practice Lab (lab.koorevaar.com)</h5>
+                            <div class="d-flex flex-wrap align-items-center mb-2">
+                                <span class="badge badge-warning mr-2"><i class="fas fa-lock"></i> Login Required</span>
+                                <span class="text-muted small"><i class="fas fa-calendar-alt mr-1"></i>Aug 30, 2026</span>
+                            </div>
+                            <p class="card-text">A gated, invite-only extension of this site for practicing CKA exam commands: a mirrored Linux session, streamed live to the browser over SignalR, running inside its own Azure Container Apps instance spun up per login by a .NET 10 lab API. Built in a single day with Claude Code, starting from a BRD drafted together with Claude before any code was written.</p>
+                            <div class="row mt-3">
+                                <div class="col-md-4 mb-3">
+                                    <div class="card bg-light border shadow-sm">
+                                        <div class="card-body">
+                                            <h6 class="card-title"><i class="fas fa-file-signature"></i> BRD-First Workflow</h6>
+                                            <p class="card-text">Started from a Business Requirements Document drafted with Claude, then built out and glued together across ACA, Cloudflare, and the .NET API.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="card bg-light border shadow-sm">
+                                        <div class="card-body">
+                                            <h6 class="card-title"><i class="fas fa-server"></i> Per-Session ACA Containers</h6>
+                                            <p class="card-text">The lab API spins up a dedicated Azure Container Apps instance for every login, torn down again once the session ends.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="card bg-light border shadow-sm">
+                                        <div class="card-body">
+                                            <h6 class="card-title"><i class="fas fa-terminal"></i> SignalR-Mirrored Terminal</h6>
+                                            <p class="card-text">A real Linux shell inside the container is relayed live to a cloudshell-style browser terminal over SignalR.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="card bg-light border shadow-sm">
+                                        <div class="card-body">
+                                            <h6 class="card-title"><i class="fas fa-graduation-cap"></i> Shimmed kubeadm/kubectl</h6>
+                                            <p class="card-text">Shell shims simulate install and upgrade command sequences, enforcing real step ordering for CKA exam practice.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="card bg-light border shadow-sm">
+                                        <div class="card-body">
+                                            <h6 class="card-title"><i class="fas fa-lock"></i> Cloudflare Access Gating</h6>
+                                            <p class="card-text">Login-gated via Cloudflare Access; only users explicitly granted access can reach the lab.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="card bg-light border shadow-sm">
+                                        <div class="card-body">
+                                            <h6 class="card-title"><i class="fas fa-code"></i> .NET 10 Lab API</h6>
+                                            <p class="card-text">A .NET 10 API with a SignalR hub orchestrates container lifecycle and relays terminal input/output.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="https://lab.koorevaar.com/" target="_blank" rel="noopener noreferrer" class="btn btn-primary mt-3"><i class="fas fa-lock"></i> Visit Lab (Login Required)</a>
+                            <a href="https://github.com/P47K0/Pat.Aca.LinuxLab" target="_blank" rel="noopener noreferrer" class="btn btn-dark mt-3 ml-2"><i class="fab fa-github"></i> View Source</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
