@@ -12,6 +12,14 @@ section[id] {
     scroll-margin-top: 66px;
 }
 
+.projects-section .col-md-12[id] {
+    scroll-margin-top: 76px;
+}
+
+.project-index .btn {
+    font-size: 0.85rem;
+}
+
 .hero-section {
     background-color: #007bff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
