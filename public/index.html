@@ -29,6 +29,20 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
+  <!-- Cloudflare Turnstile (invisible mode, no visible challenge) -->
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onTurnstileLoad" async defer></script>
+  <script>
+    function onTurnstileLoad() {
+      turnstile.render('#turnstile-container', {
+        sitekey: '0x4AAAAAAElQdCZJAeoJJRls',
+        size: 'invisible',
+        callback: function (token) {
+          if (window.onTurnstileSuccess) window.onTurnstileSuccess(token);
+        }
+      });
+    }
+  </script>
+
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -151,6 +165,15 @@
                             </div>
                         </div>
                     </a>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="card bg-secondary border-0">
+                        <div class="card-body">
+                            <h5><i class="fas fa-user-check"></i></h5>
+                            <p class="mb-0">Human Visits</p>
+                            <strong id="human-visitor-count">—</strong>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1000,14 +1023,21 @@
     <footer class="footer py-3 text-center bg-dark text-white">
         <div class="container">
             <p>&copy; 2026 Patrick Koorevaar. All rights reserved.</p>
-            <p>This site is continuously improved.</p>
+            <p>This site is continuously improved. <a href="privacy.html" class="text-white-50">Privacy Notice</a></p>
         </div>
     </footer>
+
+    <!-- Invisible Turnstile mount point; renders no visible UI -->
+    <div id="turnstile-container" style="display:none;"></div>
+    <!-- Honeypot: never linked visibly, disallowed in robots.txt. Anything that
+         follows this link gets flagged and excluded from the human count. -->
+    <a href="/go/sitemap-index" style="position:absolute; left:-9999px;" aria-hidden="true" tabindex="-1">sitemap</a>
 
     <!-- Bootstrap JS and dependencies -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script defer src="human-counter.js"></script>
     <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "621adb48e7ca4c8da9f338adc9654929"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>
