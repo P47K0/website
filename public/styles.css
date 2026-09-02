@@ -64,3 +64,24 @@ section[id] {
 .certifications-section ul.list-unstyled li {
     padding-left: 20px;
 }
+
+.tool-split {
+    margin-left: -8px;
+    margin-right: -8px;
+}
+
+.tool-split > [class^="col-"] {
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.tool-list {
+    font-size: 0.8rem;
+    line-height: 1.5;
+}
+
+.tool-list li i {
+    width: 14px;
+    text-align: center;
+    margin-right: 2px;
+}
