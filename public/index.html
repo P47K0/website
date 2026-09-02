@@ -68,6 +68,7 @@
                     <li class="nav-item"><a class="nav-link" href="#skills-section">Skills</a></li>
                     <li class="nav-item"><a class="nav-link" href="#certifications-section">Certifications</a></li>
                     <li class="nav-item"><a class="nav-link" href="#side-projects-section">Projects</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#work-style-section">My Work Style</a></li>
                     <li class="nav-item"><a class="nav-link" href="https://blog.koorevaar.com/" target="_blank" rel="noopener noreferrer">Blog</a></li>
                     <li class="nav-item"><a class="nav-link" href="#contact-section">Contact</a></li>
                 </ul>
@@ -881,6 +882,56 @@
                             </div>
                             <a href="https://lab.koorevaar.com/" target="_blank" rel="noopener noreferrer" class="btn btn-primary mt-3"><i class="fas fa-lock"></i> Visit Lab (Login Required)</a>
                             <a href="https://github.com/P47K0/Pat.Aca.LinuxLab" target="_blank" rel="noopener noreferrer" class="btn btn-dark mt-3 ml-2"><i class="fab fa-github"></i> View Source</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- My Work Style section -->
+    <section class="work-style-section py-5 bg-light" id="work-style-section">
+        <div class="container">
+            <h2><i class="fas fa-toolbox"></i> My Work Style</h2>
+            <p class="lead">A look behind the scenes at how the tools actually get used day to day — not just what ends up on the page, but how it gets built and kept up to date.</p>
+            <div class="row mt-4">
+                <div class="col-md-4 mb-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-tasks"></i> Agentic Backlog Management</h5>
+                            <p class="card-text">Ideas and feature backlog live on a private GitHub Projects board. Claude Code files and updates items directly via the GitHub GraphQL API during planning conversations, capturing decisions and open questions as they're made.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-blog"></i> Blog Content Pipeline</h5>
+                            <p class="card-text">Posts are written as Markdown and stored in Azure Cosmos DB, served through an Azure Container Apps API. I ask Claude to insert or update articles directly; deleting a post is deliberately left to me only. A Cloudflare Worker converts the Markdown to HTML on the way out, and a second Worker renders it at blog.koorevaar.com.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-laptop-code"></i> Building This Website</h5>
+                            <p class="card-text">This site started out built with Aider paired with a local Qwen2.5 model running via IPEX Ollama. Ongoing iteration — new sections, project cards, fixes — now runs through Claude Code instead.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-wrench"></i> Everyday Tool Stack</h5>
+                            <p class="card-text">VS Code for frontend work and Visual Studio Pro for backends — the same split used on my day-job projects. Azure DevOps pipelines drive CI/CD at work, while side projects run on GitHub Actions. Plus GitHub for source control and the backlog board, the Cloudflare and Azure Portals/CLI for infrastructure, PowerShell/Bash for scripting, Terraform for provisioning, and Claude Code/Aider for AI-assisted development.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-piggy-bank"></i> Cost-Conscious Architecture</h5>
+                            <p class="card-text">Every side project starts from "what can the free tiers cover?" — Cloudflare's free plan for Workers, DNS and Web Analytics, Azure Cosmos DB's free tier as the data layer, Azure Container Apps on the Consumption plan scaling to zero when idle. Authentication is split between Microsoft Entra ID's free tier and Cloudflare Zero Trust, the latter currently gating just the CKA Practice Lab. The AI demos lean on Cloudflare Workers AI's inexpensive models rather than Azure AI Foundry, for the same reason. Real infrastructure, near-zero standing cost.</p>
                         </div>
                     </div>
                 </div>
