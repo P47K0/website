@@ -114,9 +114,9 @@ async function handleBacklog(env) {
           items(first: 100) {
             nodes {
               content {
-                ... on DraftIssue { title body }
-                ... on Issue { title body }
-                ... on PullRequest { title body }
+                ... on DraftIssue { title }
+                ... on Issue { title }
+                ... on PullRequest { title }
               }
               visibility: fieldValueByName(name: "Visibility") {
                 ... on ProjectV2ItemFieldSingleSelectValue { name }
@@ -175,12 +175,11 @@ async function handleBacklog(env) {
     const items = nodes
       .map(node => ({
         title: node.content?.title ?? "",
-        description: node.content?.body ?? "",
         status: fieldText(node.status),
         visibility: fieldText(node.visibility)
       }))
       .filter(item => item.title && !isPrivate(item))
-      .map(({ title, description, status }) => ({ title, description, status }));
+      .map(({ title, status }) => ({ title, status }));
 
     return Response.json(
       { items },
