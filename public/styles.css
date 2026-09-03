@@ -53,10 +53,6 @@ section[id] {
     margin-right: 5px;
 }
 
-.backlog-description {
-    white-space: pre-line;
-}
-
 /* Custom styles for nested capability cards */
 .projects-section .card-body .card {
     border-radius: 5px;

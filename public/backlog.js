@@ -37,13 +37,6 @@
       body.appendChild(badge);
     }
 
-    if (item.description) {
-      const desc = document.createElement("p");
-      desc.className = "card-text backlog-description";
-      desc.textContent = item.description;
-      body.appendChild(desc);
-    }
-
     card.appendChild(body);
     col.appendChild(card);
     return col;
