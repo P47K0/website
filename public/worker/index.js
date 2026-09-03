@@ -117,6 +117,10 @@ async function handleBacklog(env) {
                     name
                     field { ... on ProjectV2FieldCommon { name } }
                   }
+                  ... on ProjectV2ItemFieldTextValue {
+                    text
+                    field { ... on ProjectV2FieldCommon { name } }
+                  }
                 }
               }
             }
@@ -146,20 +150,30 @@ async function handleBacklog(env) {
     if (payload.errors) throw new Error(payload.errors.map(e => e.message).join("; "));
 
     const nodes = payload.data?.user?.projectV2?.items?.nodes ?? [];
+    console.log("backlog raw fields:", JSON.stringify(nodes.map(n => ({
+      title: n.content?.title,
+      fields: (n.fieldValues?.nodes ?? []).map(fv => ({ field: fv?.field?.name, name: fv?.name, text: fv?.text }))
+    }))));
     const items = nodes
       .map(node => {
+        // Field/option names are free text on the board — match case- and
+        // whitespace-insensitively so a rename on the board side can't
+        // silently defeat the Visibility filter. Visibility may be set up
+        // as either a single-select or a plain text field, so accept both.
         const fields = {};
         for (const fv of node.fieldValues?.nodes ?? []) {
-          if (fv?.field?.name) fields[fv.field.name] = fv.name;
+          const fieldName = fv?.field?.name?.trim().toLowerCase();
+          const value = fv?.name ?? fv?.text ?? "";
+          if (fieldName) fields[fieldName] = value.trim();
         }
         return {
           title: node.content?.title ?? "",
           description: node.content?.body ?? "",
-          status: fields["Status"] ?? "",
-          visibility: fields["Visibility"] ?? ""
+          status: fields["status"] ?? "",
+          visibility: fields["visibility"] ?? ""
         };
       })
-      .filter(item => item.title && item.visibility !== "Private")
+      .filter(item => item.title && item.visibility.toLowerCase() !== "private")
       .map(({ title, description, status }) => ({ title, description, status }));
 
     return Response.json(
