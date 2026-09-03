@@ -99,6 +99,13 @@ async function handleVisitStats(env) {
 // private, so this fetch has to happen server-side with a token — items are
 // hidden unless explicitly marked Visibility = "Private"; blank/other values
 // are shown (the board's own default is public).
+//
+// GitHub's ProjectV2 `items` connection has no server-side filter argument —
+// it only supports pagination/orderBy — so every item always comes back and
+// exclusion has to happen below, after the fetch. `fieldValueByName` asks
+// GitHub directly for the two named fields we care about (instead of listing
+// every fieldValue and matching names ourselves), so the field name here
+// must exactly match the board's actual field name.
 async function handleBacklog(env) {
   const query = `
     query($owner: String!, $number: Int!) {
@@ -111,17 +118,13 @@ async function handleBacklog(env) {
                 ... on Issue { title body }
                 ... on PullRequest { title body }
               }
-              fieldValues(first: 20) {
-                nodes {
-                  ... on ProjectV2ItemFieldSingleSelectValue {
-                    name
-                    field { ... on ProjectV2FieldCommon { name } }
-                  }
-                  ... on ProjectV2ItemFieldTextValue {
-                    text
-                    field { ... on ProjectV2FieldCommon { name } }
-                  }
-                }
+              visibility: fieldValueByName(name: "Visibility") {
+                ... on ProjectV2ItemFieldSingleSelectValue { name }
+                ... on ProjectV2ItemFieldTextValue { text }
+              }
+              status: fieldValueByName(name: "Status") {
+                ... on ProjectV2ItemFieldSingleSelectValue { name }
+                ... on ProjectV2ItemFieldTextValue { text }
               }
             }
           }
@@ -152,28 +155,31 @@ async function handleBacklog(env) {
     const nodes = payload.data?.user?.projectV2?.items?.nodes ?? [];
     console.log("backlog raw fields:", JSON.stringify(nodes.map(n => ({
       title: n.content?.title,
-      fields: (n.fieldValues?.nodes ?? []).map(fv => ({ field: fv?.field?.name, name: fv?.name, text: fv?.text }))
+      visibility: n.visibility,
+      status: n.status
     }))));
+
+    // A single-select field reports its value as `name`, a plain text field
+    // as `text` — accept either. Compare case/whitespace-insensitively since
+    // the option text is free text set on the board.
+    const fieldText = fv => (fv?.name ?? fv?.text ?? "").trim();
+
+    // Two independent ways to mark an item private: the Visibility field, or
+    // a "Private:" title prefix. The title always comes through reliably
+    // (unlike a custom field, it needs no name/type to match), so it's a
+    // dependable fallback if the field-based signal ever misfires again.
+    const isPrivate = item =>
+      item.visibility.toLowerCase() === "private" ||
+      item.title.trim().toLowerCase().startsWith("private:");
+
     const items = nodes
-      .map(node => {
-        // Field/option names are free text on the board — match case- and
-        // whitespace-insensitively so a rename on the board side can't
-        // silently defeat the Visibility filter. Visibility may be set up
-        // as either a single-select or a plain text field, so accept both.
-        const fields = {};
-        for (const fv of node.fieldValues?.nodes ?? []) {
-          const fieldName = fv?.field?.name?.trim().toLowerCase();
-          const value = fv?.name ?? fv?.text ?? "";
-          if (fieldName) fields[fieldName] = value.trim();
-        }
-        return {
-          title: node.content?.title ?? "",
-          description: node.content?.body ?? "",
-          status: fields["status"] ?? "",
-          visibility: fields["visibility"] ?? ""
-        };
-      })
-      .filter(item => item.title && item.visibility.toLowerCase() !== "private")
+      .map(node => ({
+        title: node.content?.title ?? "",
+        description: node.content?.body ?? "",
+        status: fieldText(node.status),
+        visibility: fieldText(node.visibility)
+      }))
+      .filter(item => item.title && !isPrivate(item))
       .map(({ title, description, status }) => ({ title, description, status }));
 
     return Response.json(
