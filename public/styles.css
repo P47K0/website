@@ -25,7 +25,7 @@ section[id] {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.about-section, .experience-section, .skills-section, .certifications-section, .projects-section, .side-projects-section, .work-style-section, .links-contact-section {
+.about-section, .experience-section, .skills-section, .certifications-section, .projects-section, .side-projects-section, .work-style-section, .backlog-section, .links-contact-section {
     background-color: #ffffff;
     border-top: 2px solid #e9ecef;
 }
@@ -51,6 +51,10 @@ section[id] {
 .badge {
     font-size: 0.8rem;
     margin-right: 5px;
+}
+
+.backlog-description {
+    white-space: pre-line;
 }
 
 /* Custom styles for nested capability cards */
