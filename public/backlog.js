@@ -37,6 +37,13 @@
       body.appendChild(badge);
     }
 
+    if (item.tag) {
+      const tag = document.createElement("span");
+      tag.className = "badge badge-info mb-2";
+      tag.textContent = item.tag;
+      body.appendChild(tag);
+    }
+
     card.appendChild(body);
     col.appendChild(card);
     return col;
