@@ -83,6 +83,7 @@
                     <li class="nav-item"><a class="nav-link" href="#certifications-section">Certifications</a></li>
                     <li class="nav-item"><a class="nav-link" href="#side-projects-section">Projects</a></li>
                     <li class="nav-item"><a class="nav-link" href="#work-style-section">My Work Style</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#backlog-section">Backlog</a></li>
                     <li class="nav-item"><a class="nav-link" href="https://blog.koorevaar.com/" target="_blank" rel="noopener noreferrer">Blog</a></li>
                     <li class="nav-item"><a class="nav-link" href="#contact-section">Contact</a></li>
                 </ul>
@@ -933,7 +934,7 @@
                     <div class="card h-100">
                         <div class="card-body">
                             <h5 class="card-title"><i class="fas fa-tasks"></i> Agentic Backlog Management</h5>
-                            <p class="card-text">Ideas and feature backlog live on a private GitHub Projects board. Claude Code files and updates items directly via the GitHub GraphQL API during planning conversations, capturing decisions and open questions as they're made.</p>
+                            <p class="card-text">Ideas and feature backlog live on a private GitHub Projects board. Claude Code files and updates items directly via the GitHub GraphQL API during planning conversations, capturing decisions and open questions as they're made. A public subset is shown in the <a href="#backlog-section">Backlog section</a> below.</p>
                         </div>
                     </div>
                 </div>
@@ -996,6 +997,16 @@
         </div>
     </section>
 
+    <!-- Public backlog section -->
+    <section class="backlog-section py-5" id="backlog-section">
+        <div class="container">
+            <h2><i class="fas fa-list-check"></i> Backlog</h2>
+            <p class="lead">A public look at what's next. Ideas and in-progress work from my private planning board, minus anything marked private.</p>
+            <div id="backlog-list" class="row mt-4"></div>
+            <p id="backlog-empty" class="text-muted d-none">Nothing public on the backlog right now — check back later.</p>
+        </div>
+    </section>
+
     <!-- Links and contact section -->
     <section class="links-contact-section py-5 text-center bg-light" id="contact-section">
         <div class="container">
@@ -1038,6 +1049,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script defer src="human-counter.js"></script>
+    <script defer src="backlog.js"></script>
     <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "621adb48e7ca4c8da9f338adc9654929"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>
