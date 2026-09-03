@@ -126,6 +126,10 @@ async function handleBacklog(env) {
                 ... on ProjectV2ItemFieldSingleSelectValue { name }
                 ... on ProjectV2ItemFieldTextValue { text }
               }
+              tag: fieldValueByName(name: "Tag") {
+                ... on ProjectV2ItemFieldSingleSelectValue { name }
+                ... on ProjectV2ItemFieldTextValue { text }
+              }
             }
           }
         }
@@ -156,7 +160,8 @@ async function handleBacklog(env) {
     console.log("backlog raw fields:", JSON.stringify(nodes.map(n => ({
       title: n.content?.title,
       visibility: n.visibility,
-      status: n.status
+      status: n.status,
+      tag: n.tag
     }))));
 
     // A single-select field reports its value as `name`, a plain text field
@@ -176,10 +181,11 @@ async function handleBacklog(env) {
       .map(node => ({
         title: node.content?.title ?? "",
         status: fieldText(node.status),
+        tag: fieldText(node.tag),
         visibility: fieldText(node.visibility)
       }))
       .filter(item => item.title && !isPrivate(item))
-      .map(({ title, status }) => ({ title, status }));
+      .map(({ title, status, tag }) => ({ title, status, tag }));
 
     return Response.json(
       { items },
