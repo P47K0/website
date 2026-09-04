@@ -916,6 +916,7 @@
                                 </div>
                             </div>
                             <a href="https://lab.koorevaar.com/" target="_blank" rel="noopener noreferrer" class="btn btn-primary mt-3"><i class="fas fa-lock"></i> Visit Lab (Login Required)</a>
+                            <button type="button" class="btn btn-outline-primary mt-3 ml-2" data-toggle="modal" data-target="#lab-access-modal"><i class="fas fa-envelope"></i> Request Login</button>
                             <a href="https://github.com/P47K0/Pat.Aca.LinuxLab" target="_blank" rel="noopener noreferrer" class="btn btn-dark mt-3 ml-2"><i class="fab fa-github"></i> View Source</a>
                         </div>
                     </div>
@@ -1038,6 +1039,34 @@
         </div>
     </footer>
 
+    <!-- CKA Practice Lab: request-login modal. Posts to /api/lab-access,
+         which forwards to the same contact worker the Lab's own feedback
+         button uses (see lab-access.js and public/worker/index.js). -->
+    <div class="modal fade" id="lab-access-modal" tabindex="-1" role="dialog" aria-labelledby="lab-access-modal-label" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form id="lab-access-form">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="lab-access-modal-label">Request Lab Access</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="text-muted">The CKA Practice Lab is invite-only. Enter your email and I'll send you a login.</p>
+                        <div class="form-group">
+                            <label for="lab-access-email">Email address</label>
+                            <input type="email" class="form-control" id="lab-access-email" required>
+                        </div>
+                        <div id="lab-access-status"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary" id="lab-access-submit">Send Request</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- Invisible Turnstile mount point; renders no visible UI -->
     <div id="turnstile-container" style="display:none;"></div>
     <!-- Honeypot: never linked visibly, disallowed in robots.txt. Anything that
@@ -1050,6 +1079,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script defer src="human-counter.js"></script>
     <script defer src="backlog.js"></script>
+    <script defer src="lab-access.js"></script>
     <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "621adb48e7ca4c8da9f338adc9654929"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>
