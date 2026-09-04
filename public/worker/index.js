@@ -7,6 +7,9 @@
  * - GET  /api/visit-stats   public aggregate counts for the homepage stat tile.
  * - GET  /api/backlog       public subset of the private GitHub Projects
  *                            backlog board (see handleBacklog below).
+ * - POST /api/lab-access    forwards a "Request Login" email address to the
+ *                            contact worker via service binding (see
+ *                            handleLabAccess below).
  * - /go/sitemap-index       honeypot: never linked visibly, disallowed in
  *                            robots.txt; anything that requests it gets logged
  *                            separately and excluded from the human count.
@@ -29,6 +32,9 @@ export default {
     }
     if (url.pathname === "/api/backlog" && request.method === "GET") {
       return handleBacklog(env);
+    }
+    if (url.pathname === "/api/lab-access" && request.method === "POST") {
+      return handleLabAccess(request, env);
     }
     if (url.pathname === "/go/sitemap-index") {
       return handleHoneypot(request, env);
@@ -194,6 +200,40 @@ async function handleBacklog(env) {
   } catch (err) {
     console.error("backlog error:", err.message);
     return Response.json({ items: [] });
+  }
+}
+
+// "Request Login" button on the CKA Practice Lab card. Forwards to the
+// contact worker over a service binding — same-origin from the browser's
+// point of view, so no CORS surface needs opening on the (separately
+// deployed, shared) contact worker. Mirrors how the Lab's own feedback
+// button reaches the same contact worker.
+async function handleLabAccess(request, env) {
+  try {
+    const data = await request.json().catch(() => null);
+    const email = typeof data?.email === "string" ? data.email.trim() : "";
+    if (!email || !email.includes("@")) {
+      return Response.json({ success: false, message: "A valid email address is required." }, { status: 400 });
+    }
+
+    if (!env.CONTACT_WORKER) throw new Error("CONTACT_WORKER binding not configured");
+
+    const upstream = await env.CONTACT_WORKER.fetch("https://internal/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: "CKA Practice Lab visitor",
+        email,
+        subject: "CKA Practice Lab - Access Request",
+        message: `Requesting an invite to the CKA Practice Lab (lab.koorevaar.com) for ${email}.`
+      })
+    });
+
+    const result = await upstream.json().catch(() => ({ success: false, message: "Unexpected response from the contact worker." }));
+    return Response.json(result, { status: upstream.ok ? 200 : 502 });
+  } catch (err) {
+    console.error("lab-access error:", err.message);
+    return Response.json({ success: false, message: "Something went wrong. Please try again later." }, { status: 500 });
   }
 }
 
