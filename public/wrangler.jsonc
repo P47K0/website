@@ -19,5 +19,11 @@
       "database_name": "website-human-visits",
       "database_id": "83cdebe4-aee0-4326-8535-aec077ae350f"
     }
+  ],
+  "services": [
+    {
+      "binding": "CONTACT_WORKER",
+      "service": "contact"
+    }
   ]
 }
