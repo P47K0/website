@@ -47,7 +47,7 @@
     .then(function (r) { return r.json(); })
     .then(function (data) {
       const el = document.getElementById("human-visitor-count");
-      if (el) el.textContent = (data.allTime ?? 0).toLocaleString();
+      window.animateCountUp(el, data.allTime ?? 0);
     })
     .catch(function () {});
 })();

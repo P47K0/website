@@ -5,6 +5,8 @@
  * - POST /api/visit         verify an invisible Turnstile token, record one
  *                            human visit per (UTC day, visitor hash).
  * - GET  /api/visit-stats   public aggregate counts for the homepage stat tile.
+ * - GET  /api/blog-count    published blog article count, proxied server-side
+ *                            from blog-api-proxy (see handleBlogCount below).
  * - GET  /api/backlog       public subset of the private GitHub Projects
  *                            backlog board (see handleBacklog below).
  * - POST /api/lab-access    forwards a "Request Login" email address to the
@@ -29,6 +31,9 @@ export default {
     }
     if (url.pathname === "/api/visit-stats" && request.method === "GET") {
       return handleVisitStats(env);
+    }
+    if (url.pathname === "/api/blog-count" && request.method === "GET") {
+      return handleBlogCount(env);
     }
     if (url.pathname === "/api/backlog" && request.method === "GET") {
       return handleBacklog(env);
@@ -98,6 +103,26 @@ async function handleVisitStats(env) {
   } catch (err) {
     console.error("stats error:", err.message);
     return Response.json({ thisMonth: 0, allTime: 0 });
+  }
+}
+
+// Published blog article count for the homepage stat tile. blog-api-proxy's
+// /articles response is public (no key needed from the caller) but its CORS
+// allow-list is locked to blog.koorevaar.com, so the browser can't call it
+// directly from this site — this fetch happens server-to-server instead,
+// where CORS doesn't apply, and hands the client just the count.
+async function handleBlogCount(env) {
+  try {
+    const res = await fetch("https://blog-api-proxy.pkoorevaar.workers.dev/articles");
+    if (!res.ok) throw new Error(`blog-api-proxy responded ${res.status}`);
+    const articles = await res.json();
+    return Response.json(
+      { count: Array.isArray(articles) ? articles.length : 0 },
+      { headers: { "Cache-Control": "public, max-age=300" } }
+    );
+  } catch (err) {
+    console.error("blog-count error:", err.message);
+    return Response.json({ count: 0 });
   }
 }
 
