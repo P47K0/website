@@ -13,7 +13,7 @@
     .then(function (r) { return r.json(); })
     .then(function (data) {
       const el = document.getElementById("blog-article-count");
-      if (el) el.textContent = (data.count ?? 0).toLocaleString();
+      window.animateCountUp(el, data.count ?? 0);
     })
     .catch(function () {});
 })();
