@@ -48,6 +48,24 @@ section[id] {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+/* Homepage "small stats" row: 5 tiles. col-md-3 (25%) only ever fit 4 per
+   row, so the 5th always wrapped onto its own line with no top margin
+   (mb-md-0 zeroes it out for a single-row layout). From tablet width up,
+   size tiles at 20% so all 5 sit on one row inside the 960px desktop
+   container; row-gap adds spacing above/below any row that still wraps
+   (e.g. a future 6th tile) without affecting the already-correct mobile
+   layout, where mb-3 handles the 2-per-row spacing instead. */
+@media (min-width: 768px) {
+    .stats-row {
+        row-gap: 1.5rem;
+    }
+
+    .stats-row .stat-col {
+        flex: 0 0 20%;
+        max-width: 20%;
+    }
+}
+
 .badge {
     font-size: 0.8rem;
     margin-right: 5px;
