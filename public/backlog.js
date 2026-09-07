@@ -15,6 +15,27 @@
     return STATUS_BADGE[(status || "").trim().toLowerCase()] || "badge-secondary";
   }
 
+  function isDoneStatus(status) {
+    const s = (status || "").trim().toLowerCase();
+    return s === "done" || s === "completed";
+  }
+
+  // Non-Done items first, then Done items, each half grouped by the board's
+  // Tag field (project type: blog / lab / website) with groups ordered
+  // alphabetically. Array.prototype.sort is stable, so items keep their
+  // original relative order within a tag group.
+  function sortItems(items) {
+    return items.slice().sort(function (a, b) {
+      const doneA = isDoneStatus(a.status) ? 1 : 0;
+      const doneB = isDoneStatus(b.status) ? 1 : 0;
+      if (doneA !== doneB) return doneA - doneB;
+
+      const tagA = (a.tag || "").trim().toLowerCase();
+      const tagB = (b.tag || "").trim().toLowerCase();
+      return tagA.localeCompare(tagB);
+    });
+  }
+
   function buildCard(item) {
     const col = document.createElement("div");
     col.className = "col-md-4 mb-3";
@@ -62,7 +83,7 @@
         return;
       }
 
-      items.forEach(function (item) {
+      sortItems(items).forEach(function (item) {
         list.appendChild(buildCard(item));
       });
     })
