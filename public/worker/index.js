@@ -144,6 +144,7 @@ async function handleBacklog(env) {
         projectV2(number: $number) {
           items(first: 100) {
             nodes {
+              createdAt
               content {
                 ... on DraftIssue { title }
                 ... on Issue { title }
@@ -160,6 +161,9 @@ async function handleBacklog(env) {
               tag: fieldValueByName(name: "Tag") {
                 ... on ProjectV2ItemFieldSingleSelectValue { name }
                 ... on ProjectV2ItemFieldTextValue { text }
+              }
+              doneDate: fieldValueByName(name: "Done Date") {
+                ... on ProjectV2ItemFieldDateValue { date }
               }
             }
           }
@@ -192,7 +196,9 @@ async function handleBacklog(env) {
       title: n.content?.title,
       visibility: n.visibility,
       status: n.status,
-      tag: n.tag
+      tag: n.tag,
+      createdAt: n.createdAt,
+      doneDate: n.doneDate
     }))));
 
     // A single-select field reports its value as `name`, a plain text field
@@ -213,10 +219,16 @@ async function handleBacklog(env) {
         title: node.content?.title ?? "",
         status: fieldText(node.status),
         tag: fieldText(node.tag),
-        visibility: fieldText(node.visibility)
+        visibility: fieldText(node.visibility),
+        // createdAt is set by GitHub on every item, no schema change needed.
+        // doneDate only exists on items closed after the "Done Date" field
+        // was added (2026-09-06) or backfilled for the two known exceptions;
+        // it's null/undefined for every earlier Done item.
+        createdDate: node.createdAt ?? "",
+        doneDate: node.doneDate?.date ?? ""
       }))
       .filter(item => item.title && !isPrivate(item))
-      .map(({ title, status, tag }) => ({ title, status, tag }));
+      .map(({ title, status, tag, createdDate, doneDate }) => ({ title, status, tag, createdDate, doneDate }));
 
     return Response.json(
       { items },

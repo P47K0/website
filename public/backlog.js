@@ -20,6 +20,16 @@
     return s === "done" || s === "completed";
   }
 
+  // "6 Sep 2026" — short, unambiguous, locale-independent enough for a
+  // backlog card. Returns "" for missing/unparseable input so callers can
+  // just skip rendering rather than special-case invalid dates.
+  function formatDate(isoDate) {
+    if (!isoDate) return "";
+    const date = new Date(isoDate);
+    if (isNaN(date.getTime())) return "";
+    return date.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+  }
+
   // Non-Done items first, then Done items, each half grouped by the board's
   // Tag field (project type: blog / lab / website) with groups ordered
   // alphabetically. Array.prototype.sort is stable, so items keep their
@@ -63,6 +73,20 @@
       tag.className = "badge badge-info mb-2";
       tag.textContent = item.tag;
       body.appendChild(tag);
+    }
+
+    const created = formatDate(item.createdDate);
+    if (created) {
+      const dates = document.createElement("p");
+      dates.className = "card-text text-muted small mb-0";
+
+      // Done date is shown alongside Created, not instead of it, so a viewer
+      // can see turnaround time — not just that the item is finished. Only
+      // items closed after the "Done Date" field was added (or the two
+      // known-date exceptions) have one; older Done items show Created only.
+      const done = isDoneStatus(item.status) ? formatDate(item.doneDate) : "";
+      dates.textContent = done ? `Created ${created} · Done ${done}` : `Created ${created}`;
+      body.appendChild(dates);
     }
 
     card.appendChild(body);
