@@ -140,7 +140,7 @@
                             <div class="card-body">
                                 <h5><i class="fas fa-code"></i></h5>
                                 <p class="mb-0">Side Projects</p>
-                                <strong>9</strong>
+                                <strong>10</strong>
                             </div>
                         </div>
                     </a>
@@ -379,6 +379,7 @@
                     <a href="#project-hangman-live" class="btn btn-outline-primary btn-sm m-1">Live AI Multi-Agent Hangman Demo</a>
                     <a href="#project-k8s-sandbox" class="btn btn-outline-primary btn-sm m-1">K8s Cluster Provisioning (Sandbox)</a>
                     <a href="#project-cka-lab" class="btn btn-outline-primary btn-sm m-1">CKA Practice Lab</a>
+                    <a href="#project-linkedin-import" class="btn btn-outline-primary btn-sm m-1">LinkedIn Import Pipeline</a>
                 </div>
             </div>
 
@@ -937,6 +938,61 @@
                             <a href="https://lab.koorevaar.com/" target="_blank" rel="noopener noreferrer" class="btn btn-primary mt-3"><i class="fas fa-lock"></i> Visit Lab (Login Required)</a>
                             <button type="button" class="btn btn-outline-primary mt-3 ml-2" data-toggle="modal" data-target="#lab-access-modal"><i class="fas fa-envelope"></i> Request Login</button>
                             <a href="https://github.com/P47K0/Pat.Aca.LinuxLab" target="_blank" rel="noopener noreferrer" class="btn btn-dark mt-3 ml-2"><i class="fab fa-github"></i> View Source</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12" id="project-linkedin-import">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">LinkedIn Import Pipeline</h5>
+                            <div class="d-flex flex-wrap align-items-center mb-2">
+                                <span class="badge badge-info mr-2"><i class="fas fa-file-alt"></i> Write-Up Only</span>
+                                <span class="text-muted small"><i class="fas fa-calendar-alt mr-1"></i>Sep 4 – 8, 2026</span>
+                            </div>
+                            <p class="card-text">Built over several sessions, an end-to-end pipeline to bring my LinkedIn post history onto the blog: Claude for Chrome captures posts straight from the browser, Claude Code processes them (duplicate detection, tag derivation), images are rehosted on Cloudflare R2 via hand-rolled SigV4 signing, and a custom write API publishes the result. 86 articles imported this way. Unlike the projects above, this isn't a live demo or an open-source repo — it's an authoring workflow, documented in full on the blog.</p>
+                            <div class="row mt-3">
+                                <div class="col-md-4 mb-3">
+                                    <div class="card bg-light border shadow-sm">
+                                        <div class="card-body">
+                                            <h6 class="card-title"><i class="fab fa-chrome"></i> Claude for Chrome Capture</h6>
+                                            <p class="card-text">Browser-side capture of LinkedIn posts, feeding raw content into the pipeline.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="card bg-light border shadow-sm">
+                                        <div class="card-body">
+                                            <h6 class="card-title"><i class="fas fa-code"></i> Claude Code Processing</h6>
+                                            <p class="card-text">Duplicate detection and tag derivation before anything gets published.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="card bg-light border shadow-sm">
+                                        <div class="card-body">
+                                            <h6 class="card-title"><i class="fas fa-cloud"></i> Cloudflare R2 Image Hosting</h6>
+                                            <p class="card-text">Post images rehosted on R2, with hand-rolled SigV4 request signing.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="card bg-light border shadow-sm">
+                                        <div class="card-body">
+                                            <h6 class="card-title"><i class="fas fa-plug"></i> Custom Write API</h6>
+                                            <p class="card-text">Publishes imported posts into the blog through a dedicated write API integration.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="card bg-light border shadow-sm">
+                                        <div class="card-body">
+                                            <h6 class="card-title"><i class="fas fa-video"></i> Video-Embed Support</h6>
+                                            <p class="card-text">Most recent addition: LinkedIn video embeds for posts with an attached demo video.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="https://blog.koorevaar.com/efficiently-import-linkedin-posts-with-claude" target="_blank" rel="noopener noreferrer" class="btn btn-primary mt-3"><i class="fas fa-blog"></i> Read the Full Write-Up</a>
                         </div>
                     </div>
                 </div>
