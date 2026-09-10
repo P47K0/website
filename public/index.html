@@ -380,6 +380,7 @@
                     <a href="#project-k8s-sandbox" class="btn btn-outline-primary btn-sm m-1">K8s Cluster Provisioning (Sandbox)</a>
                     <a href="#project-cka-lab" class="btn btn-outline-primary btn-sm m-1">CKA Practice Lab</a>
                     <a href="#project-linkedin-import" class="btn btn-outline-primary btn-sm m-1">LinkedIn Import Pipeline</a>
+                    <a href="#project-comment-system" class="btn btn-outline-primary btn-sm m-1">AI-Moderated Blog Comment System</a>
                 </div>
             </div>
 
@@ -993,6 +994,93 @@
                                 </div>
                             </div>
                             <a href="https://blog.koorevaar.com/articles/efficiently-import-linkedin-posts-with-claude" target="_blank" rel="noopener noreferrer" class="btn btn-primary mt-3"><i class="fas fa-blog"></i> Read the Full Write-Up</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12" id="project-comment-system">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">AI-Moderated Blog Comment System</h5>
+                            <div class="d-flex flex-wrap align-items-center mb-2">
+                                <span class="badge badge-success mr-2"><i class="fas fa-play-circle"></i> Live Demo</span>
+                                <span class="text-muted small"><i class="fas fa-calendar-alt mr-1"></i>Sep 10, 2026</span>
+                            </div>
+                            <p class="card-text">Built a fully moderated comment system for the blog, spanning a .NET 10 API, a new Azure Function, and two Cloudflare Workers. A comment section now shows on every article, moderated by an LLM (and by me directly in the early days).</p>
+                            <div class="row mt-3">
+                                <div class="col-md-4 mb-3">
+                                    <div class="card bg-light border shadow-sm">
+                                        <div class="card-body">
+                                            <h6 class="card-title"><i class="fas fa-plug"></i> Public API Endpoints</h6>
+                                            <p class="card-text">Comment submission and moderation review endpoints added to the existing .NET minimal API, backed by Cosmos DB via a container-scoped custom RBAC role so the new public-write surface can't touch unrelated data.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="card bg-light border shadow-sm">
+                                        <div class="card-body">
+                                            <h6 class="card-title"><i class="fas fa-robot"></i> Async LLM Moderation Pipeline</h6>
+                                            <p class="card-text">A new .NET 10 isolated Azure Function (Flex Consumption) picks up newly-submitted comments via a Cosmos DB Change Feed trigger, scores each one against a configurable prompt, and either publishes or flags it for manual review.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="card bg-light border shadow-sm">
+                                        <div class="card-body">
+                                            <h6 class="card-title"><i class="fas fa-cloud"></i> Cross-Cloud Integration</h6>
+                                            <p class="card-text">The Azure Function calls Cloudflare Workers AI directly over HTTP for scoring &mdash; a deliberate choice to demonstrate cross-provider integration rather than staying in a single cloud.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="card bg-light border shadow-sm">
+                                        <div class="card-body">
+                                            <h6 class="card-title"><i class="fas fa-sliders-h"></i> Config-First Tuning</h6>
+                                            <p class="card-text">Moderation model, prompt wording, daily usage quota, and auto-publish confidence threshold are all runtime-configurable app settings, letting moderation behavior evolve without a code change or redeploy.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="card bg-light border shadow-sm">
+                                        <div class="card-body">
+                                            <h6 class="card-title"><i class="fas fa-shield-alt"></i> Defense in Depth</h6>
+                                            <p class="card-text">Cloudflare Turnstile bot verification, then a rate limiter partitioned by real visitor IP and article (forwarded securely across two Cloudflare Workers), then LLM content scoring.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="card bg-light border shadow-sm">
+                                        <div class="card-body">
+                                            <h6 class="card-title"><i class="fas fa-envelope"></i> Email Review Alerts</h6>
+                                            <p class="card-text">Azure Communication Services notifies on every new comment, whether auto-published or awaiting manual approval.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="card bg-light border shadow-sm">
+                                        <div class="card-body">
+                                            <h6 class="card-title"><i class="fas fa-sync-alt"></i> Self-Healing Pipeline</h6>
+                                            <p class="card-text">An hourly scheduled Function sweeps up any comment left stuck &mdash; e.g. after a transient scoring failure or an exhausted daily quota &mdash; and safely re-queues it for another attempt.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="card bg-light border shadow-sm">
+                                        <div class="card-body">
+                                            <h6 class="card-title"><i class="fas fa-lock"></i> Least-Privilege Infrastructure as Code</h6>
+                                            <p class="card-text">All new Azure resources (Function App, storage, Cosmos containers/roles) defined in Bicep and deployed via GitHub Actions using OIDC, with role-assignment permissions deliberately kept out of the CI pipeline and applied by hand instead.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="card bg-light border shadow-sm">
+                                        <div class="card-body">
+                                            <h6 class="card-title"><i class="fas fa-comments"></i> No Admin UI Required</h6>
+                                            <p class="card-text">Comment moderation (list/publish/delete) is driven directly by Claude via authenticated API endpoints on request &mdash; the same AI-assisted workflow already used to manage the blog's articles.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="https://blog.koorevaar.com/articles/adding-comments-to-the-blog" target="_blank" rel="noopener noreferrer" class="btn btn-primary mt-3"><i class="fas fa-blog"></i> Read the Write-Up &amp; See It Live</a>
                         </div>
                     </div>
                 </div>
