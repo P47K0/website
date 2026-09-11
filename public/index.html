@@ -154,13 +154,15 @@
   .more-projects{border:1px solid var(--border);border-radius:14px;overflow:hidden;background:var(--glass);backdrop-filter:blur(10px);}
   .mp-item{border-bottom:1px solid var(--border);}
   .mp-item:last-child{border-bottom:none;}
-  .mp-row{display:flex;justify-content:space-between;align-items:center;padding:15px 18px;font-size:14px;gap:12px;}
+  .mp-row{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;padding:15px 18px;font-size:14px;gap:8px 12px;}
   .mp-row .t{font-weight:600;}
   .mp-row .d{color:var(--text-faint);font-size:12.5px;margin-top:2px;}
   .mp-row a{font-size:13px;color:var(--text-dim);text-decoration:none;flex:none;}
   .mp-row a:hover{color:var(--azure-light);}
-  .mp-actions{display:flex;align-items:center;gap:10px;flex:none;}
+  .mp-actions{display:flex;align-items:center;gap:10px;flex:none;margin-left:auto;}
+  .mp-links{display:flex;flex-direction:column;align-items:flex-end;gap:4px;}
   .mp-row .detail-btn{position:static;width:26px;height:26px;font-size:14px;}
+  .detail-btn-spacer{display:inline-block;width:26px;height:26px;flex:none;visibility:hidden;}
   .mp-item .card-detail{padding:12px 18px 16px;margin-top:0;}
 
   .backlog-list{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:8px;}
@@ -544,8 +546,10 @@
         <div class="mp-row">
           <div><div class="t">Blog platform (blog.koorevaar.com)</div><div class="d">Cosmos DB content + comments, Azure Functions, two Cloudflare Workers · May–Sep 2026</div></div>
           <div class="mp-actions">
-            <a href="https://blog.koorevaar.com/" target="_blank" rel="noopener noreferrer">Visit →</a>
-            <a href="https://github.com/P47K0/Pat.Aca.BlogServiceApi" target="_blank" rel="noopener noreferrer">Source →</a>
+            <div class="mp-links">
+              <a href="https://blog.koorevaar.com/" target="_blank" rel="noopener noreferrer">Visit →</a>
+              <a href="https://github.com/P47K0/Pat.Aca.BlogServiceApi" target="_blank" rel="noopener noreferrer">Source →</a>
+            </div>
             <button class="detail-btn" aria-label="Show details" onclick="toggleDetail('blog-platform', this.closest('.mp-item'))"><span class="chevron">+</span></button>
           </div>
         </div>
@@ -581,8 +585,10 @@
         <div class="mp-row">
           <div><div class="t">Multi-agent hangman (source)</div><div class="d">Console application, Semantic Kernel and Agent Framework versions · Jan 2026</div></div>
           <div class="mp-actions">
-            <a href="https://github.com/P47K0/SKOrchestrationPractice" target="_blank" rel="noopener noreferrer">Source (SK) →</a>
-            <a href="https://github.com/P47K0/AgentFrameworkPractice" target="_blank" rel="noopener noreferrer">Source (AF) →</a>
+            <div class="mp-links">
+              <a href="https://github.com/P47K0/SKOrchestrationPractice" target="_blank" rel="noopener noreferrer">Source (SK) →</a>
+              <a href="https://github.com/P47K0/AgentFrameworkPractice" target="_blank" rel="noopener noreferrer">Source (AF) →</a>
+            </div>
             <button class="detail-btn" aria-label="Show details" onclick="toggleDetail('hangman-agents-source', this.closest('.mp-item'))"><span class="chevron">+</span></button>
           </div>
         </div>
@@ -590,11 +596,22 @@
       <div class="mp-item">
         <div class="mp-row">
           <div><div class="t">CKA practice lab</div><div class="d">SignalR, Zero Trust, ACA · Aug 2026</div></div>
+          <div class="mp-actions">
+            <div class="mp-links">
+              <a href="https://lab.koorevaar.com/" target="_blank" rel="noopener noreferrer">Visit lab →</a>
+              <a href="#" onclick="openLabModal();return false;">Request login</a>
+            </div>
+            <span class="detail-btn-spacer" aria-hidden="true"></span>
+          </div>
         </div>
       </div>
       <div class="mp-item">
         <div class="mp-row">
           <div><div class="t">K8s cluster automation</div><div class="d">Automation, Calico, Bash, Bicep · Aug 2026</div></div>
+          <div class="mp-actions">
+            <a href="https://github.com/P47K0/k8s-whizlabs-sandbox" target="_blank" rel="noopener noreferrer">Source →</a>
+            <span class="detail-btn-spacer" aria-hidden="true"></span>
+          </div>
         </div>
       </div>
     </div>
