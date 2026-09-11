@@ -42,11 +42,11 @@
     maybeFire(token);
   };
 
-  // Populate the public "Human Visits" stat tile.
+  // Populate the public "Site Visits" stat tile.
   fetch("/api/visit-stats")
     .then(function (r) { return r.json(); })
     .then(function (data) {
-      const el = document.getElementById("human-visitor-count");
+      const el = document.getElementById("site-visit-count");
       window.animateCountUp(el, data.allTime ?? 0);
     })
     .catch(function () {});
