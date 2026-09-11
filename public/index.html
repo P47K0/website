@@ -80,8 +80,8 @@
 
   nav{position:sticky;top:0;z-index:50;background:rgba(5,11,26,0.65);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);}
   nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;}
-  .brand{font-weight:700;font-size:15px;text-decoration:none;}
-  .brand span{color:var(--text-dim);font-weight:400;}
+  .brand{font-weight:700;font-size:15px;text-decoration:none;line-height:1.35;}
+  .brand span{display:block;color:var(--text-dim);font-weight:400;font-size:12px;}
   .navlinks{display:flex;gap:26px;font-size:14px;color:var(--text-dim);}
   .navlinks a{text-decoration:none;}
   .navlinks a:hover{color:var(--text);}
@@ -248,7 +248,7 @@
 
 <nav>
   <div class="wrap">
-    <a class="brand" href="#">Patrick Koorevaar <span>— Azure DevOps Engineer</span></a>
+    <a class="brand" href="#">Patrick Koorevaar<span>Azure DevOps Engineer</span></a>
     <div class="navlinks">
       <a href="#ai-section">AI Apps</a>
       <a href="#devops-section">DevOps</a>
@@ -274,7 +274,7 @@
     </button>
     <div id="about-section" style="max-width:560px;">
       <div class="skills-detail" id="about-detail">
-        <p>Senior Azure DevOps Engineer focused on cloud-native infrastructure, DevOps automation, and container orchestration. Currently studying for the CKA. Interested? <a href="https://contact.koorevaar.com/">Get in touch</a> — the request form is AI-assisted too.</p>
+        <p>Patrick Koorevaar is a senior Azure DevOps Engineer focused on cloud-native infrastructure, DevOps automation, and container orchestration. Currently studying for the CKA. Interested? <a href="https://contact.koorevaar.com/">Get in touch</a>.</p>
         <p>Before publishing full projects on GitHub, I spent years helping others on <a href="https://stackoverflow.com/users/1122629/patrick-koorevaar" target="_blank" rel="noopener noreferrer">Stack Overflow</a>: 59 questions answered, 1.4k reputation, mostly C#, Git, and Azure/Kubernetes scenarios.</p>
         <p>Every side project starts from "what can the free tiers cover" — Cloudflare Workers AI, Cosmos DB free tier, Container Apps scaled to zero. VS Code for frontend, VS Pro for backends, same split at work and on side projects.</p>
         <p style="margin-bottom:0;">Full toolset and technologies in the <a href="#skills-section">Skills section</a> below.</p>
