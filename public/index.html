@@ -4,30 +4,28 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Patrick Koorevaar - Senior Azure DevOps Engineer</title>
-  <meta name="description" content="Senior Azure DevOps Engineer with 25+ years IT experience. Azure Certified (AZ-400, AZ-104, AZ-204, AI-102). AKS clusters, CI/CD pipelines, Traefik, Prometheus.">
-  <meta name="keywords" content="Azure, Cloud Architect, DevOps Engineer, Container Apps, AKS, Terraform, Cloudflare, Azure Solutions Architect">
+  <title>Patrick Koorevaar - Azure DevOps Engineer</title>
+  <meta name="description" content="Senior Azure DevOps Engineer with 26 years IT experience. Live AI applications on Cloudflare Workers AI alongside production AKS, CI/CD and Terraform. AZ-400, AZ-305, AI-102 certified.">
+  <meta name="keywords" content="Azure, DevOps Engineer, AKS, Kubernetes, CI/CD, Cloudflare Workers AI, Terraform, Container Apps">
   <meta name="robots" content="index, follow">
 
   <link rel="canonical" href="https://www.koorevaar.com/">
 
   <!-- Open Graph  -->
-  <meta property="og:title" content="Patrick Koorevaar - Senior Azure DevOps Engineer">
-  <meta property="og:description" content="Azure Kubernetes Service, DevOps automation, CI/CD pipelines, and cloud infrastructure.">
+  <meta property="og:title" content="Patrick Koorevaar - Azure DevOps Engineer">
+  <meta property="og:description" content="Live AI applications alongside production Azure Kubernetes Service, DevOps automation, and CI/CD pipelines.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://www.koorevaar.com/">
   <meta property="og:image" content="https://www.koorevaar.com/og-image.jpg">
 
   <!-- Twitter / X -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Patrick Koorevaar - Senior Azure DevOps Engineer">
-  <meta name="twitter:description" content="Azure Kubernetes Service, DevOps automation, CI/CD pipelines, and cloud infrastructure.">
+  <meta name="twitter:title" content="Patrick Koorevaar - Azure DevOps Engineer">
+  <meta name="twitter:description" content="Live AI applications alongside production Azure Kubernetes Service, DevOps automation, and CI/CD pipelines.">
   <meta name="twitter:image" content="https://www.koorevaar.com/og-image.jpg">
 
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-  <link href="styles.css" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
   <!-- Cloudflare Turnstile (invisible mode, no visible challenge) -->
   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onTurnstileLoad" async defer></script>
@@ -49,7 +47,7 @@
     "@type": "Person",
     "name": "Patrick Koorevaar",
     "jobTitle": "Senior Azure DevOps Engineer",
-    "description": "Specialized in Azure Container Apps, AKS, CI/CD pipelines, Terraform and modern cloud architectures.",
+    "description": "Specialized in Azure Container Apps, AKS, CI/CD pipelines, Terraform, modern cloud architectures, and applied AI with Cloudflare Workers AI.",
     "worksFor": {
       "@type": "Organization",
       "name": "Q-Vend B.V."
@@ -60,1192 +58,764 @@
       "https://github.com/P47K0",
       "https://hub.docker.com/repositories/p47r1ck75"
     ],
-    "knowsAbout": ["Azure", "AKS", "Kubernetes", "DevOps", "CI/CD", "Cloudflare", "Terraform", "Container Apps"]
+    "knowsAbout": ["Azure", "AKS", "Kubernetes", "DevOps", "CI/CD", "Cloudflare Workers AI", "Terraform", "Container Apps"]
   }
   </script>
+
+<style>
+  :root{
+    --bg-1:#050B1A; --bg-2:#0B1F3D; --bg-3:#0A2B5C;
+    --glass:rgba(255,255,255,0.06); --glass-strong:rgba(255,255,255,0.10);
+    --border:rgba(255,255,255,0.14); --border-strong:rgba(255,255,255,0.24);
+    --text:#F2F6FC; --text-dim:#A9BEDA; --text-faint:#6E85A8;
+    --azure:#3AA0FF; --azure-light:#7FCBFF;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:linear-gradient(160deg,var(--bg-1) 0%,var(--bg-2) 55%,var(--bg-3) 100%);background-attachment:fixed;color:var(--text);font-family:'Inter',sans-serif;line-height:1.6;}
+  h1,h2,h3,.display{font-family:'Sora',sans-serif;}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 28px;}
+  a{color:inherit;}
+  img{max-width:100%;}
+
+  nav{position:sticky;top:0;z-index:50;background:rgba(5,11,26,0.65);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;}
+  .brand{font-weight:700;font-size:15px;text-decoration:none;line-height:1.35;}
+  .brand span{display:block;color:var(--text-dim);font-weight:400;font-size:12px;}
+  .navlinks{display:flex;gap:26px;font-size:14px;color:var(--text-dim);}
+  .navlinks a{text-decoration:none;}
+  .navlinks a:hover{color:var(--text);}
+  .navtoggle{display:none;background:none;border:1px solid var(--border);border-radius:8px;color:var(--text);width:38px;height:38px;font-size:16px;}
+
+  .hero{padding:96px 0 60px;position:relative;overflow:hidden;}
+  .glow{position:absolute;top:-140px;right:-160px;width:560px;height:560px;border-radius:50%;
+    background:radial-gradient(circle,rgba(58,160,255,0.35) 0%,rgba(58,160,255,0) 70%);pointer-events:none;}
+  .hero-inner{position:relative;max-width:680px;}
+  .hero h1{font-size:48px;line-height:1.12;font-weight:800;margin:0 0 8px;letter-spacing:-0.01em;}
+  .hero h1 .g{background:linear-gradient(90deg,var(--azure-light),var(--azure));-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .hero .tag{font-size:16px;color:var(--text-dim);margin:0;}
+  .about-summary{margin:16px 0 26px;max-width:560px;font-weight:400;font-size:16px;color:var(--text-dim);}
+  .hero-ctas{display:flex;gap:12px;flex-wrap:wrap;}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;text-decoration:none;border:1px solid var(--border);cursor:pointer;}
+  .btn-primary{background:linear-gradient(90deg,#2E8FEF,#63C7FF);color:#04101F;border:none;}
+  .btn-ghost{background:var(--glass);backdrop-filter:blur(10px);color:var(--text);}
+  .btn-ghost:hover{border-color:var(--border-strong);}
+
+  .badges{display:flex;flex-wrap:wrap;gap:10px;margin-top:44px;}
+  .badge{display:flex;align-items:center;gap:8px;background:var(--glass);backdrop-filter:blur(10px);border:1px solid var(--border);border-radius:10px;padding:9px 14px;font-size:13px;color:var(--text-dim);text-decoration:none;}
+  .badge .ic{width:14px;height:14px;border-radius:4px;background:linear-gradient(135deg,var(--azure-light),var(--azure));flex:none;}
+  .badge .cert-ic{width:15px;height:15px;flex:none;color:var(--azure-light);display:inline-flex;}
+  .badge .cert-ic svg{width:100%;height:100%;display:block;}
+
+  .stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-top:44px;}
+  .stat-card{background:var(--glass);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:12px;padding:16px;text-decoration:none;color:var(--text);}
+  .stat-card .n{font-size:22px;font-weight:800;font-family:'Sora',sans-serif;}
+  .stat-card .l{font-size:11.5px;color:var(--text-dim);margin-top:2px;}
+
+  .section{padding:64px 0;border-top:1px solid var(--border);}
+  .section-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:30px;flex-wrap:wrap;gap:8px;}
+  .section-head h2{font-size:24px;font-weight:700;margin:0;}
+  .section-head .note{font-size:13px;color:var(--text-faint);}
+
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  .grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+  .app-card{position:relative;background:var(--glass);backdrop-filter:blur(14px);border:1px solid var(--border);border-radius:14px;padding:20px;padding-bottom:54px;display:flex;flex-direction:column;gap:10px;}
+  .app-card:hover{border-color:var(--border-strong);}
+  .status-badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;}
+  .status-badge.live{color:var(--azure-light);}
+  .status-badge.prod{color:#8FE3B0;}
+  .status-badge.source{color:var(--text-faint);}
+  .dot{width:6px;height:6px;border-radius:50%;background:currentColor;box-shadow:0 0 6px currentColor;}
+  .app-card h3{font-size:16px;margin:0;font-weight:700;}
+  .app-card p{font-size:13.5px;color:var(--text-dim);margin:0;flex:1;}
+  .app-tags{display:flex;flex-wrap:wrap;gap:6px;}
+  .tag{font-size:11px;padding:3px 8px;border-radius:6px;background:rgba(255,255,255,0.05);color:var(--text-dim);border:1px solid var(--border);}
+  .app-links{display:flex;gap:14px;margin-top:2px;}
+  .app-link{font-size:13px;color:var(--azure-light);text-decoration:none;font-weight:600;}
+
+  .more-row{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:14px;}
+  .more-row .row{display:flex;justify-content:space-between;align-items:center;background:var(--glass);backdrop-filter:blur(10px);border:1px solid var(--border);border-radius:10px;padding:13px 16px;gap:10px;}
+  .more-row .row .t{font-size:13.5px;font-weight:600;}
+  .more-row .row .d{font-size:12px;color:var(--text-faint);margin-top:2px;}
+  .pill{font-size:11px;padding:3px 8px;border-radius:20px;border:1px solid var(--border-strong);color:var(--text-dim);white-space:nowrap;flex:none;}
+
+  #about-section p{font-size:14.5px;color:var(--text-dim);margin:0 0 14px;}
+  #about-section a{color:var(--azure-light);}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;}
+  .chip-group{margin-bottom:18px;}
+  .chip-group .label{font-size:11px;color:var(--text-faint);margin-bottom:8px;}
+  .chip{font-size:12.5px;padding:6px 11px;border-radius:8px;background:var(--glass);backdrop-filter:blur(10px);border:1px solid var(--border);color:var(--text);}
+
+  .certs{display:flex;flex-wrap:wrap;gap:10px;}
+  .cert{display:flex;align-items:center;gap:8px;font-size:13px;padding:9px 15px;border-radius:10px;background:var(--glass);backdrop-filter:blur(10px);border:1px solid var(--border);}
+  .cert .ic{width:14px;height:14px;border-radius:4px;background:linear-gradient(135deg,var(--azure-light),var(--azure));flex:none;}
+  .cert b{color:var(--azure-light);}
+
+  .more-projects{border:1px solid var(--border);border-radius:14px;overflow:hidden;background:var(--glass);backdrop-filter:blur(10px);}
+  .mp-item{border-bottom:1px solid var(--border);}
+  .mp-item:last-child{border-bottom:none;}
+  .mp-row{display:flex;justify-content:space-between;align-items:center;padding:15px 18px;font-size:14px;gap:12px;}
+  .mp-row .t{font-weight:600;}
+  .mp-row .d{color:var(--text-faint);font-size:12.5px;margin-top:2px;}
+  .mp-row a{font-size:13px;color:var(--text-dim);text-decoration:none;flex:none;}
+  .mp-row a:hover{color:var(--azure-light);}
+  .mp-actions{display:flex;align-items:center;gap:10px;flex:none;}
+  .mp-row .detail-btn{position:static;width:26px;height:26px;font-size:14px;}
+  .mp-item .card-detail{padding:12px 18px 16px;margin-top:0;}
+
+  .backlog-list{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:8px;}
+  .d-none{display:none;}
+  #backlog-list .card{background:var(--glass);backdrop-filter:blur(10px);border:1px solid var(--border);border-radius:12px;height:100%;}
+  #backlog-list .card-body{padding:16px 18px;}
+  #backlog-list .card-title{font-size:14.5px;font-weight:700;margin:0 0 8px;font-family:'Sora',sans-serif;}
+  #backlog-list .badge{display:inline-block;font-size:11px;padding:3px 9px;border-radius:20px;margin:0 6px 6px 0;border:1px solid var(--border);color:var(--text-dim);background:rgba(255,255,255,0.05);}
+  #backlog-list .badge-success{color:#8FE3B0;border-color:rgba(143,227,176,0.35);}
+  #backlog-list .badge-primary{color:var(--azure-light);border-color:rgba(127,203,255,0.35);}
+  #backlog-list .badge-danger{color:#FF8F8F;border-color:rgba(255,143,143,0.35);}
+  #backlog-list .badge-info{color:#B7A6FF;border-color:rgba(183,166,255,0.35);}
+  #backlog-list .badge-secondary{color:var(--text-dim);}
+  #backlog-list .card-text{font-size:12px;color:var(--text-faint);margin:6px 0 0;}
+  #backlog-list .mb-0{margin-bottom:0;}
+  .backlog-item{background:var(--glass);backdrop-filter:blur(10px);border:1px solid var(--border);border-radius:10px;padding:14px 16px;font-size:13.5px;}
+  #backlog-empty{color:var(--text-faint);font-size:13.5px;}
+
+  footer.links-section{padding:44px 0;border-top:1px solid var(--border);text-align:center;}
+  footer.links-section h2{font-size:20px;font-weight:700;margin:0 0 20px;}
+  .social-links{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;}
+  .social-links a{display:inline-flex;align-items:center;gap:8px;background:var(--glass);backdrop-filter:blur(10px);border:1px solid var(--border);border-radius:10px;padding:10px 18px;text-decoration:none;font-size:14px;font-weight:600;}
+  .social-links a:hover{border-color:var(--border-strong);}
+  .social-ic{display:inline-flex;flex:none;width:16px;height:16px;color:var(--azure-light);}
+  .social-ic svg{width:100%;height:100%;display:block;}
+
+  .built-with{text-align:center;font-size:12.5px;color:var(--text-faint);padding:26px 0;}
+  .built-with a{color:var(--text-dim);text-decoration:none;}
+
+  .site-footer{padding:22px 0 44px;text-align:center;font-size:12.5px;color:var(--text-faint);}
+  .site-footer a{color:var(--text-dim);}
+
+  /* modal */
+  .modal-overlay{position:fixed;inset:0;background:rgba(3,7,16,0.7);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:100;padding:20px;}
+  .modal-overlay.open{display:flex;}
+  .modal-box{background:#0B1730;border:1px solid var(--border-strong);border-radius:14px;padding:26px;max-width:420px;width:100%;}
+  .modal-box h3{margin:0 0 6px;font-size:17px;}
+  .modal-box p{font-size:13.5px;color:var(--text-dim);margin:0 0 16px;}
+  .modal-box input[type="email"]{width:100%;padding:11px 12px;border-radius:8px;border:1px solid var(--border);background:rgba(255,255,255,0.04);color:var(--text);font-size:14px;margin-bottom:14px;}
+  .modal-actions{display:flex;justify-content:flex-end;gap:10px;}
+  .modal-actions button{border-radius:8px;padding:10px 16px;font-size:13.5px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--glass);color:var(--text);}
+  .modal-actions button.primary{background:linear-gradient(90deg,#2E8FEF,#63C7FF);color:#04101F;border:none;}
+  #lab-access-status{font-size:13px;margin-top:6px;color:var(--text-dim);}
+  .mt-3{margin-top:0.75rem;}
+  .text-success{color:#8FE3B0;}
+  .text-danger{color:#FF8F8F;}
+
+  /* project details: inline expand, same on every viewport */
+  .detail-btn{position:absolute;right:14px;bottom:14px;width:32px;height:32px;border-radius:50%;background:var(--glass);border:1px solid var(--border);color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;line-height:1;padding:0;}
+  .detail-btn:hover{border-color:var(--border-strong);color:var(--azure-light);}
+  .detail-btn .chevron{display:inline-block;transition:transform .2s ease;}
+  .detail-btn.open .chevron{transform:rotate(45deg);}
+
+  .card-detail{display:none;margin-top:4px;padding-top:12px;border-top:1px solid var(--border);}
+  .card-detail.open{display:block;}
+  .card-detail p{font-size:13px;color:var(--text-dim);margin:0 0 10px;}
+  .card-detail ul{margin:0 0 10px;padding-left:16px;}
+  .card-detail li{font-size:12.5px;color:var(--text-dim);margin-bottom:6px;}
+  .card-detail a{color:var(--azure-light);text-decoration:none;font-size:12.5px;font-weight:600;}
+
+  .section-head h2{display:flex;align-items:center;gap:10px;}
+  .sec-ic{display:inline-flex;flex:none;width:19px;height:19px;color:var(--azure-light);}
+  .sec-ic svg{width:100%;height:100%;display:block;}
+
+  .skills-summary{width:100%;display:flex;align-items:center;justify-content:space-between;gap:16px;background:var(--glass);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:12px;padding:17px 20px;color:var(--text);font-size:14.5px;font-weight:600;cursor:pointer;text-align:left;font-family:inherit;}
+  .skills-summary:hover{border-color:var(--border-strong);}
+  .skills-summary .sub{display:block;font-size:12.5px;font-weight:400;color:var(--text-dim);margin-top:3px;}
+  .skills-summary .chevron-wrap{width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,0.05);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex:none;}
+  .skills-summary .chevron-wrap .chevron{transition:transform .2s ease;display:inline-block;font-size:17px;}
+  .skills-summary.open .chevron-wrap .chevron{transform:rotate(45deg);}
+  .skills-detail{display:none;margin-top:16px;margin-bottom:8px;padding:20px;background:var(--glass);backdrop-filter:blur(10px);border:1px solid var(--border);border-radius:12px;}
+  .skills-detail.open{display:block;}
+  .skills-detail .chip-group{margin-bottom:16px;}
+  .skills-detail .chip-group:last-child{margin-bottom:0;}
+
+  @media(max-width:820px){
+    .grid3,.grid2,.more-row,.backlog-list{grid-template-columns:1fr;}
+    .stat-row{grid-template-columns:repeat(2,1fr);}
+    .hero h1{font-size:32px;}
+    .navlinks{display:none;}
+  }
+</style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-        <div class="container">
-            <a class="navbar-brand" href="#">
-                Patrick Koorevaar
-                <span class="d-none d-lg-inline text-white-50" style="font-size: 0.8rem; font-weight: normal;"> — Azure DevOps &amp; Cloud Engineer</span>
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item"><a class="nav-link" href="#about-section">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#experience-section">Experience</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#skills-section">Skills</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#certifications-section">Certifications</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#side-projects-section">Projects</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#work-style-section">My Work Style</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#backlog-section">Backlog</a></li>
-                    <li class="nav-item"><a class="nav-link" href="https://blog.koorevaar.com/" target="_blank" rel="noopener noreferrer">Blog</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#contact-section">Contact</a></li>
-                </ul>
-            </div>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="#">Patrick Koorevaar<span>Azure DevOps Engineer</span></a>
+    <div class="navlinks">
+      <a href="#ai-section">AI Apps</a>
+      <a href="#devops-section">DevOps</a>
+      <a href="#about-section">About</a>
+      <a href="#skills-section">Skills</a>
+      <a href="#certifications-section">Certifications</a>
+      <a href="#side-projects-section">Projects</a>
+      <a href="#work-style-section">Work style</a>
+      <a href="#backlog-section">Backlog</a>
+      <a href="https://blog.koorevaar.com/" target="_blank" rel="noopener noreferrer">Blog</a>
+      <a href="#contact-section">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="glow"></div>
+  <div class="wrap hero-inner">
+    <h1>Azure DevOps<br><span class="g">Engineer</span></h1>
+    <button class="skills-summary about-summary" id="about-toggle" onclick="toggleAbout()" aria-expanded="false" aria-controls="about-detail">
+      <span><span id="years-it-inline">26</span> years in IT, <span id="years-azure-inline">5</span> years in Azure and Kubernetes. Running production AKS and CI/CD by day, and shipping live LLM applications on Cloudflare Workers AI as side projects.</span>
+      <span class="chevron-wrap"><span class="chevron">+</span></span>
+    </button>
+    <div id="about-section" style="max-width:560px;">
+      <div class="skills-detail" id="about-detail">
+        <p>Patrick Koorevaar is a senior Azure DevOps Engineer focused on cloud-native infrastructure, DevOps automation, and container orchestration. Currently studying for the CKA. Interested? <a href="https://contact.koorevaar.com/">Get in touch</a>.</p>
+        <p>Before publishing full projects on GitHub, I spent years helping others on <a href="https://stackoverflow.com/users/1122629/patrick-koorevaar" target="_blank" rel="noopener noreferrer">Stack Overflow</a>: 59 questions answered, 1.4k reputation, mostly C#, Git, and Azure/Kubernetes scenarios.</p>
+        <p>Every side project starts from "what can the free tiers cover" — Cloudflare Workers AI, Cosmos DB free tier, Container Apps scaled to zero. VS Code for frontend, VS Pro for backends, same split at work and on side projects.</p>
+        <p style="margin-bottom:0;">Full toolset and technologies in the <a href="#skills-section">Skills section</a> below.</p>
+      </div>
+    </div>
+    <div class="hero-ctas">
+      <a class="btn btn-primary" href="#ai-section">See the AI apps</a>
+      <a class="btn btn-ghost" href="#devops-section">See the DevOps work</a>
+      <a class="btn btn-ghost" href="#contact-section">Get in touch</a>
+    </div>
+    <div class="badges">
+      <span class="badge"><span class="ic"></span>AKS</span>
+      <span class="badge"><span class="ic"></span>ACA</span>
+      <span class="badge"><span class="ic"></span>Azure DevOps</span>
+      <span class="badge"><span class="ic"></span>GitHub Actions</span>
+      <div style="flex-basis:100%;"></div>
+      <span class="badge"><span class="ic"></span>CI/CD</span>
+      <span class="badge"><span class="ic"></span>Monitoring</span>
+      <span class="badge"><span class="ic"></span>AI-assisted development</span>
+      <div style="flex-basis:100%;"></div>
+      <span class="badge"><span class="cert-ic"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 1 L16 4 V9 C16 13 13 16 9 17 C5 16 2 13 2 9 V4 Z"/><path d="M6 9 L8 11 L12 6"/></svg></span>AZ-400 · May 2026</span>
+      <span class="badge"><span class="cert-ic"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 1 L16 4 V9 C16 13 13 16 9 17 C5 16 2 13 2 9 V4 Z"/><path d="M6 9 L8 11 L12 6"/></svg></span>AZ-305 · Jul 2026</span>
+      <span class="badge"><span class="cert-ic"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 1 L16 4 V9 C16 13 13 16 9 17 C5 16 2 13 2 9 V4 Z"/><path d="M6 9 L8 11 L12 6"/></svg></span>AI-102 · Jan 2026</span>
+    </div>
+    <div class="stat-row">
+      <div class="stat-card"><div class="n" id="years-it-count">—</div><div class="l">Years in IT</div></div>
+      <div class="stat-card"><div class="n" id="years-azure-count">—</div><div class="l">Years Azure &amp; Kubernetes</div></div>
+      <a href="#side-projects-section" class="stat-card"><div class="n" id="side-project-count">—</div><div class="l">Side projects</div></a>
+      <a href="#certifications-section" class="stat-card"><div class="n">7</div><div class="l">Certifications</div></a>
+      <a href="#ai-section" class="stat-card"><div class="n">5</div><div class="l">Applied AI projects</div></a>
+      <div class="stat-card"><div class="n" id="human-visitor-count">—</div><div class="l">Human visits</div></div>
+      <a href="https://blog.koorevaar.com/" target="_blank" rel="noopener noreferrer" class="stat-card"><div class="n" id="blog-article-count">—</div><div class="l">Blog articles</div></a>
+    </div>
+  </div>
+</section>
+
+<!-- Applied AI -->
+<section class="section" id="ai-section">
+  <div class="wrap">
+    <div class="section-head">
+      <h2><span class="sec-ic"><svg viewBox="0 0 18 18"><path fill="currentColor" d="M9 1 L10.6 7.4 L17 9 L10.6 10.6 L9 17 L7.4 10.6 L1 9 L7.4 7.4 Z"/></svg></span>Applied AI, running live</h2>
+      <div class="note">Cloudflare Workers AI · self-hosted Ollama · multi-agent orchestration</div>
+    </div>
+    <div class="grid3">
+      <div class="app-card" data-project>
+        <span class="status-badge live"><span class="dot"></span>Live demo · May 2026</span>
+        <h3>AI text analysis</h3>
+        <p>Sentiment and language detection served live over a Cloudflare Workers AI endpoint.</p>
+        <div class="app-tags"><span class="tag">Workers AI</span><span class="tag">.NET 10</span><span class="tag">ACA</span></div>
+        <div class="app-links">
+          <a class="app-link" href="https://text-analysis-demo.koorevaar.com/" target="_blank" rel="noopener noreferrer">View demo →</a>
+          <button class="detail-btn" aria-label="Show details" onclick="toggleDetail('ai-text-analysis', this.closest('.app-card'))"><span class="chevron">+</span></button>
         </div>
-    </nav>
-
-    <section class="hero-section py-5 text-center bg-primary text-white">
-        <div class="container">
-            <h1>Patrick Koorevaar</h1>
-            <h2>Azure DevOps &amp; Cloud Engineer</h2>
-            <p class="lead mb-4">Building reliable cloud infrastructure, modern CI/CD pipelines, and practical AI solutions.</p>
-            
-            <!-- Recent Achievements -->
-            <div class="mb-4">
-                <span class="badge badge-light mx-2 fs-6">AZ-400 - May 2026</span>
-                <span class="badge badge-light mx-2 fs-6">AZ-305 - Jul 2026</span>
-                <span class="badge badge-light mx-2 fs-6">AI-102 - Jan 2026</span>
-            </div>
-
-            <!-- Main CTA Buttons -->
-            <div class="project-actions text-center" style="margin: 0 auto; text-align: center;"">
-                <a href="https://text-analysis-demo.koorevaar.com/"
-                rel="noopener noreferrer"
-                class="btn btn-light btn-lg d-block mb-3">
-                    <i class="fas fa-play-circle me-2"></i>
-                    View Live AI Text Analysis Demo
-                </a>
-
-                <a href="https://llm-hangman-demo.koorevaar.com/"                
-                rel="noopener noreferrer"
-                class="btn btn-light btn-lg d-block mb-3">
-                    <i class="fas fa-play-circle me-2"></i>
-                    View Live AI Multi Agent Hangman Demo
-                </a>
-
-               <a href="https://capacity-advisor-demo.koorevaar.com/"                
-                rel="noopener noreferrer"
-                class="btn btn-light btn-lg d-block mb-3">
-                    <i class="fas fa-play-circle me-2"></i>
-                    View Live AI Capacity Advisor Demo for ACA
-                </a>
-
-                <a href="#side-projects-section"
-                class="btn btn-outline-light btn-lg d-block">
-                    See All Projects
-                </a>
-            </div>
-            <!-- Small stats -->
-            <div class="row mt-5 justify-content-center stats-row">
-                <div class="col-6 stat-col mb-3 mb-md-0">
-                    <a href="#side-projects-section" class="text-decoration-none text-white">
-                        <div class="card bg-secondary border-0">
-                            <div class="card-body">
-                                <h5><i class="fas fa-code"></i></h5>
-                                <p class="mb-0">Side Projects</p>
-                                <strong>10</strong>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-6 stat-col mb-3 mb-md-0">
-                    <a href="#certifications-section" class="text-decoration-none text-white">
-                        <div class="card bg-secondary border-0">
-                            <div class="card-body">
-                                <h5><i class="fas fa-certificate"></i></h5>
-                                <p class="mb-0">Certifications</p>
-                                <strong>7</strong>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-6 stat-col mb-3 mb-md-0">
-                    <a href="#work-style-section" class="text-decoration-none text-white">
-                        <div class="card bg-secondary border-0">
-                            <div class="card-body">
-                                <h5><i class="fas fa-toolbox"></i></h5>
-                                <p class="mb-0">Work Style</p>
-                                <strong>5</strong>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-6 stat-col mb-3 mb-md-0">
-                    <div class="card bg-secondary border-0">
-                        <div class="card-body">
-                            <h5><i class="fas fa-user-check"></i></h5>
-                            <p class="mb-0">Human Visits</p>
-                            <strong id="human-visitor-count">—</strong>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 stat-col mb-3 mb-md-0">
-                    <a href="https://blog.koorevaar.com/" target="_blank" rel="noopener noreferrer" class="text-decoration-none text-white">
-                        <div class="card bg-secondary border-0">
-                            <div class="card-body">
-                                <h5><i class="fas fa-blog"></i></h5>
-                                <p class="mb-0">Blog Articles</p>
-                                <strong id="blog-article-count">—</strong>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
+      </div>
+      <div class="app-card" data-project>
+        <span class="status-badge live"><span class="dot"></span>Live demo · May 2026</span>
+        <h3>Multi-agent hangman</h3>
+        <p>Two Workers AI agents compete live; game state streamed over SignalR on Azure Container Apps. Join in as a third human player.</p>
+        <div class="app-tags"><span class="tag">Multi-agent</span><span class="tag">SignalR</span><span class="tag">ACA</span></div>
+        <div class="app-links">
+          <a class="app-link" href="https://llm-hangman-demo.koorevaar.com/" target="_blank" rel="noopener noreferrer">View demo →</a>
+          <a class="app-link" href="https://github.com/P47K0/Pat.Aca.HangmanApi" target="_blank" rel="noopener noreferrer">Source →</a>
+          <button class="detail-btn" aria-label="Show details" onclick="toggleDetail('hangman-live', this.closest('.app-card'))"><span class="chevron">+</span></button>
         </div>
-    </section>
-
-    <!-- About section -->
-    <section class="about-section py-5" id="about-section">
-        <div class="container">
-            <h2><i class="fas fa-user"></i> About</h2>
-            <p class="lead">Patrick Koorevaar is a senior Azure DevOps Engineer with a strong background in Azure, AKS, CI/CD, Kubernetes, and infrastructure automation. He focuses on practical engineering experience and uses side projects for learning and experimentation. Interested? <a href="https://contact.koorevaar.com/" class="btn-link">Get in touch!</a></p>
-                <p>
-                    25+ years IT | 5+ years Azure | 7 Microsoft certifications earned in one year
-                </p>
-
-                <p>
-                    Hands-on Azure professional focused on cloud-native solutions, DevOps automation,
-                    and container orchestration. Currently studying for the CKA (Certified Kubernetes Administrator) exam.
-                </p>
-
-                <p>
-                    Before I started publishing full projects on GitHub this year, I spent years helping others on
-                    <a href="https://stackoverflow.com/users/1122629/patrick-koorevaar" target="_blank" rel="noopener noreferrer">Stack Overflow</a>,
-                    where I've answered 59 questions and earned 1.4k reputation. Most of my contributions are practical
-                    code snippets around C#, Git, code quality, and build workflows, with some real-world Azure and Kubernetes
-                    scenarios.
-                </p>
-
-                <h3><i class="fas fa-key"></i> Key areas</h3>
-                <ul class="list-unstyled">
-                    <li><i class="fas fa-check"></i> Production AKS clusters hosting 30+ microservices per namespace (TAPP)</li>
-                    <li><i class="fas fa-check"></i> Azure DevOps CI/CD pipelines (automated test → manual prod)</li>
-                    <li><i class="fas fa-check"></i> Ingress management (and migration)</li>
-                    <li><i class="fas fa-check"></i> Azure Service Bus, Storage, SQL Database</li>
-                    <li><i class="fas fa-check"></i> Blue/Green cluster migrations (2022, 2025)</li>
-                    <li><i class="fas fa-check"></i> Prometheus monitoring + PromQL</li>
-                </ul>                
+      </div>
+      <div class="app-card" data-project>
+        <span class="status-badge live"><span class="dot"></span>Live demo · Jul 2026</span>
+        <h3>AKS/ACA capacity advisor</h3>
+        <p>Turns cluster telemetry into plain-language capacity recommendations using Workers AI.</p>
+        <div class="app-tags"><span class="tag">AIOps</span><span class="tag">Telemetry</span><span class="tag">ACA</span></div>
+        <div class="app-links">
+          <a class="app-link" href="https://capacity-advisor-demo.koorevaar.com/" target="_blank" rel="noopener noreferrer">View demo →</a>
+          <a class="app-link" href="https://github.com/P47K0/Pat.Containers.CapacityAdvisor" target="_blank" rel="noopener noreferrer">Source →</a>
+          <button class="detail-btn" aria-label="Show details" onclick="toggleDetail('capacity-advisor', this.closest('.app-card'))"><span class="chevron">+</span></button>
         </div>
-    </section>
-
-    <!-- Experience section -->
-    <section class="experience-section py-5 bg-light" id="experience-section">
-        <div class="container">
-            <h2><i class="fas fa-briefcase"></i> Experience</h2>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">Senior Azure DevOps Engineer</h5>                            
-                            <p class="card-text"><strong>Nov 2020 - Present</strong> · 5 yrs 7 mos</p>
-                            <p class="card-text"><strong>Q-Vend B.V.</strong></p>
-                            <p class="card-text">Ridderkerk, Netherlands</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">Software Engineer Team Lead</h5>                            
-                            <p class="card-text"><strong>Dec 2019 - Nov 2020</strong> · 1 yr</p>
-                            <p class="card-text"><strong>Twelve</strong></p>
-                            <p class="card-text">Moordrecht, South Holland, Netherlands</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">Software Engineer Team Lead</h5>                            
-                            <p class="card-text"><strong>Jul 2017 - Dec 2019</strong> · 2 yrs 6 mos</p>
-                            <p class="card-text"><strong>Quarto Betaalsystemen</strong></p>
-                            <p class="card-text">Moordrecht, The Netherlands</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">C# Developer</h5>
-                            <p class="card-text"><strong>Jan 2013 - Jul 2017</strong> · 4 yrs 7 mos</p>
-                            <h5 class="card-title">Lead Java Developer</h5>
-                            <p class="card-text"><strong>Jan 2015 - Jul 2017</strong> · 2 yrs 7 mos</p>                        
-                            <p class="card-text"><strong>Worldline Global</strong></p>                            
-                            <p class="card-text">Ridderkerk</p>
-                        </div>
-                    </div>
-                </div>                
-                <div class="col-md-6">
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">C# Developer</h5>
-                            <p class="card-text"><strong>Dec 2010 - Jan 2013</strong> · 2 yrs 2 mos</p>
-                            <p class="card-text"><strong>Quality Equipment Benelux BV</strong></p>                            
-                            <p class="card-text">Ridderkerk</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">Java Developer</h5>
-                            <p class="card-text"><strong>Nov 2006 - Dec 2010</strong> · 4 yrs 2 mos</p>
-                            <p class="card-text"><strong>Getronics, Capgemini</strong></p>                            
-                            <p class="card-text">Hilversum</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">Hard-/Software  Developer</h5>
-                            <p class="card-text"><strong>Jan 2003 - Nov 2006</strong> · 3 yrs 11 mos</p>
-                            <p class="card-text"><strong>Quality Equipment Benelux BV</strong></p>                            
-                            <p class="card-text">Capelle a/d IJssel</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">Application Developer</h5>
-                            <p class="card-text"><strong>2000 - 2003</strong> · 3 yrs</p>
-                            <p class="card-text"><strong>Globalart/Evander</strong></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      </div>
+      <div class="app-card" data-project>
+        <span class="status-badge live"><span class="dot"></span>Live · May 2026</span>
+        <h3>CV request generator</h3>
+        <p>A button on my contact page asks an LLM to write a personalized message requesting my CV — an AI gimmick that's actually live.</p>
+        <div class="app-tags"><span class="tag">Workers AI</span><span class="tag">Llama 3.1</span></div>
+        <div class="app-links">
+          <a class="app-link" href="https://contact.koorevaar.com/" target="_blank" rel="noopener noreferrer">Try it →</a>
+          <button class="detail-btn" aria-label="Show details" onclick="toggleDetail('cv-generator', this.closest('.app-card'))"><span class="chevron">+</span></button>
         </div>
-    </section>
-
-    <!-- Skills section -->
-    <section class="skills-section py-5" id="skills-section">
-        <div class="container">
-            <h2><i class="fas fa-laptop-code"></i> Skills</h2>
-            <div class="row">
-                <div class="col-md-6">
-                    <ul>
-                        <li><strong>Cloud:</strong> Azure</li>
-                        <li><strong>Containers:</strong> Docker, Kubernetes, AKS (production, work), Azure Container Apps (personal demo hosting)</li>
-                        <li><strong>Integration:</strong> Azure Service Bus, Storage queues</li>
-                        <li><strong>CI/CD:</strong> Azure DevOps, YAML pipelines, GitHub Actions</li>
-                        <li><strong>Infrastructure:</strong> Terraform, Helm, ingress, networking</li>
-                        <li><strong>Deployment Strategies:</strong> Blue/Green, Canary, feature flags (Azure App Config)</li>
-                    </ul>
-                </div>
-                <div class="col-md-6">
-                    <ul>
-                        <li><strong>Languages / Scripts:</strong> C#, Python, Bash, PowerShell</li>
-                        <li><strong>Monitoring / Observability:</strong> Prometheus, Grafana</li>
-                        <li><strong>AI / LLM:</strong> IPEX Ollama (local), Cloudflare Workers AI, Semantic Kernel, Agent Framework, multi-agent orchestration, prompt engineering</li>
-                        <li><strong>Frameworks:</strong> .net 10, SignalR, ASP.NET Core, Entity Framework, gRPC, REST, react, bootstrap</li>
-                        <li><strong>Database:</strong> Azure SQL Database</li>
-                        <li><strong>Tools:</strong> VS Pro, VS Code, GitHub, Cloudflare (Workers, Workers AI, Web Analytics, DNS/edge delivery)</li>
-                        <li><strong>OIDC:</strong> Keycloak</li>
-                    </ul>
-                </div>
-            </div>
+      </div>
+      <div class="app-card" data-project>
+        <span class="status-badge live"><span class="dot"></span>Live · Sep 2026</span>
+        <h3>Blog comment moderation</h3>
+        <p>Every comment on the blog is scored by an LLM via a Cosmos DB change-feed-triggered Azure Function, calling Cloudflare Workers AI cross-cloud.</p>
+        <div class="app-tags"><span class="tag">Change feed</span><span class="tag">Azure Function</span><span class="tag">ACA</span></div>
+        <div class="app-links">
+          <a class="app-link" href="https://blog.koorevaar.com/" target="_blank" rel="noopener noreferrer">Try it →</a>
+          <a class="app-link" href="https://github.com/P47K0/Pat.Aca.BlogServiceApi" target="_blank" rel="noopener noreferrer">Source →</a>
+          <button class="detail-btn" aria-label="Show details" onclick="toggleDetail('blog-moderation', this.closest('.app-card'))"><span class="chevron">+</span></button>
         </div>
-    </section>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- Certifications section -->
-    <section class="certifications-section py-5 bg-light" id="certifications-section">
-        <div class="container">
-            <h2><i class="fas fa-certificate"></i> Certifications</h2>
-            <ul class="list-unstyled">
-                <li><i class="fas fa-certificate"></i> AZ-900: Azure Fundamentals</li>
-                <li><i class="fas fa-certificate"></i> AI-900: Azure AI Fundamentals</li>
-                <li><i class="fas fa-certificate"></i> AZ-104: Azure Administrator Associate</li>
-                <li><i class="fas fa-certificate"></i> AZ-204: Azure Developer Associate</li>
-                <li><i class="fas fa-certificate"></i> AI-102: Azure AI Engineer Associate (Jan 2026)</li>
-                <li><i class="fas fa-certificate"></i> <strong>AZ-305:</strong> Azure Solutions Architect Expert (Jul 2026)</li>
-                <li><i class="fas fa-certificate"></i> <strong>AZ-400:</strong> Azure DevOps Engineer Expert (May 2026)</li>
-            </ul>
+<!-- DevOps -->
+<section class="section" id="devops-section">
+  <div class="wrap">
+    <div class="section-head">
+      <h2><span class="sec-ic"><svg viewBox="0 0 18 18"><rect fill="currentColor" x="2" y="3" width="14" height="3" rx="1.5"/><rect fill="currentColor" opacity="0.7" x="2" y="8" width="14" height="3" rx="1.5"/><rect fill="currentColor" opacity="0.45" x="2" y="13" width="14" height="3" rx="1.5"/></svg></span>Infrastructure &amp; DevOps</h2>
+      <div class="note">Where the AI apps above actually run</div>
+    </div>
+    <div class="grid3">
+      <div class="app-card">
+        <span class="status-badge prod"><span class="dot"></span>Production</span>
+        <h3>Production AKS at scale</h3>
+        <p>30+ microservices per namespace on production AKS clusters, including two full blue/green cluster migrations (2022, 2025).</p>
+        <div class="app-tags"><span class="tag">AKS</span><span class="tag">Ingress</span></div>
+        <div class="app-links"><button class="detail-btn" aria-label="Show details" onclick="toggleDetail('aks-production', this.closest('.app-card'))"><span class="chevron">+</span></button></div>
+      </div>
+      <div class="app-card">
+        <span class="status-badge prod"><span class="dot"></span>Production</span>
+        <h3>CI/CD pipelines</h3>
+        <p>Azure DevOps YAML pipelines, automated test with a manual production gate, plus blue/green and canary rollouts via Traefik and feature flags.</p>
+        <div class="app-tags"><span class="tag">Azure DevOps</span><span class="tag">Canary</span></div>
+        <div class="app-links"><button class="detail-btn" aria-label="Show details" onclick="toggleDetail('cicd', this.closest('.app-card'))"><span class="chevron">+</span></button></div>
+      </div>
+      <div class="app-card">
+        <span class="status-badge prod"><span class="dot"></span>Production</span>
+        <h3>Infrastructure as code</h3>
+        <p>Terraform and Bicep, deployed via GitHub Actions with OIDC and least-privilege roles kept out of the CI pipeline by design.</p>
+        <div class="app-tags"><span class="tag">Terraform</span><span class="tag">Bicep</span></div>
+        <div class="app-links"><button class="detail-btn" aria-label="Show details" onclick="toggleDetail('iac', this.closest('.app-card'))"><span class="chevron">+</span></button></div>
+      </div>
+      <div class="app-card" data-project>
+        <span class="status-badge source"><span class="dot"></span>Side project · Aug 2026</span>
+        <h3>K8s cluster automation</h3>
+        <p>Fully automated two-node Kubernetes cluster in an Azure sandbox, provisioned with Bash and Bicep, standing up end-to-end in under 7 minutes with Calico CNI over VXLAN.</p>
+        <div class="app-tags"><span class="tag">Automation</span><span class="tag">Calico</span><span class="tag">Bash</span><span class="tag">Bicep</span></div>
+        <div class="app-links">
+          <a class="app-link" href="https://github.com/P47K0/k8s-whizlabs-sandbox" target="_blank" rel="noopener noreferrer">Source →</a>
+          <button class="detail-btn" aria-label="Show details" onclick="toggleDetail('k8s-sandbox', this.closest('.app-card'))"><span class="chevron">+</span></button>
         </div>
-    </section>
-
-    <!-- Projects section -->
-    <section class="projects-section py-5" id="side-projects-section">
-        <div class="container">
-            <h2><i class="fas fa-project-diagram"></i> Side Projects</h2>
-
-            <!-- Project sub-index -->
-            <div class="project-index mb-4">
-                <p class="text-muted mb-2"><i class="fas fa-list"></i> Jump to a project:</p>
-                <div class="d-flex flex-wrap">
-                    <a href="#project-sentiment-aks" class="btn btn-outline-primary btn-sm m-1">Sentiment Analysis Platform (AKS)</a>
-                    <a href="#project-hangman-agents" class="btn btn-outline-primary btn-sm m-1">AI Multi-Agent Hangman Game</a>
-                    <a href="#project-capacity-advisor" class="btn btn-outline-primary btn-sm m-1">AKS/ACA Capacity Advisor</a>
-                    <a href="#project-youtube-monitor" class="btn btn-outline-primary btn-sm m-1">YouTube Channel Monitor</a>
-                    <a href="#project-website" class="btn btn-outline-primary btn-sm m-1">www.koorevaar.com Website</a>
-                    <a href="#project-az400-demo" class="btn btn-outline-primary btn-sm m-1">Live AI Demo (AZ-400 Practice)</a>
-                    <a href="#project-hangman-live" class="btn btn-outline-primary btn-sm m-1">Live AI Multi-Agent Hangman Demo</a>
-                    <a href="#project-k8s-sandbox" class="btn btn-outline-primary btn-sm m-1">K8s Cluster Provisioning (Sandbox)</a>
-                    <a href="#project-cka-lab" class="btn btn-outline-primary btn-sm m-1">CKA Practice Lab</a>
-                    <a href="#project-linkedin-import" class="btn btn-outline-primary btn-sm m-1">LinkedIn Import Pipeline</a>
-                    <a href="#project-comment-system" class="btn btn-outline-primary btn-sm m-1">AI-Moderated Blog Comment System</a>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-12" id="project-sentiment-aks">
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">Self-Hosted LLM-Powered Sentiment Analysis Platform on AKS</h5>
-                            <div class="d-flex flex-wrap align-items-center mb-2">
-                                <span class="badge badge-secondary mr-2"><i class="fas fa-code-branch"></i> Source Only</span>
-                                <span class="text-muted small"><i class="fas fa-calendar-alt mr-1"></i>May 1, 2026</span>
-                            </div>
-                            <p class="card-text">Built a complete, production-oriented sentiment analysis solution running entirely on Azure Kubernetes Service (AKS) using a self-hosted Large Language Model.</p>
-                            <div class="row mt-3">
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-exchange-alt"></i> Blue/Green Deployment</h6>
-                                            <p class="card-text">Controlled traffic switching between blue and green environments via Traefik.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-bolt"></i> Canary Deployment</h6>
-                                            <p class="card-text">Weighted rollout flow for gradual production exposure.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-code-branch"></i> Multi-Pipeline Design</h6>
-                                            <p class="card-text">Separate pipelines for infrastructure, build/deploy, traffic switching, and teardown.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-server"></i> Infrastructure</h6>
-                                            <p class="card-text">AKS + user nodepool + state store via Terraform script.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-book-reader"></i> Self-Hosted LLM</h6>
-                                            <p class="card-text">Private Ollama-based inference running inside AKS.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-cube"></i> Kubernetes Delivery</h6>
-                                            <p class="card-text">Docker, manifests, probes, ConfigMaps, and resource limits.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-dollar-sign"></i> Cost-Control Teardown</h6>
-                                            <p class="card-text">Remove resources when not demoing to reduce costs.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-shield-alt"></i> End to end security via Cloudflare</h6>
-                                            <p class="card-text">Secure the platform from edge to core.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-language"></i> Additional API feature</h6>
-                                            <p class="card-text">Language Detection.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="https://github.com/P47K0/sentiment-aks-ollama" target="_blank" rel="noopener noreferrer" class="btn btn-dark mt-3"><i class="fab fa-github"></i> View Source</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-12" id="project-hangman-agents">
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">AI Multi-Agent Hangman Game</h5>
-                            <div class="d-flex flex-wrap align-items-center mb-2">
-                                <span class="badge badge-secondary mr-2"><i class="fas fa-code-branch"></i> Source Only</span>
-                                <span class="text-muted small"><i class="fas fa-calendar-alt mr-1"></i>Jan 13 – 18, 2026</span>
-                            </div>
-                            <p class="card-text">Experimental multi-agent Hangman game built with Semantic Kernel and local LLMs, focused on agent orchestration, tool use, and reliable turn-based interaction.</p>
-                            <div class="row mt-3">
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-users"></i> Multi-Agent Design</h6>
-                                            <p class="card-text">Designed a Hangman game with two competing agents and one host agent managing the flow.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-code"></i> Semantic Kernel</h6>
-                                            <p class="card-text">Used Semantic Kernel to coordinate agent interaction and tool-based gameplay logic.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-code"></i> Agent Framework</h6>
-                                            <p class="card-text">Implemented a separate agent framework version.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-book-reader"></i> Local LLMs</h6>
-                                            <p class="card-text">Ran the entire setup locally with Ollama and multiple lightweight models.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-wrench"></i> Tool Use</h6>
-                                            <p class="card-text">Trained agents to call gameplay tools such as GuessLetter and GetStatus.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-check-circle"></i> Reliability</h6>
-                                            <p class="card-text">Investigated silent responses and unstable function calling in local agent workflows.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-edit"></i> Prompt Engineering</h6>
-                                            <p class="card-text">Refined prompts to improve consistency, structure, and tool usage.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="https://github.com/P47K0/SKOrchestrationPractice" target="_blank" rel="noopener noreferrer" class="btn btn-dark mt-3"><i class="fab fa-github"></i> View Source (Semantic Kernel)</a>
-                            <a href="https://github.com/P47K0/AgentFrameworkPractice" target="_blank" rel="noopener noreferrer" class="btn btn-dark mt-3 ml-2"><i class="fab fa-github"></i> View Source (Agent Framework)</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-12" id="project-capacity-advisor">
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">AKS and ACA Capacity Advisor</h5>
-                            <div class="d-flex flex-wrap align-items-center mb-2">
-                                <span class="badge badge-secondary mr-2"><i class="fas fa-code-branch"></i> Source Only</span>
-                                <span class="text-muted small"><i class="fas fa-calendar-alt mr-1"></i>Jul 20, 2026</span>
-                            </div>
-                            <p class="card-text">Practical AIOps demo transforming AKS telemetry into clear capacity recommendations. It helps identify when workloads are safely placed, when limits should be revisited, and when additional cluster headroom is needed. Uses Cloudflare Workers AI (Llama 3.1) for recommendations.</p>
-                            <div class="row mt-3">
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-chart-bar"></i> Telemetry Analysis</h6>
-                                            <p class="card-text">Analyzes AKS telemetry data to identify resource usage patterns.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-chart-line"></i> Capacity Recommendations</h6>
-                                            <p class="card-text">Provides actionable recommendations for cluster capacity based on analysis.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-cog"></i> Automation</h6>
-                                            <p class="card-text">Automates capacity analysis and recommendation generation.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="https://github.com/P47K0/Pat.Containers.CapacityAdvisor" target="_blank" rel="noopener noreferrer" class="btn btn-dark mt-3"><i class="fab fa-github"></i> View Source (Advisor)</a>
-                            <a href="https://github.com/P47K0/Pat.Containers.CapacitySimulator" target="_blank" rel="noopener noreferrer" class="btn btn-dark mt-3 ml-2"><i class="fab fa-github"></i> View Source (Simulator)</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-12" id="project-youtube-monitor">
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">Youtube channel monitor</h5>
-                            <div class="d-flex flex-wrap align-items-center mb-2">
-                                <span class="badge badge-secondary mr-2"><i class="fas fa-code-branch"></i> Source Only</span>
-                                <span class="text-muted small"><i class="fas fa-calendar-alt mr-1"></i>Jul 29, 2026</span>
-                            </div>
-                            <p class="card-text">As a simple alternative to FamilyLink. This tool, deployed in my ACA environment, sends an email when a video is made public on a monitored channel.</p>
-                            <div class="row mt-3">
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-business-time"></i> ACA Job</h6>
-                                            <p class="card-text">Azure Container Apps Job to run the check as a scheduled background task.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-play"></i> YouTube API Integration</h6>
-                                            <p class="card-text">Google YouTube API to inspect the channel and detect public videos.</p>
-                                        </div>
-                                    </div>
-                                </div>                                
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-envelope"></i> ACS integration</h6>
-                                            <p class="card-text"> Azure Communication Services is used to send the email notification.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="https://github.com/P47K0/Pat.Containers.Job.YoutubeChannelGuard" target="_blank" rel="noopener noreferrer" class="btn btn-dark mt-3"><i class="fab fa-github"></i> View Source</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-12" id="project-website">
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">www.koorevaar.com Website</h5>
-                            <div class="d-flex flex-wrap align-items-center mb-2">
-                                <span class="badge badge-success mr-2"><i class="fas fa-play-circle"></i> Live Demo</span>
-                                <span class="text-muted small"><i class="fas fa-calendar-alt mr-1"></i>May 5, 2026</span>
-                            </div>
-                            <p class="card-text">AI-assisted portfolio website built with Aider, Qwen2.5, and Claude Code, managed in GitHub and delivered through Cloudflare, with a Cosmos DB-backed blog and planned extensions toward Azure Static Web Apps and Functions.</p>
-                            <div class="row mt-3">
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-code"></i> AI-Assisted Development</h6>
-                                            <p class="card-text">Built and refined the site using Aider with Qwen2.5 as the coding model (local via Ollama), and later Claude Code for ongoing iteration.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-file-code"></i> Static Portfolio Design</h6>
-                                            <p class="card-text">Started as a lightweight static CV/portfolio site for koorevaar.com.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-sync-alt"></i> Iterative Prompting</h6>
-                                            <p class="card-text">Improved layout, project cards, and structure through guided iteration instead of one-shot generation.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-project-diagram"></i> Project Presentation</h6>
-                                            <p class="card-text">Focused on turning large project write-ups into compact feature-driven portfolio blocks.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fab fa-github"></i> GitHub Workflow</h6>
-                                            <p class="card-text">Managed the site source in GitHub as part of the iteration and update process.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-cloud"></i> Cloudflare Delivery</h6>
-                                            <p class="card-text">Exposed and delivered the site through Cloudflare as a lightweight static setup.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                 <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-envelope"></i> Contact with AI generated message</h6>
-                                            <p class="card-text">'Generator Request for CV' functionality added on contact page, this uses a Cloudflare Workers AI (Llama 3.1) to instantly create a personalized, natural message asking for my CV</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-blog"></i> Blog Platform (blog.koorevaar.com)</h6>
-                                            <p class="card-text">Blog content is written as Markdown and stored in Azure Cosmos DB, served through an Azure Container Apps API. An api-proxy Cloudflare Worker converts the Markdown to HTML, and a ui-worker Cloudflare Worker renders it on the page.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-cloud"></i> Planned Azure Hosting</h6>
-                                            <p class="card-text">Considering Azure Static Web Apps as the next hosting/deployment step.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-server"></i> API Layer via ACA &amp; Workers</h6>
-                                            <p class="card-text">Dynamic features are powered by Azure Container Apps APIs and Cloudflare Workers.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-database"></i> Cosmos DB Data Layer</h6>
-                                            <p class="card-text">Delivered via the blog platform above: Azure Cosmos DB now stores structured content, the site's first real data layer beyond static files.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="https://blog.koorevaar.com/" target="_blank" rel="noopener noreferrer" class="btn btn-primary mt-3"><i class="fas fa-blog"></i> Read the Blog</a>
-                            <a href="https://github.com/P47K0/website" target="_blank" rel="noopener noreferrer" class="btn btn-dark mt-3 ml-2"><i class="fab fa-github"></i> View Source</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-12" id="project-az400-demo">
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">Live AI Demo for AZ-400 Practice</h5>
-                            <div class="d-flex flex-wrap align-items-center mb-2">
-                                <span class="badge badge-success mr-2"><i class="fas fa-play-circle"></i> Live Demo</span>
-                                <span class="text-muted small"><i class="fas fa-calendar-alt mr-1"></i>May 5, 2026</span>
-                            </div>
-                            <p class="card-text">Live AI demo built for AZ-400 practice, deployed with GitHub Actions, Terraform, and Azure Container Apps. It showcases service integration between a frontend client, API, LLM adapter, and Cloudflare-hosted AI endpoint. Later extended, as a one-time practice exercise, with a Blue/Green and Canary deployment setup.</p>
-                            <div class="row mt-3">
-                                <div class="col-md-6 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-exchange-alt"></i> Blue/Green Deployment</h6>
-                                            <p class="card-text">ACA revision-based blue/green setup, enabling fast rollback to the stable blue revision.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-flag"></i> Canary via Feature Flags</h6>
-                                            <p class="card-text">Within the green revision, a text summarization feature was gradually enabled using Azure App Config feature flags.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="https://text-analysis-demo.koorevaar.com/" target="_blank" class="btn btn-primary mt-3"><i class="fas fa-play-circle"></i> View Demo</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-12" id="project-hangman-live">
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">Live AI Multi-Agent Hangman Demo (ACA)</h5>
-                            <div class="d-flex flex-wrap align-items-center mb-2">
-                                <span class="badge badge-success mr-2"><i class="fas fa-play-circle"></i> Live Demo</span>
-                                <span class="text-muted small"><i class="fas fa-calendar-alt mr-1"></i>May 31, 2026</span>
-                            </div>
-                            <p class="card-text">Cloud-hosted evolution of the Multi-Agent Hangman project, deployed on Azure Container Apps. Two Cloudflare Workers AI LLM agents compete live to guess letters, with the game state, turns, and results streamed in real time over SignalR.</p>
-                            <div class="row mt-3">
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-server"></i> Azure Container Apps</h6>
-                                            <p class="card-text">Deployed and scaled as a live demo on Azure Container Apps.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-cloud"></i> Cloudflare Workers AI</h6>
-                                            <p class="card-text">Two competing LLM agents powered by Cloudflare Workers AI drive the gameplay.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-bolt"></i> SignalR Live Updates</h6>
-                                            <p class="card-text">Game state, turns, and guesses are pushed to the browser in real time via SignalR.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fab fa-github"></i> GitHub Actions CI/CD</h6>
-                                            <p class="card-text">Built and deployed to Azure Container Apps via a GitHub Actions workflow.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-hand-paper"></i> Human Player Mode</h6>
-                                            <p class="card-text">New feature: join in as a third player and guess letters alongside the two AI agents, developed using Claude Code.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="https://llm-hangman-demo.koorevaar.com/" target="_blank" class="btn btn-primary mt-3"><i class="fas fa-play-circle"></i> View Demo</a>
-                            <a href="https://github.com/P47K0/Pat.Aca.HangmanApi" target="_blank" rel="noopener noreferrer" class="btn btn-dark mt-3 ml-2"><i class="fab fa-github"></i> View Source</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-12" id="project-k8s-sandbox">
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">Automated Kubernetes Cluster Provisioning (Azure Sandbox)</h5>
-                            <div class="d-flex flex-wrap align-items-center mb-2">
-                                <span class="badge badge-secondary mr-2"><i class="fas fa-code-branch"></i> Source Only</span>
-                                <span class="text-muted small"><i class="fas fa-calendar-alt mr-1"></i>Aug 16, 2026</span>
-                            </div>
-                            <p class="card-text">Fully automated two-node Kubernetes cluster built in the Whizlabs Azure sandbox, provisioning in under 7 minutes end-to-end. Built as an on-demand, reproducible practice environment for CKA scenarios, with Calico as the CNI over VXLAN for pod-to-pod networking across nodes.</p>
-                            <div class="row mt-3">
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-stopwatch"></i> Under 7-Minute Provisioning</h6>
-                                            <p class="card-text">Full two-node cluster stood up from scratch in under seven minutes, start to finish.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-robot"></i> End-to-End Automation</h6>
-                                            <p class="card-text">Scripts handle infrastructure deployment, Kubernetes init, worker joining, Calico install, and connectivity validation.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-network-wired"></i> Calico CNI over VXLAN</h6>
-                                            <p class="card-text">Cross-node pod-to-pod communication handled via Calico with VXLAN networking.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-route"></i> Cross-Node Networking Fix</h6>
-                                            <p class="card-text">Traced a pod-to-pod failure to Azure NIC IP forwarding being disabled by default; enabling it on both VM NICs fixed Calico's cross-node routing.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-search"></i> Network-First Troubleshooting</h6>
-                                            <p class="card-text">Testing direct pod-IP connectivity before DNS isolated the root cause; a fresh install also needed a CoreDNS restart before DNS worked.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-graduation-cap"></i> CKA Practice Ready</h6>
-                                            <p class="card-text">A reproducible, observable, quick-to-rebuild sandbox for running real admin and troubleshooting scenarios on demand.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="https://github.com/P47K0/k8s-whizlabs-sandbox" target="_blank" rel="noopener noreferrer" class="btn btn-dark mt-3"><i class="fab fa-github"></i> View Source</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-12" id="project-cka-lab">
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">CKA Practice Lab (lab.koorevaar.com)</h5>
-                            <div class="d-flex flex-wrap align-items-center mb-2">
-                                <span class="badge badge-warning mr-2"><i class="fas fa-lock"></i> Login Required</span>
-                                <span class="text-muted small"><i class="fas fa-calendar-alt mr-1"></i>Aug 30, 2026</span>
-                            </div>
-                            <p class="card-text">A gated, invite-only extension of this site for practicing CKA exam commands: a mirrored Linux session, streamed live to the browser over SignalR, running inside its own Azure Container Apps instance spun up per login by a .NET 10 lab API. Built in a single day with Claude Code, starting from a BRD drafted together with Claude before any code was written.</p>
-                            <div class="row mt-3">
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-file-signature"></i> BRD-First Workflow</h6>
-                                            <p class="card-text">Started from a Business Requirements Document drafted with Claude, then built out and glued together across ACA, Cloudflare, and the .NET API.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-server"></i> Per-Session ACA Containers</h6>
-                                            <p class="card-text">The lab API spins up a dedicated Azure Container Apps instance for every login, torn down again once the session ends.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-terminal"></i> SignalR-Mirrored Terminal</h6>
-                                            <p class="card-text">A real Linux shell inside the container is relayed live to a cloudshell-style browser terminal over SignalR.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-graduation-cap"></i> Shimmed kubeadm/kubectl</h6>
-                                            <p class="card-text">Shell shims simulate install and upgrade command sequences, enforcing real step ordering for CKA exam practice.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-lock"></i> Cloudflare Zero Trust Gating</h6>
-                                            <p class="card-text">Login-gated via Cloudflare Access (part of Cloudflare Zero Trust); only users explicitly granted access can reach the lab.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-code"></i> .NET 10 Lab API</h6>
-                                            <p class="card-text">A .NET 10 API with a SignalR hub orchestrates container lifecycle and relays terminal input/output.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="https://lab.koorevaar.com/" target="_blank" rel="noopener noreferrer" class="btn btn-primary mt-3"><i class="fas fa-lock"></i> Visit Lab (Login Required)</a>
-                            <button type="button" class="btn btn-outline-primary mt-3 ml-2" data-toggle="modal" data-target="#lab-access-modal"><i class="fas fa-envelope"></i> Request Login</button>
-                            <a href="https://github.com/P47K0/Pat.Aca.LinuxLab" target="_blank" rel="noopener noreferrer" class="btn btn-dark mt-3 ml-2"><i class="fab fa-github"></i> View Source</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-12" id="project-linkedin-import">
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">LinkedIn Import Pipeline</h5>
-                            <div class="d-flex flex-wrap align-items-center mb-2">
-                                <span class="badge badge-info mr-2"><i class="fas fa-file-alt"></i> Write-Up Only</span>
-                                <span class="text-muted small"><i class="fas fa-calendar-alt mr-1"></i>Sep 4 – 8, 2026</span>
-                            </div>
-                            <p class="card-text">Built over several sessions, an end-to-end pipeline to bring my LinkedIn post history onto the blog: Claude for Chrome captures posts straight from the browser, Claude Code processes them (duplicate detection, tag derivation), images are rehosted on Cloudflare R2 via hand-rolled SigV4 signing, and a custom write API publishes the result. 86 articles imported this way. Unlike the projects above, this isn't a live demo or an open-source repo — it's an authoring workflow, documented in full on the blog.</p>
-                            <div class="row mt-3">
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fab fa-chrome"></i> Claude for Chrome Capture</h6>
-                                            <p class="card-text">Browser-side capture of LinkedIn posts, feeding raw content into the pipeline.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-code"></i> Claude Code Processing</h6>
-                                            <p class="card-text">Duplicate detection and tag derivation before anything gets published.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-cloud"></i> Cloudflare R2 Image Hosting</h6>
-                                            <p class="card-text">Post images rehosted on R2, with hand-rolled SigV4 request signing.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-plug"></i> Custom Write API</h6>
-                                            <p class="card-text">Publishes imported posts into the blog through a dedicated write API integration.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-video"></i> Video-Embed Support</h6>
-                                            <p class="card-text">Most recent addition: LinkedIn video embeds for posts with an attached demo video.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="https://blog.koorevaar.com/articles/efficiently-import-linkedin-posts-with-claude" target="_blank" rel="noopener noreferrer" class="btn btn-primary mt-3"><i class="fas fa-blog"></i> Read the Full Write-Up</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-12" id="project-comment-system">
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">AI-Moderated Blog Comment System</h5>
-                            <div class="d-flex flex-wrap align-items-center mb-2">
-                                <span class="badge badge-success mr-2"><i class="fas fa-play-circle"></i> Live Demo</span>
-                                <span class="text-muted small"><i class="fas fa-calendar-alt mr-1"></i>Sep 10, 2026</span>
-                            </div>
-                            <p class="card-text">Built a fully moderated comment system for the blog, spanning a .NET 10 API, a new Azure Function, and two Cloudflare Workers. A comment section now shows on every article, moderated by an LLM (and by me directly in the early days).</p>
-                            <div class="row mt-3">
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-plug"></i> Public API Endpoints</h6>
-                                            <p class="card-text">Comment submission and moderation review endpoints added to the existing .NET minimal API, backed by Cosmos DB via a container-scoped custom RBAC role so the new public-write surface can't touch unrelated data.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-robot"></i> Async LLM Moderation Pipeline</h6>
-                                            <p class="card-text">A new .NET 10 isolated Azure Function (Flex Consumption) picks up newly-submitted comments via a Cosmos DB Change Feed trigger, scores each one against a configurable prompt, and either publishes or flags it for manual review.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-cloud"></i> Cross-Cloud Integration</h6>
-                                            <p class="card-text">The Azure Function calls Cloudflare Workers AI directly over HTTP for scoring &mdash; a deliberate choice to demonstrate cross-provider integration rather than staying in a single cloud.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-sliders-h"></i> Config-First Tuning</h6>
-                                            <p class="card-text">Moderation model, prompt wording, daily usage quota, and auto-publish confidence threshold are all runtime-configurable app settings, letting moderation behavior evolve without a code change or redeploy.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-shield-alt"></i> Defense in Depth</h6>
-                                            <p class="card-text">Cloudflare Turnstile bot verification, then a rate limiter partitioned by real visitor IP and article (forwarded securely across two Cloudflare Workers), then LLM content scoring.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-envelope"></i> Email Review Alerts</h6>
-                                            <p class="card-text">Azure Communication Services notifies on every new comment, whether auto-published or awaiting manual approval.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-sync-alt"></i> Self-Healing Pipeline</h6>
-                                            <p class="card-text">An hourly scheduled Function sweeps up any comment left stuck &mdash; e.g. after a transient scoring failure or an exhausted daily quota &mdash; and safely re-queues it for another attempt.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-lock"></i> Least-Privilege Infrastructure as Code</h6>
-                                            <p class="card-text">All new Azure resources (Function App, storage, Cosmos containers/roles) defined in Bicep and deployed via GitHub Actions using OIDC, with role-assignment permissions deliberately kept out of the CI pipeline and applied by hand instead.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-comments"></i> No Admin UI Required</h6>
-                                            <p class="card-text">Comment moderation (list/publish/delete) is driven directly by Claude via authenticated API endpoints on request &mdash; the same AI-assisted workflow already used to manage the blog's articles.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="https://blog.koorevaar.com/articles/adding-comments-to-the-blog" target="_blank" rel="noopener noreferrer" class="btn btn-primary mt-3"><i class="fas fa-blog"></i> Read the Write-Up &amp; See It Live</a>
-                            <a href="https://github.com/P47K0/Pat.Aca.BlogServiceApi" target="_blank" rel="noopener noreferrer" class="btn btn-dark mt-3 ml-2"><i class="fab fa-github"></i> View Source</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      </div>
+      <div class="app-card" data-project>
+        <span class="status-badge live"><span class="dot"></span>Side project · Live, login required · Aug 2026</span>
+        <h3>CKA practice lab</h3>
+        <p>A real Linux shell relayed live to a cloudshell-style browser terminal over SignalR, shimmed kubectl/kubeadm, gated by Cloudflare Zero Trust.</p>
+        <div class="app-tags"><span class="tag">SignalR</span><span class="tag">Zero Trust</span><span class="tag">ACA</span></div>
+        <div class="app-links">
+          <a class="app-link" href="https://lab.koorevaar.com/" target="_blank" rel="noopener noreferrer">Visit lab →</a>
+          <a class="app-link" href="#" onclick="openLabModal();return false;">Request login</a>
+          <button class="detail-btn" aria-label="Show details" onclick="toggleDetail('cka-lab', this.closest('.app-card'))"><span class="chevron">+</span></button>
         </div>
-    </section>
-
-    <!-- My Work Style section -->
-    <section class="work-style-section py-5 bg-light" id="work-style-section">
-        <div class="container">
-            <h2><i class="fas fa-toolbox"></i> My Work Style</h2>
-            <p class="lead">A look behind the scenes at how the tools actually get used day to day — not just what ends up on the page, but how it gets built and kept up to date.</p>
-            <div class="row mt-4">
-                <div class="col-md-4 mb-3">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title"><i class="fas fa-tasks"></i> Agentic Backlog Management</h5>
-                            <p class="card-text">Ideas and feature backlog live on a private GitHub Projects board. Claude Code files and updates items directly via the GitHub GraphQL API during planning conversations, capturing decisions and open questions as they're made. A public subset is shown in the <a href="#backlog-section">Backlog section</a> below.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-3">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title"><i class="fas fa-blog"></i> Blog Content Pipeline</h5>
-                            <p class="card-text">Posts are written as Markdown and stored in Azure Cosmos DB, served through an Azure Container Apps API. I ask Claude to insert or update articles directly; deleting a post is deliberately left to me only. A Cloudflare Worker converts the Markdown to HTML on the way out, and a second Worker renders it at blog.koorevaar.com.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-3">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title"><i class="fas fa-laptop-code"></i> Building This Website</h5>
-                            <p class="card-text">This site started out built with Aider paired with a local Qwen2.5 model running via IPEX Ollama. Ongoing iteration — new sections, project cards, fixes — now runs through Claude Code instead.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-3">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title"><i class="fas fa-wrench"></i> Everyday Tool Stack</h5>
-                            <p class="card-text">VS Code for frontend work and Visual Studio Pro for backends — the same split on both day-job and side projects.</p>
-                            <hr>
-                            <div class="row tool-split">
-                                <div class="col-6">
-                                    <p class="card-text mb-1"><strong>Work</strong></p>
-                                    <ul class="list-unstyled tool-list mb-0">
-                                        <li><i class="fas fa-check"></i> Azure Repos</li>
-                                        <li><i class="fas fa-check"></i> Azure DevOps</li>
-                                        <li><i class="fas fa-check"></i> Azure Registry</li>
-                                        <li><i class="fas fa-check"></i> AKS runtime</li>
-                                    </ul>
-                                </div>
-                                <div class="col-6">
-                                    <p class="card-text mb-1"><strong>Side Projects</strong></p>
-                                    <ul class="list-unstyled tool-list mb-0">
-                                        <li><i class="fas fa-check"></i> GitHub (+ backlog)</li>
-                                        <li><i class="fas fa-check"></i> GitHub Actions</li>
-                                        <li><i class="fas fa-check"></i> GitHub Registry</li>
-                                        <li><i class="fas fa-check"></i> Azure Container Apps</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <hr>
-                            <p class="card-text mb-0 small">Shared across both: Cloudflare &amp; Azure Portals/CLI, PowerShell/Bash, Terraform, and Claude Code/Aider for AI-assisted development.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-3">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title"><i class="fas fa-piggy-bank"></i> Cost-Conscious Architecture</h5>
-                            <p class="card-text">Every side project starts from "what can the free tiers cover?" — Cloudflare's free plan for Workers, DNS and Web Analytics, Azure Cosmos DB's free tier as the data layer, Azure Container Apps on the Consumption plan scaling to zero when idle. Authentication is split between Microsoft Entra ID's free tier and Cloudflare Zero Trust (Access), the latter currently gating just the CKA Practice Lab. The AI demos lean on Cloudflare Workers AI's inexpensive models rather than Azure AI Foundry, for the same reason. Anything beyond that — like spinning up an AKS cluster via an Azure DevOps pipeline to test something or record a demo, then tearing it down again — runs on the monthly Azure credit included with my Visual Studio Professional subscription. Real infrastructure, near-zero standing cost.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Backlog section -->
-    <section class="backlog-section py-5" id="backlog-section">
-        <div class="container">
-            <h2><i class="fas fa-list-check"></i> Backlog</h2>
-            <p class="lead">A look at my todo list. Ideas and in-progress work from my planning board on Github (live copy).</p>
-            <div id="backlog-list" class="row mt-4"></div>
-            <p id="backlog-empty" class="text-muted d-none">Nothing on the backlog right now — check back later.</p>
-        </div>
-    </section>
-
-    <!-- Links and contact section -->
-    <section class="links-contact-section py-5 text-center bg-light" id="contact-section">
-        <div class="container">
-            <h2><i class="fas fa-link"></i> Links &amp; Contact</h2>
-            <a href="https://www.linkedin.com/in/patrickkoorevaar" target="_blank" class="btn btn-primary m-1"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
-            <a href="https://github.com/P47K0" target="_blank" class="btn btn-dark m-1"><i class="fab fa-github"></i> GitHub</a>
-            <a href="https://hub.docker.com/repositories/p47r1ck75" target="_blank" rel="noopener noreferrer" class="btn btn-info m-1"><i class="fab fa-docker"></i> Docker Hub</a>
-            <!-- <a href="mailto:patrick@koorevaar.com" class="btn btn-secondary m-1"><i class="fas fa-envelope"></i> Email</a> -->
-            <!-- <a href="cv.pdf" download class="btn btn-success m-1"><i class="fas fa-download"></i> Download CV</a> -->
-        </div>
-    </section>
-
-    <section class="links-contact-section py-5 text-center bg-light">
-        <p class="built-with">
-        Built with: 
-        <a href="https://aider.chat/" target="_blank" rel="noopener noreferrer">Aider</a>,
-        <a href="https://qwenlm.github.io/" target="_blank" rel="noopener noreferrer">Qwen2.5</a>,
-        <a href="https://www.claude.com/product/claude-code" target="_blank" rel="noopener noreferrer">Claude Code</a>,
-        <a href="https://github.com/" target="_blank" rel="noopener noreferrer">GitHub</a>,
-        <a href="https://www.cloudflare.com/" target="_blank" rel="noopener noreferrer">Cloudflare</a>
-        </p>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer py-3 text-center bg-dark text-white">
-        <div class="container">
-            <p>&copy; 2026 Patrick Koorevaar. All rights reserved.</p>
-            <p>This site is continuously improved. <a href="privacy.html" class="text-white-50">Privacy Notice</a></p>
-        </div>
-    </footer>
-
-    <!-- CKA Practice Lab: request-login modal. Posts to /api/lab-access,
-         which forwards to the same contact worker the Lab's own feedback
-         button uses (see lab-access.js and public/worker/index.js). -->
-    <div class="modal fade" id="lab-access-modal" tabindex="-1" role="dialog" aria-labelledby="lab-access-modal-label" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <form id="lab-access-form">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="lab-access-modal-label">Request Lab Access</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    </div>
-                    <div class="modal-body">
-                        <p class="text-muted">The CKA Practice Lab is invite-only. Enter your email and I'll send you a login.</p>
-                        <div class="form-group">
-                            <label for="lab-access-email">Email address</label>
-                            <input type="email" class="form-control" id="lab-access-email" required>
-                        </div>
-                        <div id="lab-access-status"></div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-primary" id="lab-access-submit">Send Request</button>
-                    </div>
-                </form>
-            </div>
-        </div>
+      </div>
     </div>
 
-    <!-- Invisible Turnstile mount point; renders no visible UI -->
-    <div id="turnstile-container" style="display:none;"></div>
-    <!-- Honeypot: never linked visibly, disallowed in robots.txt. Anything that
-         follows this link gets flagged and excluded from the human count. -->
-    <a href="/go/sitemap-index" style="position:absolute; left:-9999px;" aria-hidden="true" tabindex="-1">sitemap</a>
+    <div class="more-row">
+      <div class="row">
+        <div><div class="t">Monitoring &amp; observability</div><div class="d">Prometheus, Grafana, PromQL dashboards</div></div>
+      </div>
+      <div class="row">
+        <div><div class="t">Messaging &amp; data</div><div class="d">Azure Service Bus, Storage queues, Azure SQL Database</div></div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- Bootstrap JS and dependencies -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script defer src="count-up.js"></script>
-    <script defer src="human-counter.js"></script>
-    <script defer src="blog-counter.js"></script>
-    <script defer src="backlog.js"></script>
-    <script defer src="lab-access.js"></script>
-    <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "621adb48e7ca4c8da9f338adc9654929"}'></script><!-- End Cloudflare Web Analytics -->
+<!-- Skills -->
+<section class="section" id="skills-section">
+  <div class="wrap">
+    <div class="section-head"><h2><span class="sec-ic"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 1 L17 5 L9 9 L1 5 Z"/><path d="M1 9 L9 13 L17 9"/><path d="M1 13 L9 17 L17 13"/></svg></span>Skills</h2><div class="note">13 categories, full breakdown</div></div>
+    <button class="skills-summary" id="skills-toggle" onclick="toggleSkills()" aria-expanded="false" aria-controls="skills-detail">
+      <span>AKS, ACA, Azure DevOps, GitHub Actions, CI/CD, Monitoring, and more<span class="sub">Click to expand the full list</span></span>
+      <span class="chevron-wrap"><span class="chevron">+</span></span>
+    </button>
+    <div class="skills-detail" id="skills-detail">
+      <div class="chip-group">
+        <div class="label">Cloud</div>
+        <div class="chips"><span class="chip">Azure</span></div>
+      </div>
+      <div class="chip-group">
+        <div class="label">Containers</div>
+        <div class="chips"><span class="chip">Docker</span><span class="chip">Kubernetes</span><span class="chip">AKS (production, work)</span><span class="chip">Azure Container Apps</span></div>
+      </div>
+      <div class="chip-group">
+        <div class="label">Integration</div>
+        <div class="chips"><span class="chip">Azure Service Bus</span><span class="chip">Storage queues</span></div>
+      </div>
+      <div class="chip-group">
+        <div class="label">CI/CD</div>
+        <div class="chips"><span class="chip">Azure DevOps</span><span class="chip">YAML pipelines</span><span class="chip">GitHub Actions</span></div>
+      </div>
+      <div class="chip-group">
+        <div class="label">Infrastructure</div>
+        <div class="chips"><span class="chip">Terraform</span><span class="chip">Helm</span><span class="chip">Ingress</span><span class="chip">Networking</span></div>
+      </div>
+      <div class="chip-group">
+        <div class="label">Deployment strategies</div>
+        <div class="chips"><span class="chip">Blue/green</span><span class="chip">Canary</span><span class="chip">Feature flags (Azure App Config)</span></div>
+      </div>
+      <div class="chip-group">
+        <div class="label">Languages &amp; scripts</div>
+        <div class="chips"><span class="chip">C#</span><span class="chip">Python</span><span class="chip">Bash</span><span class="chip">PowerShell</span></div>
+      </div>
+      <div class="chip-group">
+        <div class="label">Monitoring &amp; observability</div>
+        <div class="chips"><span class="chip">Prometheus</span><span class="chip">Grafana</span></div>
+      </div>
+      <div class="chip-group">
+        <div class="label">AI / LLM</div>
+        <div class="chips"><span class="chip">IPEX Ollama (local)</span><span class="chip">Cloudflare Workers AI</span><span class="chip">Semantic Kernel</span><span class="chip">Agent Framework</span><span class="chip">Multi-agent orchestration</span><span class="chip">Prompt engineering</span></div>
+      </div>
+      <div class="chip-group">
+        <div class="label">Frameworks</div>
+        <div class="chips"><span class="chip">.NET 10</span><span class="chip">SignalR</span><span class="chip">ASP.NET Core</span><span class="chip">Entity Framework</span><span class="chip">gRPC</span><span class="chip">REST</span><span class="chip">React</span><span class="chip">Bootstrap</span></div>
+      </div>
+      <div class="chip-group">
+        <div class="label">Database</div>
+        <div class="chips"><span class="chip">Azure SQL Database</span></div>
+      </div>
+      <div class="chip-group">
+        <div class="label">Tools</div>
+        <div class="chips"><span class="chip">VS Pro</span><span class="chip">VS Code</span><span class="chip">GitHub</span><span class="chip">Cloudflare (Workers, Workers AI, Web Analytics, DNS)</span></div>
+      </div>
+      <div class="chip-group">
+        <div class="label">OIDC</div>
+        <div class="chips"><span class="chip">Keycloak</span><span class="chip">Azure Entra ID</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Certifications -->
+<section class="section" id="certifications-section">
+  <div class="wrap">
+    <div class="section-head"><h2><span class="sec-ic"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 1 L16 4 V9 C16 13 13 16 9 17 C5 16 2 13 2 9 V4 Z"/><path d="M6 9 L8 11 L12 6"/></svg></span>Certifications</h2><div class="note">7 earned, full breakdown</div></div>
+    <button class="skills-summary" id="certs-toggle" onclick="toggleCerts()" aria-expanded="false" aria-controls="certs-detail">
+      <span>AZ-400, AZ-305, and more<span class="sub">Click to expand the full list</span></span>
+      <span class="chevron-wrap"><span class="chevron">+</span></span>
+    </button>
+    <div class="skills-detail" id="certs-detail">
+      <div class="certs">
+        <span class="cert"><span class="ic"></span><b>AZ-400</b>&nbsp;DevOps Engineer Expert</span>
+        <span class="cert"><span class="ic"></span><b>AZ-305</b>&nbsp;Solutions Architect Expert</span>
+        <span class="cert"><span class="ic"></span><b>AI-102</b>&nbsp;AI Engineer Associate</span>
+        <span class="cert"><span class="ic"></span><b>AZ-204</b>&nbsp;Azure Developer Associate</span>
+        <span class="cert"><span class="ic"></span><b>AZ-104</b>&nbsp;Azure Administrator Associate</span>
+        <span class="cert"><span class="ic"></span><b>AI-900</b>&nbsp;Azure AI Fundamentals</span>
+        <span class="cert"><span class="ic"></span><b>AZ-900</b>&nbsp;Azure Fundamentals</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- More projects -->
+<section class="section" id="side-projects-section">
+  <div class="wrap">
+    <div class="section-head"><h2><span class="sec-ic"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 4 H7 L9 6 H17 V15 H1 Z"/></svg></span>More projects</h2></div>
+    <div class="more-projects">
+      <div class="mp-item" data-project>
+        <div class="mp-row">
+          <div><div class="t">Personal website (koorevaar.com)</div><div class="d">Built with Aider, Qwen2.5 and Claude Code; Cloudflare-delivered · May 2026</div></div>
+          <div class="mp-actions">
+            <a href="https://github.com/P47K0/website" target="_blank" rel="noopener noreferrer">Source →</a>
+            <button class="detail-btn" aria-label="Show details" onclick="toggleDetail('website', this.closest('.mp-item'))"><span class="chevron">+</span></button>
+          </div>
+        </div>
+      </div>
+      <div class="mp-item" data-project>
+        <div class="mp-row">
+          <div><div class="t">Blog platform (blog.koorevaar.com)</div><div class="d">Cosmos DB content + comments, Azure Functions, two Cloudflare Workers · May–Sep 2026</div></div>
+          <div class="mp-actions">
+            <a href="https://blog.koorevaar.com/" target="_blank" rel="noopener noreferrer">Visit →</a>
+            <a href="https://github.com/P47K0/Pat.Aca.BlogServiceApi" target="_blank" rel="noopener noreferrer">Source →</a>
+            <button class="detail-btn" aria-label="Show details" onclick="toggleDetail('blog-platform', this.closest('.mp-item'))"><span class="chevron">+</span></button>
+          </div>
+        </div>
+      </div>
+      <div class="mp-item" data-project>
+        <div class="mp-row">
+          <div><div class="t">LinkedIn import pipeline</div><div class="d">Claude for Chrome + Claude Code authoring workflow, 86 articles imported · Sep 2026</div></div>
+          <div class="mp-actions">
+            <a href="https://blog.koorevaar.com/articles/efficiently-import-linkedin-posts-with-claude" target="_blank" rel="noopener noreferrer">Write-up →</a>
+            <button class="detail-btn" aria-label="Show details" onclick="toggleDetail('linkedin-import', this.closest('.mp-item'))"><span class="chevron">+</span></button>
+          </div>
+        </div>
+      </div>
+      <div class="mp-item" data-project>
+        <div class="mp-row">
+          <div><div class="t">YouTube channel monitor</div><div class="d">ACA scheduled job + YouTube API + Azure Communication Services email alert · Jul 2026</div></div>
+          <div class="mp-actions">
+            <a href="https://github.com/P47K0/Pat.Containers.Job.YoutubeChannelGuard" target="_blank" rel="noopener noreferrer">Source →</a>
+            <button class="detail-btn" aria-label="Show details" onclick="toggleDetail('youtube-monitor', this.closest('.mp-item'))"><span class="chevron">+</span></button>
+          </div>
+        </div>
+      </div>
+      <div class="mp-item" data-project>
+        <div class="mp-row">
+          <div><div class="t">Sentiment analysis platform (AKS)</div><div class="d">Self-hosted Ollama, blue/green + canary deploys · May 2026</div></div>
+          <div class="mp-actions">
+            <a href="https://github.com/P47K0/sentiment-aks-ollama" target="_blank" rel="noopener noreferrer">Source →</a>
+            <button class="detail-btn" aria-label="Show details" onclick="toggleDetail('sentiment-aks-source', this.closest('.mp-item'))"><span class="chevron">+</span></button>
+          </div>
+        </div>
+      </div>
+      <div class="mp-item" data-project>
+        <div class="mp-row">
+          <div><div class="t">Multi-agent hangman (source)</div><div class="d">Console application, Semantic Kernel and Agent Framework versions · Jan 2026</div></div>
+          <div class="mp-actions">
+            <a href="https://github.com/P47K0/SKOrchestrationPractice" target="_blank" rel="noopener noreferrer">Source (SK) →</a>
+            <a href="https://github.com/P47K0/AgentFrameworkPractice" target="_blank" rel="noopener noreferrer">Source (AF) →</a>
+            <button class="detail-btn" aria-label="Show details" onclick="toggleDetail('hangman-agents-source', this.closest('.mp-item'))"><span class="chevron">+</span></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Work style -->
+<section class="section" id="work-style-section">
+  <div class="wrap">
+    <div class="section-head"><h2><span class="sec-ic"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="2" y1="5" x2="16" y2="5"/><circle fill="currentColor" stroke="none" cx="11" cy="5" r="2"/><line x1="2" y1="9" x2="16" y2="9"/><circle fill="currentColor" stroke="none" cx="6" cy="9" r="2"/><line x1="2" y1="13" x2="16" y2="13"/><circle fill="currentColor" stroke="none" cx="13" cy="13" r="2"/></svg></span>My work style</h2><div class="note">How this actually gets built and kept up to date</div></div>
+    <div class="grid3">
+      <div class="app-card">
+        <h3>Agentic backlog management</h3>
+        <p>Ideas and the feature backlog live on a private GitHub Projects board. Claude Code files and updates items directly via the GitHub GraphQL API during planning conversations, capturing decisions and open questions as they're made.</p>
+        <div class="app-links"><a class="app-link" href="#backlog-section">See the public backlog →</a></div>
+      </div>
+      <div class="app-card">
+        <h3>Blog content pipeline</h3>
+        <p>Posts are written as Markdown, stored in Cosmos DB, served through an ACA API. I ask Claude to insert or update articles directly; deleting a post is deliberately left to me only. A Cloudflare Worker converts Markdown to HTML on the way out.</p>
+      </div>
+      <div class="app-card">
+        <h3>Building this website</h3>
+        <p>Started out built with Aider paired with a local Qwen2.5 model running via IPEX Ollama. Ongoing iteration — new sections, project cards, fixes — now runs through Claude Code instead.</p>
+      </div>
+      <div class="app-card">
+        <h3>Everyday tool stack</h3>
+        <p>VS Code for frontend work, Visual Studio Pro for backends — the same split at work and on side projects.</p>
+        <div class="app-tags"><span class="tag">Work: Azure Repos/DevOps/Registry, AKS</span></div>
+        <div class="app-tags"><span class="tag">Side projects: GitHub Actions/Registry, ACA</span></div>
+      </div>
+      <div class="app-card">
+        <h3>Cost-conscious architecture</h3>
+        <p>Every side project starts from "what can the free tiers cover" — Cloudflare Workers/DNS/Web Analytics, Cosmos DB free tier, Container Apps scaled to zero, Entra ID plus Cloudflare Zero Trust for auth. Workers AI over Azure AI Foundry for the same reason. Anything bigger runs briefly on the Azure credit from my VS Pro subscription, then gets torn down.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Backlog -->
+<section class="section" id="backlog-section">
+  <div class="wrap">
+    <div class="section-head"><h2><span class="sec-ic"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="14" height="14" rx="2.5"/><path d="M5.5 9 L7.5 11 L12.5 6"/></svg></span>Backlog</h2><div class="note">Live copy of my GitHub planning board</div></div>
+    <div id="backlog-list" class="backlog-list"></div>
+    <p id="backlog-empty" class="d-none">Nothing on the backlog right now — check back later.</p>
+  </div>
+</section>
+
+<footer class="links-section" id="contact-section">
+  <div class="wrap">
+    <h2 style="display:flex;align-items:center;justify-content:center;gap:10px;"><span class="sec-ic"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="16" height="11" rx="2"/><path d="M2 5 L9 11 L16 5"/></svg></span>Links &amp; contact</h2>
+    <div class="social-links">
+      <a href="https://www.linkedin.com/in/patrickkoorevaar" target="_blank" rel="noopener noreferrer"><span class="social-ic"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="6" r="3"/><path d="M3 16c0-3 2.5-5 6-5s6 2 6 5"/></svg></span>LinkedIn</a>
+      <a href="https://github.com/P47K0" target="_blank" rel="noopener noreferrer"><span class="social-ic"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4 L2 9 L6 14"/><path d="M12 4 L16 9 L12 14"/></svg></span>GitHub</a>
+      <a href="https://hub.docker.com/repositories/p47r1ck75" target="_blank" rel="noopener noreferrer"><span class="social-ic"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2 L16 5.5 V12.5 L9 16 L2 12.5 V5.5 Z"/><path d="M2 5.5 L9 9 L16 5.5"/><path d="M9 9 V16"/></svg></span>Docker Hub</a>
+      <a href="https://stackoverflow.com/users/1122629/patrick-koorevaar" target="_blank" rel="noopener noreferrer"><span class="social-ic"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12 L9 15 L15 12"/><path d="M3 9 L9 12 L15 9"/><path d="M3 6 L9 3 L15 6 L9 9 Z"/></svg></span>Stack Overflow</a>
+      <a href="https://contact.koorevaar.com/" target="_blank" rel="noopener noreferrer"><span class="social-ic"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="16" height="11" rx="2"/><path d="M2 5 L9 11 L16 5"/></svg></span>Contact</a>
+    </div>
+  </div>
+</footer>
+
+<p class="built-with">
+  Built with:
+  <a href="https://aider.chat/" target="_blank" rel="noopener noreferrer">Aider</a>,
+  <a href="https://qwenlm.github.io/" target="_blank" rel="noopener noreferrer">Qwen2.5</a>,
+  <a href="https://www.claude.com/product/claude-code" target="_blank" rel="noopener noreferrer">Claude Code</a>,
+  <a href="https://github.com/" target="_blank" rel="noopener noreferrer">GitHub</a>,
+  <a href="https://www.cloudflare.com/" target="_blank" rel="noopener noreferrer">Cloudflare</a>
+</p>
+
+<div class="site-footer">
+  <p>&copy; <span id="copyright-year">2026</span> Patrick Koorevaar. All rights reserved.</p>
+  <p>This site is continuously improved. <a href="privacy.html">Privacy notice</a></p>
+</div>
+
+<!-- CKA Practice Lab: request-login modal -->
+<div class="modal-overlay" id="lab-access-modal">
+  <div class="modal-box">
+    <form id="lab-access-form">
+      <h3>Request lab access</h3>
+      <p>The CKA practice lab is invite-only. Enter your email and I'll send you a login.</p>
+      <input type="email" id="lab-access-email" required placeholder="you@example.com">
+      <div id="lab-access-status"></div>
+      <div class="modal-actions">
+        <button type="button" onclick="closeLabModal();">Cancel</button>
+        <button type="submit" class="primary" id="lab-access-submit">Send Request</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Invisible Turnstile mount point; renders no visible UI -->
+<div id="turnstile-container" style="display:none;"></div>
+<!-- Honeypot: never linked visibly, disallowed in robots.txt. Anything that
+     follows this link gets flagged and excluded from the human count. -->
+<a href="/go/sitemap-index" style="position:absolute; left:-9999px;" aria-hidden="true" tabindex="-1">sitemap</a>
+
+<script>
+  var copyrightYearEl = document.getElementById('copyright-year');
+  if (copyrightYearEl) copyrightYearEl.textContent = new Date().getFullYear();
+
+  function openLabModal(){
+    document.getElementById('lab-access-modal').classList.add('open');
+    var status = document.getElementById('lab-access-status');
+    var form = document.getElementById('lab-access-form');
+    if(status){ status.textContent = ''; status.className = ''; }
+    if(form){ form.reset(); }
+  }
+  function closeLabModal(){ document.getElementById('lab-access-modal').classList.remove('open'); }
+  document.getElementById('lab-access-modal').addEventListener('click', function(e){
+    if(e.target === this){ closeLabModal(); }
+  });
+
+  var DETAILS = {
+    'ai-text-analysis': { title: 'AI text analysis', body:
+      '<p>A live client calling a Cloudflare Workers AI endpoint to score sentiment and detect language in real time.</p>' +
+      '<ul><li>Sentiment scoring on arbitrary input text</li><li>Language detection as an additional API feature</li><li>.NET 10 backend calling Workers AI</li><li>Blue/green deployment: ACA revision-based setup enabling fast rollback to the stable blue revision</li><li>Canary rollout: a text summarization feature was gradually enabled via Azure App Config feature flags within the green revision</li></ul>' +
+      '<a href="https://text-analysis-demo.koorevaar.com/" target="_blank" rel="noopener noreferrer">View demo →</a>' },
+    'hangman-live': { title: 'Multi-agent hangman (live)', body:
+      '<p>Cloud-hosted evolution of the multi-agent hangman project, deployed on Azure Container Apps. Two Workers AI agents compete live to guess letters, with the game streamed in real time.</p>' +
+      '<ul><li>Two competing Cloudflare Workers AI agents</li><li>Game state, turns and guesses pushed live over SignalR</li><li>Built and deployed via GitHub Actions CI/CD</li><li>Human player mode: join in as a third player alongside the two agents</li></ul>' +
+      '<a href="https://llm-hangman-demo.koorevaar.com/" target="_blank" rel="noopener noreferrer">View demo →</a> &nbsp; <a href="https://github.com/P47K0/Pat.Aca.HangmanApi" target="_blank" rel="noopener noreferrer">Source →</a>' },
+    'capacity-advisor': { title: 'AKS/ACA capacity advisor', body:
+      '<p>A practical AIOps demo that turns AKS telemetry into plain-language capacity recommendations using Cloudflare Workers AI (Llama 3.1).</p>' +
+      '<ul><li>Analyzes AKS telemetry for resource usage patterns</li><li>Flags when workloads are safely placed or limits need revisiting</li><li>Automated recommendation generation, no manual review step</li></ul>' +
+      '<a href="https://capacity-advisor-demo.koorevaar.com/" target="_blank" rel="noopener noreferrer">View demo →</a> &nbsp; <a href="https://github.com/P47K0/Pat.Containers.CapacityAdvisor" target="_blank" rel="noopener noreferrer">Source (advisor) →</a> &nbsp; <a href="https://github.com/P47K0/Pat.Containers.CapacitySimulator" target="_blank" rel="noopener noreferrer">Source (simulator) →</a>' },
+    'cv-generator': { title: 'CV request generator', body:
+      '<p>A "Generator Request for CV" button on the contact page uses Cloudflare Workers AI (Llama 3.1) to instantly draft a personalized, natural-sounding message asking for my CV — no typing required.</p>' +
+      '<ul><li>One click, fresh wording every time</li><li>Runs on Llama 3.1 via Cloudflare Workers AI</li><li>Part of the wider contact.koorevaar.com flow</li></ul>' +
+      '<a href="https://contact.koorevaar.com/" target="_blank" rel="noopener noreferrer">Try it →</a>' },
+    'blog-moderation': { title: 'Blog comment moderation', body:
+      '<p>Every comment on the blog runs through an async LLM moderation pipeline before it&#39;s published.</p>' +
+      '<ul><li>Cosmos DB change feed triggers a .NET 10 isolated Azure Function</li><li>The Function calls Cloudflare Workers AI directly over HTTP &mdash; a deliberate cross-cloud integration</li><li>Model, prompt, quota and auto-publish threshold are all runtime-configurable, no redeploy needed</li><li>Defense in depth: Turnstile, IP/article-partitioned rate limiting, then LLM scoring</li><li>An hourly sweep re-queues any comment stuck after a transient failure</li></ul>' +
+      '<a href="https://blog.koorevaar.com/" target="_blank" rel="noopener noreferrer">Try it →</a> &nbsp; <a href="https://github.com/P47K0/Pat.Aca.BlogServiceApi" target="_blank" rel="noopener noreferrer">Source →</a>' },
+    'sentiment-aks-source': { title: 'Sentiment analysis platform (AKS)', body:
+      '<p>A complete, production-oriented sentiment analysis solution running entirely on AKS using a self-hosted Large Language Model (Ollama).</p>' +
+      '<ul><li>Blue/green deployment: controlled traffic switching between blue and green environments via Traefik</li><li>Canary deployment: weighted rollout flow for gradual production exposure</li><li>Multi-pipeline design: separate pipelines for infrastructure, build/deploy, traffic switching and teardown</li><li>Infrastructure: AKS plus a user nodepool and state store, provisioned via a Terraform script</li><li>Self-hosted LLM: private Ollama-based inference running inside AKS</li><li>Kubernetes delivery: Docker, manifests, probes, ConfigMaps and resource limits</li><li>Cost-control teardown: resources removed when not demoing, to keep cost near zero</li><li>End-to-end security via Cloudflare, edge to core</li><li>Additional API feature: language detection alongside sentiment scoring</li></ul>' +
+      '<a href="https://github.com/P47K0/sentiment-aks-ollama" target="_blank" rel="noopener noreferrer">Source →</a>' },
+    'hangman-agents-source': { title: 'Multi-agent hangman (source)', body:
+      '<p>Experimental multi-agent Hangman game built with Semantic Kernel and local LLMs, focused on agent orchestration, tool use, and reliable turn-based interaction. The direct ancestor of the live, cloud-hosted hangman demo above.</p>' +
+      '<ul><li>Runs as a local console application, no UI beyond the terminal</li><li>Multi-agent design: two competing agents plus one host agent managing the flow</li><li>Semantic Kernel coordinates agent interaction and tool-based gameplay logic</li><li>A separate Agent Framework version implements the same game</li><li>Ran entirely locally with Ollama and multiple lightweight models</li><li>Agents call gameplay tools such as GuessLetter and GetStatus</li><li>Investigated silent responses and unstable function calling in local agent workflows</li><li>Prompts refined for consistency, structure and tool usage</li></ul>' +
+      '<a href="https://github.com/P47K0/SKOrchestrationPractice" target="_blank" rel="noopener noreferrer">Source (Semantic Kernel) →</a> &nbsp; <a href="https://github.com/P47K0/AgentFrameworkPractice" target="_blank" rel="noopener noreferrer">Source (Agent Framework) →</a>' },
+    'aks-production': { title: 'Production AKS at scale', body:
+      '<p>Day-job infrastructure: production Azure Kubernetes Service clusters running a large microservice estate.</p>' +
+      '<ul><li>30+ microservices per namespace (TAPP)</li><li>Two full blue/green cluster migrations completed, in 2022 and 2025</li><li>Ingress management and migration</li><li>Azure Service Bus, Storage and SQL Database integration</li></ul>' },
+    'cicd': { title: 'CI/CD pipelines', body:
+      '<p>Azure DevOps pipelines at work, GitHub Actions on side projects &mdash; same deployment philosophy on both.</p>' +
+      '<ul><li>YAML pipelines with an automated test stage and a manual gate before production</li><li>Blue/green deployment via Traefik-controlled traffic switching</li><li>Canary rollout via Azure App Config feature flags</li><li>Separate pipelines for infrastructure, build/deploy, traffic switching and teardown on side projects</li></ul>' },
+    'iac': { title: 'Infrastructure as code', body:
+      '<p>Terraform for cluster and infra provisioning, Bicep for newer Azure resources &mdash; both deployed through CI with intentionally limited permissions.</p>' +
+      '<ul><li>Terraform scripts for AKS, nodepools and state store</li><li>Bicep for Function Apps, storage and Cosmos containers/roles</li><li>GitHub Actions deploys via OIDC, no stored cloud secrets</li><li>Role-assignment permissions deliberately kept out of the CI pipeline and applied by hand</li></ul>' },
+    'k8s-sandbox': { title: 'K8s cluster automation', body:
+      '<p>A fully automated two-node Kubernetes cluster built in the Whizlabs Azure sandbox, built as an on-demand, reproducible CKA practice environment.</p>' +
+      '<ul><li>Full cluster stood up from scratch in under 7 minutes</li><li>Bicep provisions the underlying VMs and networking in the sandbox</li><li>Bash scripts handle kubeadm init, worker joining, Calico install and connectivity validation</li><li>Calico CNI over VXLAN for cross-node pod-to-pod networking</li><li>Cross-node networking fix: traced a pod-to-pod failure to Azure NIC IP forwarding being disabled by default; enabling it on both VM NICs fixed Calico&#39;s cross-node routing</li><li>Network-first troubleshooting: testing direct pod-IP connectivity before DNS isolated the root cause; a fresh install also needed a CoreDNS restart before DNS worked</li></ul>' +
+      '<a href="https://github.com/P47K0/k8s-whizlabs-sandbox" target="_blank" rel="noopener noreferrer">Source →</a>' },
+    'cka-lab': { title: 'CKA practice lab', body:
+      '<p>A browser-accessible Linux/Kubernetes practice environment, built to feel like a real terminal rather than a simulation. Built in a single day with Claude Code, starting from a BRD drafted together with Claude before any code was written.</p>' +
+      '<ul><li>BRD-first workflow: started from a Business Requirements Document drafted with Claude, then built out and glued together across ACA, Cloudflare, and the .NET API</li><li>Per-session ACA containers: the lab API spins up a dedicated Azure Container Apps instance for every login, torn down again once the session ends</li><li>A real Linux shell inside the container, relayed live to a cloudshell-style browser terminal over SignalR</li><li>Shimmed kubeadm/kubectl commands enforce real step ordering for exam practice</li><li>Login-gated via Cloudflare Zero Trust (Access)</li><li>.NET 10 API with a SignalR hub orchestrates container lifecycle</li></ul>' +
+      '<a href="https://lab.koorevaar.com/" target="_blank" rel="noopener noreferrer">Visit lab →</a> &nbsp; <a href="#" onclick="openLabModal();return false;">Request login</a>' },
+    'website': { title: 'Personal website (koorevaar.com)', body:
+      '<p>AI-assisted portfolio site built with Aider, Qwen2.5 and Claude Code, managed in GitHub and delivered through Cloudflare. Beyond the portfolio itself, the site hosts live demos and the blog, with planned extensions toward Azure Static Web Apps and Functions.</p>' +
+      '<ul><li>Built and refined with Aider using Qwen2.5 as the local coding model (via Ollama), later Claude Code for ongoing iteration</li><li>Started as a lightweight static CV/portfolio site</li><li>Layout, project cards and structure improved through guided iterative prompting rather than one-shot generation</li><li>Large project write-ups turned into compact, feature-driven portfolio blocks</li><li>Site source managed in GitHub as part of the iteration and update process</li><li>Delivered through Cloudflare as a lightweight static setup</li><li>Dynamic features (counters, backlog, contact form) powered by Azure Container Apps APIs and Cloudflare Workers</li><li>Azure Static Web Apps under consideration as the next hosting step</li></ul>' +
+      '<a href="https://github.com/P47K0/website" target="_blank" rel="noopener noreferrer">Source →</a>' },
+    'blog-platform': { title: 'Blog platform (blog.koorevaar.com)', body:
+      '<p>Started as the Cosmos DB-backed blog behind the main website, blog.koorevaar.com has grown into its own dedicated subdomain and project: a Markdown content pipeline, and a fully moderated comment system spanning a .NET 10 API, an Azure Function, and two Cloudflare Workers.</p>' +
+      '<ul><li>Markdown content pipeline: content written as Markdown, stored in Cosmos DB, served through an ACA API; an api-proxy Worker converts Markdown to HTML and a ui-worker Worker renders it on the page</li><li>Cosmos DB stores both blog content and comments &mdash; the site\'s first real data layer beyond static files</li><li>Comment submission and moderation-review endpoints added to the existing .NET minimal API, backed by Cosmos DB via a container-scoped custom RBAC role</li><li>Moderation model, prompt wording, daily quota and auto-publish threshold are all runtime-configurable, no redeploy needed</li><li>Defense in depth: Turnstile bot verification, then an IP/article-partitioned rate limiter, then LLM content scoring (see the comment moderation card above)</li><li>Azure Communication Services emails a notification on every new comment, published or awaiting review</li><li>An hourly scheduled Function re-queues any comment stuck after a transient failure or exhausted quota</li><li>New Azure resources (Function App, storage, Cosmos containers/roles) defined in Bicep, deployed via GitHub Actions using OIDC, with role-assignment permissions applied by hand instead of by CI</li><li>Comment moderation (list/publish/delete) is driven directly by Claude via authenticated API endpoints &mdash; no admin UI required</li></ul>' +
+      '<a href="https://blog.koorevaar.com/" target="_blank" rel="noopener noreferrer">Visit →</a> &nbsp; <a href="https://blog.koorevaar.com/articles/adding-comments-to-the-blog" target="_blank" rel="noopener noreferrer">Comment moderation write-up →</a> &nbsp; <a href="https://github.com/P47K0/Pat.Aca.BlogServiceApi" target="_blank" rel="noopener noreferrer">Source →</a>' },
+    'linkedin-import': { title: 'LinkedIn import pipeline', body:
+      '<p>An end-to-end pipeline bringing my LinkedIn post history onto the blog: Claude for Chrome captures posts straight from the browser, Claude Code processes them, images are rehosted on Cloudflare R2, and a custom write API publishes the result. 86 articles imported this way.</p>' +
+      '<ul><li>Claude for Chrome captures LinkedIn posts straight from the browser</li><li>Claude Code handles duplicate detection and tag derivation before anything is published</li><li>Post images rehosted on Cloudflare R2, with hand-rolled SigV4 request signing</li><li>A dedicated custom write API publishes imported posts into the blog</li><li>Most recent addition: LinkedIn video embeds for posts with an attached demo video</li></ul>' +
+      '<a href="https://blog.koorevaar.com/articles/efficiently-import-linkedin-posts-with-claude" target="_blank" rel="noopener noreferrer">Write-up →</a>' },
+    'youtube-monitor': { title: 'YouTube channel monitor', body:
+      '<p>A simple alternative to FamilyLink: deployed in my ACA environment, it sends an email when a video is made public on a monitored channel.</p>' +
+      '<ul><li>Runs as an Azure Container Apps Job, a scheduled background task</li><li>Uses the Google YouTube API to inspect the channel and detect public videos</li><li>Azure Communication Services sends the email notification</li></ul>' +
+      '<a href="https://github.com/P47K0/Pat.Containers.Job.YoutubeChannelGuard" target="_blank" rel="noopener noreferrer">Source →</a>' }
+  };
+
+  function toggleDetail(id, cardEl){
+    var data = DETAILS[id];
+    if(!data || !cardEl) return;
+    var existing = cardEl.querySelector('.card-detail');
+    var btn = cardEl.querySelector('.detail-btn');
+    if(existing){
+      var nowOpen = existing.classList.toggle('open');
+      if(btn){
+        btn.classList.toggle('open', nowOpen);
+        btn.setAttribute('aria-label', nowOpen ? 'Hide details' : 'Show details');
+      }
+      return;
+    }
+    var div = document.createElement('div');
+    div.className = 'card-detail open';
+    div.innerHTML = data.body;
+    cardEl.appendChild(div);
+    if(btn){
+      btn.classList.add('open');
+      btn.setAttribute('aria-label', 'Hide details');
+    }
+  }
+
+  function toggleSkills(){
+    var btn = document.getElementById('skills-toggle');
+    var panel = document.getElementById('skills-detail');
+    var nowOpen = panel.classList.toggle('open');
+    btn.classList.toggle('open', nowOpen);
+    btn.setAttribute('aria-expanded', nowOpen ? 'true' : 'false');
+  }
+
+  function toggleCerts(){
+    var btn = document.getElementById('certs-toggle');
+    var panel = document.getElementById('certs-detail');
+    var nowOpen = panel.classList.toggle('open');
+    btn.classList.toggle('open', nowOpen);
+    btn.setAttribute('aria-expanded', nowOpen ? 'true' : 'false');
+  }
+
+  function toggleAbout(){
+    var btn = document.getElementById('about-toggle');
+    var panel = document.getElementById('about-detail');
+    var nowOpen = panel.classList.toggle('open');
+    btn.classList.toggle('open', nowOpen);
+    btn.setAttribute('aria-expanded', nowOpen ? 'true' : 'false');
+  }
+</script>
+
+<script defer src="count-up.js"></script>
+<script defer src="tenure-counter.js"></script>
+<script defer src="human-counter.js"></script>
+<script defer src="blog-counter.js"></script>
+<script defer src="side-project-counter.js"></script>
+<script defer src="backlog.js"></script>
+<script defer src="lab-access.js"></script>
+<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "621adb48e7ca4c8da9f338adc9654929"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>
