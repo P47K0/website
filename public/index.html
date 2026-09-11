@@ -380,7 +380,7 @@
                     <a href="#project-k8s-sandbox" class="btn btn-outline-primary btn-sm m-1">K8s Cluster Provisioning (Sandbox)</a>
                     <a href="#project-cka-lab" class="btn btn-outline-primary btn-sm m-1">CKA Practice Lab</a>
                     <a href="#project-linkedin-import" class="btn btn-outline-primary btn-sm m-1">LinkedIn Import Pipeline</a>
-                    <a href="#project-comment-system" class="btn btn-outline-primary btn-sm m-1">AI-Moderated Blog Comment System</a>
+                    <a href="#project-blog-platform" class="btn btn-outline-primary btn-sm m-1">Blog Platform (blog.koorevaar.com)</a>
                 </div>
             </div>
 
@@ -631,7 +631,7 @@
                                 <span class="badge badge-success mr-2"><i class="fas fa-play-circle"></i> Live Demo</span>
                                 <span class="text-muted small"><i class="fas fa-calendar-alt mr-1"></i>May 5, 2026</span>
                             </div>
-                            <p class="card-text">AI-assisted portfolio website built with Aider, Qwen2.5, and Claude Code, managed in GitHub and delivered through Cloudflare, with a Cosmos DB-backed blog and planned extensions toward Azure Static Web Apps and Functions.</p>
+                            <p class="card-text">AI-assisted portfolio website built with Aider, Qwen2.5, and Claude Code, managed in GitHub and delivered through Cloudflare, with planned extensions toward Azure Static Web Apps and Functions. The blog it links to has grown into its own dedicated project &mdash; see Blog Platform (blog.koorevaar.com) below.</p>
                             <div class="row mt-3">
                                 <div class="col-md-4 mb-3">
                                     <div class="card bg-light border shadow-sm">
@@ -692,14 +692,6 @@
                                 <div class="col-md-4 mb-3">
                                     <div class="card bg-light border shadow-sm">
                                         <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-blog"></i> Blog Platform (blog.koorevaar.com)</h6>
-                                            <p class="card-text">Blog content is written as Markdown and stored in Azure Cosmos DB, served through an Azure Container Apps API. An api-proxy Cloudflare Worker converts the Markdown to HTML, and a ui-worker Cloudflare Worker renders it on the page.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
                                             <h6 class="card-title"><i class="fas fa-cloud"></i> Planned Azure Hosting</h6>
                                             <p class="card-text">Considering Azure Static Web Apps as the next hosting/deployment step.</p>
                                         </div>
@@ -713,17 +705,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-light border shadow-sm">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><i class="fas fa-database"></i> Cosmos DB Data Layer</h6>
-                                            <p class="card-text">Delivered via the blog platform above: Azure Cosmos DB now stores structured content, the site's first real data layer beyond static files.</p>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
-                            <a href="https://blog.koorevaar.com/" target="_blank" rel="noopener noreferrer" class="btn btn-primary mt-3"><i class="fas fa-blog"></i> Read the Blog</a>
-                            <a href="https://github.com/P47K0/website" target="_blank" rel="noopener noreferrer" class="btn btn-dark mt-3 ml-2"><i class="fab fa-github"></i> View Source</a>
+                            <a href="https://github.com/P47K0/website" target="_blank" rel="noopener noreferrer" class="btn btn-dark mt-3"><i class="fab fa-github"></i> View Source</a>
                         </div>
                     </div>
                 </div>
@@ -997,16 +980,32 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-12" id="project-comment-system">
+                <div class="col-md-12" id="project-blog-platform">
                     <div class="card mb-3">
                         <div class="card-body">
-                            <h5 class="card-title">AI-Moderated Blog Comment System</h5>
+                            <h5 class="card-title">Blog Platform (blog.koorevaar.com)</h5>
                             <div class="d-flex flex-wrap align-items-center mb-2">
                                 <span class="badge badge-success mr-2"><i class="fas fa-play-circle"></i> Live Demo</span>
-                                <span class="text-muted small"><i class="fas fa-calendar-alt mr-1"></i>Sep 10, 2026</span>
+                                <span class="text-muted small"><i class="fas fa-calendar-alt mr-1"></i>May 5 &ndash; Sep 10, 2026</span>
                             </div>
-                            <p class="card-text">Built a fully moderated comment system for the blog, spanning a .NET 10 API, a new Azure Function, and two Cloudflare Workers. A comment section now shows on every article, moderated by an LLM (and by me directly in the early days).</p>
+                            <p class="card-text">Started as the Cosmos DB-backed blog behind the main website, blog.koorevaar.com has grown into its own dedicated subdomain and project: a Markdown content pipeline, and &mdash; since September &mdash; a fully moderated comment system spanning a .NET 10 API, a new Azure Function, and two Cloudflare Workers. A comment section now shows on every article, moderated by an LLM (and by me directly in the early days).</p>
                             <div class="row mt-3">
+                                <div class="col-md-4 mb-3">
+                                    <div class="card bg-light border shadow-sm">
+                                        <div class="card-body">
+                                            <h6 class="card-title"><i class="fas fa-blog"></i> Markdown Content Pipeline</h6>
+                                            <p class="card-text">Blog content is written as Markdown and stored in Azure Cosmos DB, served through an Azure Container Apps API. An api-proxy Cloudflare Worker converts the Markdown to HTML, and a ui-worker Cloudflare Worker renders it on the page.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="card bg-light border shadow-sm">
+                                        <div class="card-body">
+                                            <h6 class="card-title"><i class="fas fa-database"></i> Cosmos DB Data Layer</h6>
+                                            <p class="card-text">Azure Cosmos DB stores both blog content and comments as structured documents &mdash; the site's first real data layer beyond static files.</p>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="col-md-4 mb-3">
                                     <div class="card bg-light border shadow-sm">
                                         <div class="card-body">
@@ -1080,7 +1079,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <a href="https://blog.koorevaar.com/articles/adding-comments-to-the-blog" target="_blank" rel="noopener noreferrer" class="btn btn-primary mt-3"><i class="fas fa-blog"></i> Read the Write-Up &amp; See It Live</a>
+                            <a href="https://blog.koorevaar.com/" target="_blank" rel="noopener noreferrer" class="btn btn-primary mt-3"><i class="fas fa-blog"></i> Visit the Blog</a>
+                            <a href="https://blog.koorevaar.com/articles/adding-comments-to-the-blog" target="_blank" rel="noopener noreferrer" class="btn btn-outline-primary mt-3 ml-2"><i class="fas fa-file-alt"></i> Read the Comment Moderation Write-Up</a>
+                            <a href="https://github.com/P47K0/Pat.Aca.BlogServiceApi" target="_blank" rel="noopener noreferrer" class="btn btn-dark mt-3 ml-2"><i class="fab fa-github"></i> View Source</a>
                         </div>
                     </div>
                 </div>
