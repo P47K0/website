@@ -85,7 +85,11 @@
   .navlinks{display:flex;gap:26px;font-size:14px;color:var(--text-dim);}
   .navlinks a{text-decoration:none;}
   .navlinks a:hover{color:var(--text);}
-  .navtoggle{display:none;background:none;border:1px solid var(--border);border-radius:8px;color:var(--text);width:38px;height:38px;font-size:16px;}
+  .navtoggle{display:none;background:none;border:1px solid var(--border);border-radius:8px;color:var(--text);width:38px;height:38px;font-size:16px;align-items:center;justify-content:center;flex:none;cursor:pointer;}
+  .navtoggle svg{width:18px;height:18px;display:block;}
+  .navtoggle .icon-close{display:none;}
+  .navtoggle.open .icon-menu{display:none;}
+  .navtoggle.open .icon-close{display:block;}
 
   .hero{padding:96px 0 60px;position:relative;overflow:hidden;}
   .glow{position:absolute;top:-140px;right:-160px;width:560px;height:560px;border-radius:50%;
@@ -240,7 +244,10 @@
     .grid3,.grid2,.more-row,.backlog-list{grid-template-columns:1fr;}
     .stat-row{grid-template-columns:repeat(2,1fr);}
     .hero h1{font-size:32px;}
+    .navtoggle{display:flex;}
     .navlinks{display:none;}
+    .navlinks.open{display:flex;flex-direction:column;align-items:flex-start;gap:4px;position:absolute;top:64px;left:0;right:0;background:rgba(5,11,26,0.97);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:12px 28px 18px;}
+    .navlinks.open a{padding:10px 0;width:100%;}
   }
 </style>
 </head>
@@ -249,17 +256,21 @@
 <nav>
   <div class="wrap">
     <a class="brand" href="#">Patrick Koorevaar<span>Azure DevOps Engineer</span></a>
-    <div class="navlinks">
-      <a href="#ai-section">AI Apps</a>
-      <a href="#devops-section">DevOps</a>
-      <a href="#about-section">About</a>
-      <a href="#skills-section">Skills</a>
-      <a href="#certifications-section">Certifications</a>
-      <a href="#side-projects-section">Projects</a>
-      <a href="#work-style-section">Work style</a>
-      <a href="#backlog-section">Backlog</a>
-      <a href="https://blog.koorevaar.com/" target="_blank" rel="noopener noreferrer">Blog</a>
-      <a href="#contact-section">Contact</a>
+    <button class="navtoggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navlinks" onclick="toggleNav()">
+      <svg class="icon-menu" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="2" y1="5" x2="16" y2="5"/><line x1="2" y1="9" x2="16" y2="9"/><line x1="2" y1="13" x2="16" y2="13"/></svg>
+      <svg class="icon-close" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="4" y1="4" x2="14" y2="14"/><line x1="14" y1="4" x2="4" y2="14"/></svg>
+    </button>
+    <div class="navlinks" id="navlinks">
+      <a href="#ai-section" onclick="closeNav()">AI Apps</a>
+      <a href="#devops-section" onclick="closeNav()">DevOps</a>
+      <a href="#about-section" onclick="closeNav()">About</a>
+      <a href="#skills-section" onclick="closeNav()">Skills</a>
+      <a href="#certifications-section" onclick="closeNav()">Certifications</a>
+      <a href="#side-projects-section" onclick="closeNav()">Projects</a>
+      <a href="#work-style-section" onclick="closeNav()">Work style</a>
+      <a href="#backlog-section" onclick="closeNav()">Backlog</a>
+      <a href="https://blog.koorevaar.com/" target="_blank" rel="noopener noreferrer" onclick="closeNav()">Blog</a>
+      <a href="#contact-section" onclick="closeNav()">Contact</a>
     </div>
   </div>
 </nav>
@@ -694,6 +705,28 @@
 <script>
   var copyrightYearEl = document.getElementById('copyright-year');
   if (copyrightYearEl) copyrightYearEl.textContent = new Date().getFullYear();
+
+  function toggleNav(){
+    var nav = document.getElementById('navlinks');
+    var btn = document.getElementById('nav-toggle');
+    var nowOpen = nav.classList.toggle('open');
+    btn.classList.toggle('open', nowOpen);
+    btn.setAttribute('aria-expanded', nowOpen ? 'true' : 'false');
+  }
+  function closeNav(){
+    var nav = document.getElementById('navlinks');
+    var btn = document.getElementById('nav-toggle');
+    nav.classList.remove('open');
+    btn.classList.remove('open');
+    btn.setAttribute('aria-expanded', 'false');
+  }
+  document.addEventListener('click', function(e){
+    var nav = document.getElementById('navlinks');
+    var btn = document.getElementById('nav-toggle');
+    if (nav.classList.contains('open') && !nav.contains(e.target) && !btn.contains(e.target)) {
+      closeNav();
+    }
+  });
 
   function openLabModal(){
     document.getElementById('lab-access-modal').classList.add('open');
