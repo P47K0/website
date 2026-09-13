@@ -10,12 +10,12 @@ Two pieces landed in this repo:
 
 Read `assistant-widget.js` top-to-bottom before changing anything — it's short and every non-obvious decision has a comment explaining why, not just what.
 
-## Two things this widget cannot work without, neither of which lives in this repo
+## Status of the two things this widget cannot work without
 
-1. **A Turnstile site key for this domain.** The script tag currently has a placeholder (`YOUR_SITE_KEY_HERE`) in `data-turnstile-sitekey`. That Turnstile widget (Cloudflare dashboard → Turnstile) must have `www.koorevaar.com` in its allowed hostnames — either added to the existing widget the blog's comment form uses, or a new dedicated one. This is a Cloudflare dashboard change, not a code change, and it's the user's to make.
-2. **A CORS fix on the backend Worker, already coded but not yet deployed.** The backend (`assistant-worker`, in `Pat.Aca.BlogServiceApi/Cloudflare/assistant-worker`, a sibling Cloudflare Worker in a different repo) had zero CORS headers until the other session added them, on branch `feature/assistant-worker-cors`, scoped to exactly `https://www.koorevaar.com`. That branch was committed but **not pushed, not merged, not deployed** — the sandbox that built it had no GitHub push access. Until it's live, every `fetch()` from this widget will be silently blocked by the browser's own CORS check, no matter how correct this widget's code is. If testing and every request fails with a generic network error (not a 429/403/500 the widget can display), check devtools for a CORS error specifically, not just "failed to fetch".
+1. **Turnstile site key for this domain — done.** `data-turnstile-sitekey` in [public/index.html](public/index.html) is set to the real key (`0x4AAAAAAEuW1UZyrV4YDywH`). This assumes that Turnstile widget's allowed hostnames (Cloudflare dashboard → Turnstile) already include `www.koorevaar.com` — worth a quick check in the dashboard if Turnstile verification fails unexpectedly.
+2. **A CORS fix on the backend Worker — still pending.** The backend (`assistant-worker`, in `Pat.Aca.BlogServiceApi/Cloudflare/assistant-worker`, a sibling Cloudflare Worker in a different repo) had zero CORS headers until another session added them, on branch `feature/assistant-worker-cors`, scoped to exactly `https://www.koorevaar.com`. That branch was committed but **not pushed, not merged, not deployed** — the sandbox that built it had no GitHub push access. Until it's live, every `fetch()` from this widget will be silently blocked by the browser's own CORS check, no matter how correct this widget's code is. If testing and every request fails with a generic network error (not a 429/403/500 the widget can display), check devtools for a CORS error specifically, not just "failed to fetch".
 
-Neither of these is something to work around from this side. Until both are done, the widget is inert by design (invalid site key -> Turnstile never verifies) and safe to leave live in the page.
+This second one isn't something to work around from this side — it has to be pushed, merged, and deployed in the other repo. Until it is, the widget will fail closed (CORS block) and is safe to leave live in the page.
 
 ## Backend contract (`assistant-worker`, endpoint `https://ai-assistant.koorevaar.com/ask`)
 
@@ -46,6 +46,6 @@ The script reads its config via `document.currentScript.getAttribute(...)` at th
 
 ## Remaining follow-ups before this is live
 
-1. Create/reuse a Turnstile widget with `www.koorevaar.com` allowed, and paste its site key into `data-turnstile-sitekey` in [public/index.html](public/index.html) (replacing `YOUR_SITE_KEY_HERE`).
+1. ~~Create/reuse a Turnstile widget with `www.koorevaar.com` allowed, and paste its site key into `data-turnstile-sitekey`.~~ Done — real site key is in [public/index.html](public/index.html).
 2. Push, merge, and deploy the `feature/assistant-worker-cors` branch in the `Pat.Aca.BlogServiceApi` repo.
-3. Once both are done, do a real end-to-end browser test (ask a question, confirm a 200 with an answer, confirm the 429 and non-English/Dutch redirect paths behave as documented above).
+3. Once that's done, do a real end-to-end browser test (ask a question, confirm a 200 with an answer, confirm the 429 and non-English/Dutch redirect paths behave as documented above).

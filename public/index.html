@@ -879,12 +879,11 @@
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "621adb48e7ca4c8da9f338adc9654929"}'></script><!-- End Cloudflare Web Analytics -->
 <!--
   "Ask about Patrick" chat widget -- see assistant-widget.js for details.
-  Not yet wired up: needs a real Turnstile site key (widget allowed
-  hostnames must include www.koorevaar.com) and the assistant-worker CORS
-  fix (ALLOWED_ORIGIN = https://www.koorevaar.com) deployed on the backend.
-  Until both land, requests from this widget will fail (403 or a silent
-  CORS block). See assistant-widget-handover.md for the full writeup.
+  Turnstile site key is live below. Still pending: the assistant-worker
+  CORS fix (ALLOWED_ORIGIN = https://www.koorevaar.com) deployed on the
+  backend -- until that lands, requests from this widget will fail with a
+  silent CORS block. See assistant-widget-handover.md for the full writeup.
 -->
-<script src="/assistant-widget.js" data-turnstile-sitekey="YOUR_SITE_KEY_HERE" defer></script>
+<script src="/assistant-widget.js" data-turnstile-sitekey="0x4AAAAAAEuW1UZyrV4YDywH" defer></script>
 </body>
 </html>
