@@ -52,7 +52,13 @@
     '@media (max-width:600px){',
     '.aw-launcher{bottom:calc(76px + env(safe-area-inset-bottom));}',
     '.aw-panel{bottom:calc(144px + env(safe-area-inset-bottom));right:12px;max-width:calc(100vw - 24px);',
-    'max-height:calc(100vh - 180px);max-height:calc(100dvh - 180px);}',
+    // Shorter than the 460px desktop panel: on a phone, the on-screen
+    // keyboard eats a big chunk of vertical space the moment the message
+    // field is focused (which happens automatically on open), and a tall
+    // fixed-height panel can end up with its header and welcome message
+    // pushed out of view above the keyboard. A shorter panel leaves enough
+    // headroom for that not to happen.
+    'height:360px;max-height:calc(100vh - 180px);max-height:calc(100dvh - 180px);}',
     '}',
     '.aw-header{background:#2563eb;color:#fff;padding:12px 16px;display:flex;',
     'justify-content:space-between;align-items:center;flex-shrink:0;}',
