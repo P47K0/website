@@ -167,7 +167,7 @@
   var pendingTokenResolve = null;
   var pendingTokenReject = null;
 
-  window.__assistantWidgetOnTurnstileLoad = function () {
+  function renderAssistantTurnstileWidget() {
     var container = document.createElement('div');
     container.style.display = 'none';
     document.body.appendChild(container);
@@ -199,9 +199,29 @@
       },
     });
     turnstileReady = true;
-  };
+  }
 
   (function loadTurnstile() {
+    // The host page may already load the Turnstile script itself for some
+    // other widget (e.g. an invisible human-visitor check). Reuse that
+    // instead of injecting a second <script src="...api.js"> tag -- two
+    // copies of the same script both trying to define window.turnstile is
+    // unnecessary and untested, and Turnstile happily renders multiple
+    // independent widgets off a single loaded script.
+    if (window.turnstile) {
+      renderAssistantTurnstileWidget();
+      return;
+    }
+    if (document.querySelector('script[src*="challenges.cloudflare.com/turnstile"]')) {
+      var poll = setInterval(function () {
+        if (window.turnstile) {
+          clearInterval(poll);
+          renderAssistantTurnstileWidget();
+        }
+      }, 50);
+      return;
+    }
+    window.__assistantWidgetOnTurnstileLoad = renderAssistantTurnstileWidget;
     var s = document.createElement('script');
     s.src = TURNSTILE_SCRIPT_SRC + '?onload=__assistantWidgetOnTurnstileLoad&render=explicit';
     s.async = true;
