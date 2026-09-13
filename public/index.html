@@ -104,8 +104,18 @@
   .btn-primary{background:linear-gradient(90deg,#2E8FEF,#63C7FF);color:#04101F;border:none;}
   .btn-ghost{background:var(--glass);backdrop-filter:blur(10px);color:var(--text);}
   .btn-ghost:hover{border-color:var(--border-strong);}
-  .btn-ask{background:linear-gradient(90deg,#2FAE6E,#8FE3B0);color:#04101F;border:none;}
+  .btn-ask{background:linear-gradient(90deg,#2FAE6E,#8FE3B0);color:#04101F;border:none;
+    animation:btn-ask-shake 20s ease-in-out infinite;}
   .btn-ask:hover{filter:brightness(1.08);}
+  @keyframes btn-ask-shake{
+    0%,98.5%,100%{transform:translateX(0);}
+    98.75%{transform:translateX(-3px);}
+    99%{transform:translateX(3px);}
+    99.25%{transform:translateX(-3px);}
+    99.5%{transform:translateX(3px);}
+    99.75%{transform:translateX(-1px);}
+  }
+  @media (prefers-reduced-motion: reduce){.btn-ask{animation:none;}}
 
   .badges{display:flex;flex-wrap:wrap;gap:10px;margin-top:44px;}
   .badge{display:flex;align-items:center;gap:8px;background:var(--glass);backdrop-filter:blur(10px);border:1px solid var(--border);border-radius:10px;padding:9px 14px;font-size:13px;color:var(--text-dim);text-decoration:none;}
@@ -298,8 +308,8 @@
     <div class="hero-ctas">
       <a class="btn btn-primary" href="#ai-section">See the AI apps</a>
       <a class="btn btn-ghost" href="#devops-section">See the DevOps work</a>
-      <a class="btn btn-ask" href="#" onclick="document.querySelector('.aw-launcher').click();return false;">Ask</a>
       <a class="btn btn-ghost" href="#contact-section">Get in touch</a>
+      <a class="btn btn-ask" href="#" onclick="document.querySelector('.aw-launcher').click();return false;">Ask</a>
     </div>
     <div class="badges">
       <span class="badge"><span class="ic"></span>AKS</span>
