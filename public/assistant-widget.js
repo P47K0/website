@@ -38,15 +38,22 @@
   // into or clashes with the host page's own CSS.
   // ---------------------------------------------------------------------
   var STYLE = [
-    '.aw-launcher{position:fixed;right:20px;bottom:20px;width:56px;height:56px;border-radius:50%;',
+    '.aw-launcher{position:fixed;right:20px;bottom:20px;bottom:calc(20px + env(safe-area-inset-bottom));',
+    'width:56px;height:56px;border-radius:50%;',
     'background:#2563eb;color:#fff;border:none;box-shadow:0 4px 14px rgba(0,0,0,.25);cursor:pointer;',
     'font-size:24px;line-height:56px;text-align:center;z-index:9999;padding:0;}',
     '.aw-launcher:hover{background:#1d4ed8;}',
-    '.aw-panel{position:fixed;right:20px;bottom:88px;width:340px;max-width:calc(100vw - 40px);',
-    'height:460px;max-height:calc(100vh - 120px);background:#fff;border-radius:16px;',
+    '.aw-panel{position:fixed;right:20px;bottom:88px;bottom:calc(88px + env(safe-area-inset-bottom));',
+    'width:340px;max-width:calc(100vw - 40px);',
+    'height:460px;max-height:calc(100vh - 120px);max-height:calc(100dvh - 120px);background:#fff;border-radius:16px;',
     'box-shadow:0 8px 30px rgba(0,0,0,.3);display:none;flex-direction:column;overflow:hidden;',
     'font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;font-size:14px;color:#111827;z-index:9999;}',
     '.aw-panel.aw-open{display:flex;}',
+    '@media (max-width:600px){',
+    '.aw-launcher{bottom:calc(76px + env(safe-area-inset-bottom));}',
+    '.aw-panel{bottom:calc(144px + env(safe-area-inset-bottom));right:12px;max-width:calc(100vw - 24px);',
+    'max-height:calc(100vh - 180px);max-height:calc(100dvh - 180px);}',
+    '}',
     '.aw-header{background:#2563eb;color:#fff;padding:12px 16px;display:flex;',
     'justify-content:space-between;align-items:center;flex-shrink:0;}',
     '.aw-header h2{margin:0;font-size:15px;font-weight:600;}',
@@ -169,7 +176,21 @@
 
   function renderAssistantTurnstileWidget() {
     var container = document.createElement('div');
-    container.style.display = 'none';
+    // Deliberately not display:none -- Cloudflare doesn't recommend hiding a
+    // Turnstile container that way, and it's been linked to unexpected
+    // layout side effects on some mobile browsers. Instead, pin it to a
+    // fixed 1x1px clipped box at the viewport's top-left corner: small and
+    // clipped enough to be invisible, but still genuinely rendered, and
+    // deliberately NOT pushed off-canvas with a large negative offset --
+    // that classic hiding trick can itself expand the page's scrollable
+    // area on some mobile browsers, which is the opposite of the goal here.
+    container.style.position = 'fixed';
+    container.style.left = '0';
+    container.style.top = '0';
+    container.style.width = '1px';
+    container.style.height = '1px';
+    container.style.overflow = 'hidden';
+    container.style.clip = 'rect(0,0,0,0)';
     document.body.appendChild(container);
 
     turnstileWidgetId = window.turnstile.render(container, {
