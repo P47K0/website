@@ -317,7 +317,7 @@
       <a href="#devops-section" class="stat-card"><div class="n" id="years-azure-count">—</div><div class="l">Years Azure &amp; Kubernetes</div></a>
       <div class="stat-card"><div class="n" id="site-visit-count">—</div><div class="l">Site visits</div></div>
       <a href="#certifications-section" class="stat-card"><div class="n">7</div><div class="l">Certifications</div></a>
-      <a href="#ai-section" class="stat-card"><div class="n">5</div><div class="l">Applied AI projects</div></a>
+      <a href="#ai-section" class="stat-card"><div class="n">6</div><div class="l">Applied AI projects</div></a>
       <a href="#side-projects-section" class="stat-card"><div class="n" id="side-project-count">—</div><div class="l">Side projects</div></a>
       <a href="https://blog.koorevaar.com/" target="_blank" rel="noopener noreferrer" class="stat-card"><div class="n" id="blog-article-count">—</div><div class="l">Blog articles</div></a>
     </div>
@@ -383,6 +383,17 @@
           <a class="app-link" href="https://blog.koorevaar.com/" target="_blank" rel="noopener noreferrer">Try it →</a>
           <a class="app-link" href="https://github.com/P47K0/Pat.Aca.BlogServiceApi" target="_blank" rel="noopener noreferrer">Source →</a>
           <button class="detail-btn" aria-label="Show details" onclick="toggleDetail('blog-moderation', this.closest('.app-card'))"><span class="chevron">+</span></button>
+        </div>
+      </div>
+      <div class="app-card" data-project>
+        <span class="status-badge live"><span class="dot"></span>Live · Sep 2026</span>
+        <h3>"Ask about Patrick" chat assistant</h3>
+        <p>The floating chat button on this page — a retrieval-augmented assistant that answers questions about my background from a knowledge base built entirely by Claude Code.</p>
+        <div class="app-tags"><span class="tag">Workers AI</span><span class="tag">RAG</span><span class="tag">Cosmos DB</span></div>
+        <div class="app-links">
+          <a class="app-link" href="#" onclick="document.querySelector('.aw-launcher').click();return false;">Try it →</a>
+          <a class="app-link" href="https://github.com/P47K0/Pat.Aca.BlogServiceApi" target="_blank" rel="noopener noreferrer">Source →</a>
+          <button class="detail-btn" aria-label="Show details" onclick="toggleDetail('ai-assistant', this.closest('.app-card'))"><span class="chevron">+</span></button>
         </div>
       </div>
     </div>
@@ -778,6 +789,10 @@
       '<p>Every comment on the blog runs through an async LLM moderation pipeline before it&#39;s published.</p>' +
       '<ul><li>Cosmos DB change feed triggers a .NET 10 isolated Azure Function</li><li>The Function calls Cloudflare Workers AI directly over HTTP &mdash; a deliberate cross-cloud integration</li><li>Model, prompt, quota and auto-publish threshold are all runtime-configurable, no redeploy needed</li><li>Defense in depth: Turnstile, IP/article-partitioned rate limiting, then LLM scoring</li><li>An hourly sweep re-queues any comment stuck after a transient failure</li></ul>' +
       '<a href="https://blog.koorevaar.com/" target="_blank" rel="noopener noreferrer">Try it →</a> &nbsp; <a href="https://github.com/P47K0/Pat.Aca.BlogServiceApi" target="_blank" rel="noopener noreferrer">Source →</a>' },
+    'ai-assistant': { title: '"Ask about Patrick" chat assistant', body:
+      '<p>A retrieval-augmented chat widget, floating right here on this page, that answers questions about my background, skills, and projects &mdash; entirely on Cloudflare Workers, end to end.</p>' +
+      '<ul><li>Talking model: Llama 3.1 8B Instruct (fp8) on Cloudflare Workers AI</li><li>Embedding model: bge-m3, also served via Workers AI</li><li>Embeddings are stored in Cosmos DB and queried for retrieval at answer time</li><li>Turnstile-gated with a fresh token per question, plus per-IP rate limiting</li><li>Knowledge base built by Claude Code: read every blog post, generated embeddings locally through Ollama, then inserted them into Cosmos DB</li><li>Also ingested the GitHub backlog items and a structured interview with me, to cover what the blog and backlog alone didn&#39;t</li></ul>' +
+      '<a href="#" onclick="document.querySelector(&#39;.aw-launcher&#39;).click();return false;">Try it →</a> &nbsp; <a href="https://github.com/P47K0/Pat.Aca.BlogServiceApi" target="_blank" rel="noopener noreferrer">Source →</a>' },
     'sentiment-aks-source': { title: 'Sentiment analysis platform (AKS)', body:
       '<p>A complete, production-oriented sentiment analysis solution running entirely on AKS using a self-hosted Large Language Model (Ollama).</p>' +
       '<ul><li>Blue/green deployment: controlled traffic switching between blue and green environments via Traefik</li><li>Canary deployment: weighted rollout flow for gradual production exposure</li><li>Multi-pipeline design: separate pipelines for infrastructure, build/deploy, traffic switching and teardown</li><li>Infrastructure: AKS plus a user nodepool and state store, provisioned via a Terraform script</li><li>Self-hosted LLM: private Ollama-based inference running inside AKS</li><li>Kubernetes delivery: Docker, manifests, probes, ConfigMaps and resource limits</li><li>Cost-control teardown: resources removed when not demoing, to keep cost near zero</li><li>End-to-end security via Cloudflare, edge to core</li><li>Additional API feature: language detection alongside sentiment scoring</li></ul>' +
