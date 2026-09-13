@@ -67,7 +67,11 @@
     '.aw-footer{border-top:1px solid #e5e7eb;padding:8px 12px;flex-shrink:0;}',
     '.aw-input-row{display:flex;gap:6px;}',
     '.aw-input{flex:1;resize:none;border:1px solid #d1d5db;border-radius:10px;padding:8px 10px;',
-    'font:inherit;max-height:80px;}',
+    // 16px, not inherited 14px: iOS Safari auto-zooms the whole page in when
+    // a focused text input is under 16px, and it doesn't reliably zoom back
+    // out afterward -- exactly the "page shifts right and stays that way"
+    // bug this caused, since the widget auto-focuses this field on open.
+    'font-family:inherit;font-size:16px;max-height:80px;}',
     '.aw-input:focus{outline:2px solid #2563eb;outline-offset:1px;}',
     '.aw-send{background:#2563eb;color:#fff;border:none;border-radius:10px;padding:0 14px;',
     'font:inherit;font-weight:600;cursor:pointer;}',
