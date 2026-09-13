@@ -255,12 +255,13 @@
   .skills-detail .chip-group:last-child{margin-bottom:0;}
 
   @media(max-width:820px){
+    .wrap{padding:0 18px;}
     .grid3,.grid2,.more-row,.backlog-list{grid-template-columns:1fr;}
     .stat-row{grid-template-columns:repeat(2,1fr);}
     .hero h1{font-size:32px;}
     .navtoggle{display:flex;}
     .navlinks{display:none;}
-    .navlinks.open{display:flex;flex-direction:column;align-items:flex-start;gap:4px;position:absolute;top:64px;left:0;right:0;background:rgba(5,11,26,0.97);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:12px 28px 18px;}
+    .navlinks.open{display:flex;flex-direction:column;align-items:flex-start;gap:4px;position:absolute;top:64px;left:0;right:0;background:rgba(5,11,26,0.97);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:12px 18px 18px;}
     .navlinks.open a{padding:10px 0;width:100%;}
   }
 </style>
