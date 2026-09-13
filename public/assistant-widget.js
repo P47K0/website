@@ -145,7 +145,7 @@
     if (open) {
       inputEl.focus();
       if (messagesEl.children.length === 0) {
-        addMessage("Hi! Ask me anything about Patrick's background, skills, or projects.", 'system');
+        addMessage("Hi! I'm an AI assistant that can answer questions about Patrick's background, skills, or projects.", 'system');
       }
     }
   }
