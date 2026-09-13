@@ -333,6 +333,39 @@
     </div>
     <div class="grid3">
       <div class="app-card" data-project>
+        <span class="status-badge live"><span class="dot"></span>Live · Sep 2026</span>
+        <h3>"Ask about Patrick" chat assistant</h3>
+        <p>The floating chat button on this page — a retrieval-augmented assistant that answers questions about my background from a knowledge base built entirely by Claude Code.</p>
+        <div class="app-tags"><span class="tag">Workers AI</span><span class="tag">RAG</span><span class="tag">Cosmos DB</span></div>
+        <div class="app-links">
+          <a class="app-link" href="#" onclick="document.querySelector('.aw-launcher').click();return false;">Try it →</a>
+          <a class="app-link" href="https://github.com/P47K0/Pat.Aca.BlogServiceApi" target="_blank" rel="noopener noreferrer">Source →</a>
+          <button class="detail-btn" aria-label="Show details" onclick="toggleDetail('ai-assistant', this.closest('.app-card'))"><span class="chevron">+</span></button>
+        </div>
+      </div>
+      <div class="app-card" data-project>
+        <span class="status-badge live"><span class="dot"></span>Live · Sep 2026</span>
+        <h3>Blog comment moderation</h3>
+        <p>Every comment on the blog is scored by an LLM via a Cosmos DB change-feed-triggered Azure Function, calling Cloudflare Workers AI cross-cloud.</p>
+        <div class="app-tags"><span class="tag">Change feed</span><span class="tag">Azure Function</span><span class="tag">ACA</span></div>
+        <div class="app-links">
+          <a class="app-link" href="https://blog.koorevaar.com/" target="_blank" rel="noopener noreferrer">Try it →</a>
+          <a class="app-link" href="https://github.com/P47K0/Pat.Aca.BlogServiceApi" target="_blank" rel="noopener noreferrer">Source →</a>
+          <button class="detail-btn" aria-label="Show details" onclick="toggleDetail('blog-moderation', this.closest('.app-card'))"><span class="chevron">+</span></button>
+        </div>
+      </div>
+      <div class="app-card" data-project>
+        <span class="status-badge live"><span class="dot"></span>Live demo · Jul 2026</span>
+        <h3>AKS/ACA capacity advisor</h3>
+        <p>Turns cluster telemetry into plain-language capacity recommendations using Workers AI.</p>
+        <div class="app-tags"><span class="tag">AIOps</span><span class="tag">Telemetry</span><span class="tag">ACA</span></div>
+        <div class="app-links">
+          <a class="app-link" href="https://capacity-advisor-demo.koorevaar.com/" target="_blank" rel="noopener noreferrer">View demo →</a>
+          <a class="app-link" href="https://github.com/P47K0/Pat.Containers.CapacityAdvisor" target="_blank" rel="noopener noreferrer">Source →</a>
+          <button class="detail-btn" aria-label="Show details" onclick="toggleDetail('capacity-advisor', this.closest('.app-card'))"><span class="chevron">+</span></button>
+        </div>
+      </div>
+      <div class="app-card" data-project>
         <span class="status-badge live"><span class="dot"></span>Live demo · May 2026</span>
         <h3>AI text analysis</h3>
         <p>Sentiment and language detection served live over a Cloudflare Workers AI endpoint.</p>
@@ -354,17 +387,6 @@
         </div>
       </div>
       <div class="app-card" data-project>
-        <span class="status-badge live"><span class="dot"></span>Live demo · Jul 2026</span>
-        <h3>AKS/ACA capacity advisor</h3>
-        <p>Turns cluster telemetry into plain-language capacity recommendations using Workers AI.</p>
-        <div class="app-tags"><span class="tag">AIOps</span><span class="tag">Telemetry</span><span class="tag">ACA</span></div>
-        <div class="app-links">
-          <a class="app-link" href="https://capacity-advisor-demo.koorevaar.com/" target="_blank" rel="noopener noreferrer">View demo →</a>
-          <a class="app-link" href="https://github.com/P47K0/Pat.Containers.CapacityAdvisor" target="_blank" rel="noopener noreferrer">Source →</a>
-          <button class="detail-btn" aria-label="Show details" onclick="toggleDetail('capacity-advisor', this.closest('.app-card'))"><span class="chevron">+</span></button>
-        </div>
-      </div>
-      <div class="app-card" data-project>
         <span class="status-badge live"><span class="dot"></span>Live · May 2026</span>
         <h3>CV request generator</h3>
         <p>A button on my contact page asks an LLM to write a personalized message requesting my CV — an AI gimmick that's actually live.</p>
@@ -372,28 +394,6 @@
         <div class="app-links">
           <a class="app-link" href="https://contact.koorevaar.com/" target="_blank" rel="noopener noreferrer">Try it →</a>
           <button class="detail-btn" aria-label="Show details" onclick="toggleDetail('cv-generator', this.closest('.app-card'))"><span class="chevron">+</span></button>
-        </div>
-      </div>
-      <div class="app-card" data-project>
-        <span class="status-badge live"><span class="dot"></span>Live · Sep 2026</span>
-        <h3>Blog comment moderation</h3>
-        <p>Every comment on the blog is scored by an LLM via a Cosmos DB change-feed-triggered Azure Function, calling Cloudflare Workers AI cross-cloud.</p>
-        <div class="app-tags"><span class="tag">Change feed</span><span class="tag">Azure Function</span><span class="tag">ACA</span></div>
-        <div class="app-links">
-          <a class="app-link" href="https://blog.koorevaar.com/" target="_blank" rel="noopener noreferrer">Try it →</a>
-          <a class="app-link" href="https://github.com/P47K0/Pat.Aca.BlogServiceApi" target="_blank" rel="noopener noreferrer">Source →</a>
-          <button class="detail-btn" aria-label="Show details" onclick="toggleDetail('blog-moderation', this.closest('.app-card'))"><span class="chevron">+</span></button>
-        </div>
-      </div>
-      <div class="app-card" data-project>
-        <span class="status-badge live"><span class="dot"></span>Live · Sep 2026</span>
-        <h3>"Ask about Patrick" chat assistant</h3>
-        <p>The floating chat button on this page — a retrieval-augmented assistant that answers questions about my background from a knowledge base built entirely by Claude Code.</p>
-        <div class="app-tags"><span class="tag">Workers AI</span><span class="tag">RAG</span><span class="tag">Cosmos DB</span></div>
-        <div class="app-links">
-          <a class="app-link" href="#" onclick="document.querySelector('.aw-launcher').click();return false;">Try it →</a>
-          <a class="app-link" href="https://github.com/P47K0/Pat.Aca.BlogServiceApi" target="_blank" rel="noopener noreferrer">Source →</a>
-          <button class="detail-btn" aria-label="Show details" onclick="toggleDetail('ai-assistant', this.closest('.app-card'))"><span class="chevron">+</span></button>
         </div>
       </div>
     </div>
