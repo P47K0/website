@@ -295,10 +295,13 @@ async function handleAssistantUsage(request, env) {
     const ua = request.headers.get("User-Agent") || "";
     const { hash } = await dailyVisitorHash(ip, ua, env.VISITOR_HASH_SALT);
 
+    // id is an auto-incrementing INTEGER PRIMARY KEY -- leave it out and let
+    // SQLite assign it, rather than supplying a UUID string (which threw
+    // "datatype mismatch: SQLITE_MISMATCH" against an INTEGER column).
     await env.TEXT_ANALYSIS_DB.prepare(
-      `INSERT INTO demo_executions (id, demo_name, feature_name, executed_at, client_hash)
-       VALUES (?, ?, ?, ?, ?)`
-    ).bind(crypto.randomUUID(), "ai-assistant", "chat", new Date().toISOString(), hash).run();
+      `INSERT INTO demo_executions (demo_name, feature_name, executed_at, client_hash)
+       VALUES (?, ?, ?, ?)`
+    ).bind("ai-assistant", "chat", new Date().toISOString(), hash).run();
 
     return Response.json({ ok: true });
   } catch (err) {
