@@ -278,6 +278,15 @@
   // ---------------------------------------------------------------------
   var sending = false;
 
+  // Fire-and-forget usage count, logged to this site's own Worker (not
+  // assistant-worker) -- only called once a real answer has come back, so it
+  // counts actual use rather than failed/blocked/rate-limited attempts. A
+  // relative URL deliberately, since it always targets whatever site is
+  // hosting this widget, unlike the configurable API_URL above.
+  function logAssistantUsage() {
+    fetch('/api/assistant-usage', { method: 'POST' }).catch(function () {});
+  }
+
   function handleSend() {
     if (sending) {
       return;
@@ -318,6 +327,7 @@
         }
         return response.json().then(function (data) {
           addMessage(data.answer, 'assistant');
+          logAssistantUsage();
         });
       })
       .catch(function () {
