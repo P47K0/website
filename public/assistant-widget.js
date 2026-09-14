@@ -284,7 +284,25 @@
   // relative URL deliberately, since it always targets whatever site is
   // hosting this widget, unlike the configurable API_URL above.
   function logAssistantUsage() {
-    fetch('/api/assistant-usage', { method: 'POST' }).catch(function () {});
+    fetch('/api/assistant-usage', { method: 'POST' })
+      .then(function (res) {
+        if (res.ok) bumpAiMessagesStatTile();
+      })
+      .catch(function () {});
+  }
+
+  // Optimistic local increment of the homepage's "AI messages sent" stat
+  // tile, so the visitor sees their own message reflected instantly instead
+  // of waiting for a future page load to refetch the real count. Only
+  // updates what's already on screen -- silently a no-op if that tile isn't
+  // present (e.g. the widget embedded somewhere else) or hasn't finished its
+  // own initial load yet (still showing the "-" placeholder).
+  function bumpAiMessagesStatTile() {
+    var el = document.getElementById('ai-messages-count');
+    if (!el) return;
+    var current = parseInt(el.textContent.replace(/[^0-9]/g, ''), 10);
+    if (isNaN(current)) return;
+    el.textContent = (current + 1).toLocaleString();
   }
 
   function handleSend() {
