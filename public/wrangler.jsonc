@@ -18,6 +18,11 @@
       "binding": "DB",
       "database_name": "website-human-visits",
       "database_id": "83cdebe4-aee0-4326-8535-aec077ae350f"
+    },
+    {
+      "binding": "TEXT_ANALYSIS_DB",
+      "database_name": "text-analysis",
+      "database_id": "8f995a47-93c7-4bbb-aceb-c2b1d232cec0"
     }
   ],
   "services": [

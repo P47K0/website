@@ -12,6 +12,11 @@
  * - POST /api/lab-access    forwards a "Request Login" email address to the
  *                            contact worker via service binding (see
  *                            handleLabAccess below).
+ * - POST /api/assistant-usage  records one "Ask about Patrick" chat use in
+ *                            the shared demo_executions table (text-analysis
+ *                            D1 database) that the other AI demos also log
+ *                            to. Called by assistant-widget.js only after a
+ *                            real answer comes back -- not on every attempt.
  * - /go/sitemap-index       honeypot: never linked visibly, disallowed in
  *                            robots.txt; anything that requests it gets logged
  *                            separately and excluded from the human count.
@@ -40,6 +45,9 @@ export default {
     }
     if (url.pathname === "/api/lab-access" && request.method === "POST") {
       return handleLabAccess(request, env);
+    }
+    if (url.pathname === "/api/assistant-usage" && request.method === "POST") {
+      return handleAssistantUsage(request, env);
     }
     if (url.pathname === "/go/sitemap-index") {
       return handleHoneypot(request, env);
@@ -271,6 +279,33 @@ async function handleLabAccess(request, env) {
   } catch (err) {
     console.error("lab-access error:", err.message);
     return Response.json({ success: false, message: "Something went wrong. Please try again later." }, { status: 500 });
+  }
+}
+
+// Fire-and-forget usage log for the "Ask about Patrick" chat widget, called
+// from the browser only after a real answer comes back from assistant-worker
+// (see assistant-widget.js) -- not on every attempt, so this counts actual
+// use rather than abuse/rate-limit/retry noise. Shares the demo_executions
+// table with the other AI demos, so the row shape is fixed by that existing
+// schema; client_hash reuses the same salted, day-rotating hash as the
+// visit counter above for the same reason -- no raw IP ever stored.
+async function handleAssistantUsage(request, env) {
+  try {
+    const ip = request.headers.get("CF-Connecting-IP") || "0.0.0.0";
+    const ua = request.headers.get("User-Agent") || "";
+    const { hash } = await dailyVisitorHash(ip, ua, env.VISITOR_HASH_SALT);
+
+    await env.TEXT_ANALYSIS_DB.prepare(
+      `INSERT INTO demo_executions (id, demo_name, feature_name, executed_at, client_hash)
+       VALUES (?, ?, ?, ?, ?)`
+    ).bind(crypto.randomUUID(), "ai-assistant", "chat", new Date().toISOString(), hash).run();
+
+    return Response.json({ ok: true });
+  } catch (err) {
+    console.error("assistant-usage error:", err.message);
+    // Never fail loudly for a usage-logging call -- the widget doesn't (and
+    // shouldn't) act on this response either way.
+    return Response.json({ ok: false }, { status: 500 });
   }
 }
 
