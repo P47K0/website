@@ -17,6 +17,13 @@
  *                            D1 database) that the other AI demos also log
  *                            to. Called by assistant-widget.js only after a
  *                            real answer comes back -- not on every attempt.
+ * - GET  /api/ai-messages-count  total "Ask about Patrick" messages sent,
+ *                            counted from the same demo_executions rows.
+ * - GET  /api/embeddings-count   total embeddings backing the assistant's
+ *                            retrieval, proxied server-side from
+ *                            assistant-worker's internal endpoint (see
+ *                            handleEmbeddingsCount below) -- not meant to be
+ *                            called directly from the browser.
  * - /go/sitemap-index       honeypot: never linked visibly, disallowed in
  *                            robots.txt; anything that requests it gets logged
  *                            separately and excluded from the human count.
@@ -48,6 +55,12 @@ export default {
     }
     if (url.pathname === "/api/assistant-usage" && request.method === "POST") {
       return handleAssistantUsage(request, env);
+    }
+    if (url.pathname === "/api/ai-messages-count" && request.method === "GET") {
+      return handleAiMessagesCount(env);
+    }
+    if (url.pathname === "/api/embeddings-count" && request.method === "GET") {
+      return handleEmbeddingsCount(env);
     }
     if (url.pathname === "/go/sitemap-index") {
       return handleHoneypot(request, env);
@@ -121,11 +134,15 @@ async function handleVisitStats(env) {
 // where CORS doesn't apply, and hands the client just the count.
 async function handleBlogCount(env) {
   try {
-    const res = await fetch("https://blog-api-proxy.pkoorevaar.workers.dev/articles");
+    // Dedicated count endpoint, added on blog-api-proxy's side specifically
+    // so this no longer has to fetch every article just to read .length.
+    // Public and key-free like /articles -- api-proxy attaches its own API
+    // key server-side, nothing needed from here.
+    const res = await fetch("https://blog-api-proxy.pkoorevaar.workers.dev/articles/count");
     if (!res.ok) throw new Error(`blog-api-proxy responded ${res.status}`);
-    const articles = await res.json();
+    const data = await res.json();
     return Response.json(
-      { count: Array.isArray(articles) ? articles.length : 0 },
+      { count: typeof data.count === "number" ? data.count : 0 },
       { headers: { "Cache-Control": "public, max-age=300" } }
     );
   } catch (err) {
@@ -309,6 +326,48 @@ async function handleAssistantUsage(request, env) {
     // Never fail loudly for a usage-logging call -- the widget doesn't (and
     // shouldn't) act on this response either way.
     return Response.json({ ok: false }, { status: 500 });
+  }
+}
+
+// Total "Ask about Patrick" messages sent, for the homepage stat tile.
+// Counts the same demo_executions rows handleAssistantUsage writes, scoped
+// to this demo/feature so it doesn't pick up rows the other AI demos log to
+// the same shared table.
+async function handleAiMessagesCount(env) {
+  try {
+    const row = await env.TEXT_ANALYSIS_DB.prepare(
+      `SELECT COUNT(*) AS n FROM demo_executions WHERE demo_name = ? AND feature_name = ?`
+    ).bind("ai-assistant", "chat").first();
+    return Response.json(
+      { count: row?.n ?? 0 },
+      { headers: { "Cache-Control": "public, max-age=60" } }
+    );
+  } catch (err) {
+    console.error("ai-messages-count error:", err.message);
+    return Response.json({ count: 0 });
+  }
+}
+
+// Total embeddings backing the assistant's retrieval, for the homepage stat
+// tile. This has to be proxied server-side, not called from the browser:
+// assistant-worker's endpoint is deliberately internal-only (no CORS,
+// secret-gated behind X-Embeddings-Count-Key). EMBEDDINGS_COUNT_SECRET must
+// be configured as a secret on this Worker (`wrangler secret put
+// EMBEDDINGS_COUNT_SECRET`) -- not done yet as of this writing.
+async function handleEmbeddingsCount(env) {
+  try {
+    const res = await fetch("https://ai-assistant.koorevaar.com/internal/embeddings-count", {
+      headers: { "X-Embeddings-Count-Key": env.EMBEDDINGS_COUNT_SECRET }
+    });
+    if (!res.ok) throw new Error(`assistant-worker responded ${res.status}`);
+    const data = await res.json();
+    return Response.json(
+      { count: typeof data.count === "number" ? data.count : 0 },
+      { headers: { "Cache-Control": "public, max-age=3600" } }
+    );
+  } catch (err) {
+    console.error("embeddings-count error:", err.message);
+    return Response.json({ count: 0 });
   }
 }
 
