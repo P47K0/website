@@ -138,7 +138,7 @@ async function handleBlogCount(env) {
     // so this no longer has to fetch every article just to read .length.
     // Public and key-free like /articles -- api-proxy attaches its own API
     // key server-side, nothing needed from here.
-    const res = await fetch("https://blog-api-proxy.pkoorevaar.workers.dev/articles/count");
+    const res = await fetch("https://pat-aca-blogserviceapi.pkoorevaar.workers.dev/articles/count");
     if (!res.ok) throw new Error(`blog-api-proxy responded ${res.status}`);
     const data = await res.json();
     return Response.json(
