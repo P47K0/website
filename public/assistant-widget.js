@@ -37,17 +37,23 @@
   // Styles -- injected once, scoped by the aw- prefix so nothing here leaks
   // into or clashes with the host page's own CSS.
   // ---------------------------------------------------------------------
+  // Colors mirror the host site's own dark navy / azure design system
+  // (see public/index.html's :root custom properties) rather than a
+  // generic stock palette, so the widget reads as part of the page
+  // instead of a bolted-on chat box.
   var STYLE = [
     '.aw-launcher{position:fixed;right:20px;bottom:20px;bottom:calc(20px + env(safe-area-inset-bottom));',
     'width:56px;height:56px;border-radius:50%;',
-    'background:#2563eb;color:#fff;border:none;box-shadow:0 4px 14px rgba(0,0,0,.25);cursor:pointer;',
+    'background:linear-gradient(90deg,#2E8FEF,#63C7FF);color:#04101F;border:none;',
+    'box-shadow:0 4px 14px rgba(0,0,0,.35);cursor:pointer;',
     'font-size:24px;line-height:56px;text-align:center;z-index:9999;padding:0;}',
-    '.aw-launcher:hover{background:#1d4ed8;}',
+    '.aw-launcher:hover{filter:brightness(1.08);}',
     '.aw-panel{position:fixed;right:20px;bottom:88px;bottom:calc(88px + env(safe-area-inset-bottom));',
     'width:340px;max-width:calc(100vw - 40px);',
-    'height:460px;max-height:calc(100vh - 120px);max-height:calc(100dvh - 120px);background:#fff;border-radius:16px;',
-    'box-shadow:0 8px 30px rgba(0,0,0,.3);display:none;flex-direction:column;overflow:hidden;',
-    'font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;font-size:14px;color:#111827;z-index:9999;}',
+    'height:460px;max-height:calc(100vh - 120px);max-height:calc(100dvh - 120px);',
+    'background:rgba(15,26,48,.9);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.14);border-radius:16px;',
+    'box-shadow:0 8px 30px rgba(0,0,0,.45);display:none;flex-direction:column;overflow:hidden;',
+    'font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;font-size:14px;color:#F2F6FC;z-index:9999;}',
     '.aw-panel.aw-open{display:flex;}',
     '@media (max-width:600px){',
     '.aw-launcher{bottom:calc(76px + env(safe-area-inset-bottom));}',
@@ -60,29 +66,33 @@
     // headroom for that not to happen.
     'height:360px;max-height:calc(100vh - 180px);max-height:calc(100dvh - 180px);}',
     '}',
-    '.aw-header{background:#2563eb;color:#fff;padding:12px 16px;display:flex;',
+    '.aw-header{background:linear-gradient(90deg,#2E8FEF,#63C7FF);color:#04101F;padding:12px 16px;display:flex;',
     'justify-content:space-between;align-items:center;flex-shrink:0;}',
     '.aw-header h2{margin:0;font-size:15px;font-weight:600;}',
-    '.aw-close{background:none;border:none;color:#fff;font-size:18px;cursor:pointer;padding:0 4px;}',
+    '.aw-close{background:none;border:none;color:#04101F;font-size:18px;cursor:pointer;padding:0 4px;opacity:.75;}',
+    '.aw-close:hover{opacity:1;}',
     '.aw-messages{flex:1;overflow-y:auto;padding:12px 16px;display:flex;flex-direction:column;gap:10px;}',
     '.aw-msg{max-width:85%;padding:8px 12px;border-radius:12px;white-space:pre-wrap;line-height:1.4;}',
-    '.aw-msg-user{align-self:flex-end;background:#2563eb;color:#fff;border-bottom-right-radius:2px;}',
-    '.aw-msg-assistant{align-self:flex-start;background:#f3f4f6;color:#111827;border-bottom-left-radius:2px;}',
-    '.aw-msg-error{align-self:flex-start;background:#fef2f2;color:#991b1b;border:1px solid #fecaca;}',
-    '.aw-msg-system{align-self:center;background:none;color:#6b7280;font-size:12px;font-style:italic;}',
-    '.aw-footer{border-top:1px solid #e5e7eb;padding:8px 12px;flex-shrink:0;}',
+    '.aw-msg-user{align-self:flex-end;background:linear-gradient(90deg,#2E8FEF,#63C7FF);color:#04101F;border-bottom-right-radius:2px;}',
+    '.aw-msg-assistant{align-self:flex-start;background:rgba(255,255,255,.07);color:#F2F6FC;',
+    'border:1px solid rgba(255,255,255,.12);border-bottom-left-radius:2px;}',
+    '.aw-msg-error{align-self:flex-start;background:rgba(239,68,68,.12);color:#FCA5A5;border:1px solid rgba(252,165,165,.35);}',
+    '.aw-msg-system{align-self:center;background:none;color:#93A0B4;font-size:12px;font-style:italic;}',
+    '.aw-footer{border-top:1px solid rgba(255,255,255,.12);padding:8px 12px;flex-shrink:0;}',
     '.aw-input-row{display:flex;gap:6px;}',
-    '.aw-input{flex:1;resize:none;border:1px solid #d1d5db;border-radius:10px;padding:8px 10px;',
+    '.aw-input{flex:1;resize:none;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);',
+    'border-radius:10px;padding:8px 10px;color:#F2F6FC;',
     // 16px, not inherited 14px: iOS Safari auto-zooms the whole page in when
     // a focused text input is under 16px, and it doesn't reliably zoom back
     // out afterward -- exactly the "page shifts right and stays that way"
     // bug this caused, since the widget auto-focuses this field on open.
     'font-family:inherit;font-size:16px;max-height:80px;}',
-    '.aw-input:focus{outline:2px solid #2563eb;outline-offset:1px;}',
-    '.aw-send{background:#2563eb;color:#fff;border:none;border-radius:10px;padding:0 14px;',
+    '.aw-input::placeholder{color:#6E85A8;}',
+    '.aw-input:focus{outline:2px solid #63C7FF;outline-offset:1px;}',
+    '.aw-send{background:linear-gradient(90deg,#2E8FEF,#63C7FF);color:#04101F;border:none;border-radius:10px;padding:0 14px;',
     'font:inherit;font-weight:600;cursor:pointer;}',
-    '.aw-send:disabled{background:#93c5fd;cursor:not-allowed;}',
-    '.aw-consent{display:flex;align-items:flex-start;gap:6px;margin-top:8px;font-size:11px;color:#6b7280;}',
+    '.aw-send:disabled{background:rgba(46,143,239,.35);color:rgba(4,16,31,.5);cursor:not-allowed;}',
+    '.aw-consent{display:flex;align-items:flex-start;gap:6px;margin-top:8px;font-size:11px;color:#93A0B4;}',
     '.aw-consent input{margin-top:2px;}',
   ].join('');
 
