@@ -1,0 +1,15 @@
+{
+  "name": "Patrick Koorevaar - Azure DevOps Engineer",
+  "short_name": "Patrick Koorevaar",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#050B1A",
+  "theme_color": "#050B1A",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
