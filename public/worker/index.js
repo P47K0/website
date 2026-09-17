@@ -7,6 +7,10 @@
  * - GET  /api/visit-stats   public aggregate counts for the homepage stat tile.
  * - GET  /api/blog-count    published blog article count, proxied server-side
  *                            from blog-api-proxy (see handleBlogCount below).
+ * - GET  /api/most-viewed-article  most-viewed published blog article, for a
+ *                            homepage link to it, proxied server-side from
+ *                            blog-api-proxy (see handleMostViewedArticle
+ *                            below).
  * - GET  /api/backlog       public subset of the private GitHub Projects
  *                            backlog board (see handleBacklog below).
  * - POST /api/lab-access    forwards a "Request Login" email address to the
@@ -46,6 +50,9 @@ export default {
     }
     if (url.pathname === "/api/blog-count" && request.method === "GET") {
       return handleBlogCount(env);
+    }
+    if (url.pathname === "/api/most-viewed-article" && request.method === "GET") {
+      return handleMostViewedArticle(env);
     }
     if (url.pathname === "/api/backlog" && request.method === "GET") {
       return handleBacklog(env);
@@ -148,6 +155,35 @@ async function handleBlogCount(env) {
   } catch (err) {
     console.error("blog-count error:", err.message);
     return Response.json({ count: 0 });
+  }
+}
+
+// Most-viewed published blog article, for a homepage link to its detail
+// page. Same trust level and call shape as handleBlogCount above -- public,
+// key-free endpoint, CORS-locked to blog.koorevaar.com on api-proxy's side,
+// so this fetch happens server-to-server. blog-api-proxy responds 204 with
+// no body until the first twice-daily view-count sync runs after deploy --
+// that's "nothing to show" rather than an error, so it's passed straight
+// through rather than logged/retried.
+async function handleMostViewedArticle(env) {
+  try {
+    const res = await fetch("https://blog-api-proxy.pkoorevaar.workers.dev/articles/most-viewed");
+    if (res.status === 204) return new Response(null, { status: 204 });
+    if (!res.ok) throw new Error(`blog-api-proxy responded ${res.status}`);
+    const data = await res.json();
+    if (!data.slug) return new Response(null, { status: 204 });
+    return Response.json(
+      {
+        slug: data.slug,
+        title: data.title,
+        summary: data.summary,
+        viewCount: typeof data.viewCount === "number" ? data.viewCount : 0
+      },
+      { headers: { "Cache-Control": "public, max-age=300" } }
+    );
+  } catch (err) {
+    console.error("most-viewed-article error:", err.message);
+    return new Response(null, { status: 204 });
   }
 }
 
