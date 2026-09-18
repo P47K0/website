@@ -129,6 +129,7 @@
   .stat-block:first-of-type{margin-top:44px;}
   .stat-group-label{font-size:11px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:var(--text-faint);margin:0 0 10px;}
   .stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;}
+  @media(min-width:821px){ .stat-row-about{grid-template-columns:repeat(4,1fr);} }
   .stat-card{background:var(--glass);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:12px;padding:16px;text-decoration:none;color:var(--text);}
   .stat-card .n{font-size:22px;font-weight:800;font-family:'Sora',sans-serif;}
   .stat-card .l{font-size:11.5px;color:var(--text-dim);margin-top:2px;}
@@ -339,10 +340,11 @@
     </div>
     <div class="stat-block">
       <div class="stat-group-label">About me</div>
-      <div class="stat-row">
+      <div class="stat-row stat-row-about">
         <div class="stat-card"><div class="n" id="years-it-count">—</div><div class="l">Years in IT</div></div>
         <a href="#devops-section" class="stat-card"><div class="n" id="years-azure-count">—</div><div class="l">Years Azure &amp; Kubernetes</div></a>
         <a href="#certifications-section" class="stat-card"><div class="n">7</div><div class="l">Certifications</div></a>
+        <a href="https://stackoverflow.com/users/1122629/patrick-koorevaar" target="_blank" rel="noopener noreferrer" class="stat-card"><div class="n">1.4k</div><div class="l">Stack Overflow reputation</div></a>
         <a href="#ai-section" class="stat-card"><div class="n">6</div><div class="l">Applied AI projects</div></a>
         <a href="#side-projects-section" class="stat-card"><div class="n" id="side-project-count">—</div><div class="l">Side projects</div></a>
       </div>
