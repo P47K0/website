@@ -125,7 +125,11 @@
   .badge .cert-ic{width:15px;height:15px;flex:none;color:var(--azure-light);display:inline-flex;}
   .badge .cert-ic svg{width:100%;height:100%;display:block;}
 
-  .stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-top:44px;}
+  .stat-block{margin-top:28px;}
+  .stat-block:first-of-type{margin-top:44px;}
+  .stat-group-label{font-size:11px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:var(--text-faint);margin:0 0 10px;}
+  .stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;}
+  @media(min-width:821px){ .stat-row-about{grid-template-columns:repeat(4,1fr);} }
   .stat-card{background:var(--glass);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:12px;padding:16px;text-decoration:none;color:var(--text);}
   .stat-card .n{font-size:22px;font-weight:800;font-family:'Sora',sans-serif;}
   .stat-card .l{font-size:11.5px;color:var(--text-dim);margin-top:2px;}
@@ -334,16 +338,28 @@
       <span class="badge"><span class="cert-ic"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 1 L16 4 V9 C16 13 13 16 9 17 C5 16 2 13 2 9 V4 Z"/><path d="M6 9 L8 11 L12 6"/></svg></span>AZ-305 · Jul 2026</span>
       <span class="badge"><span class="cert-ic"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 1 L16 4 V9 C16 13 13 16 9 17 C5 16 2 13 2 9 V4 Z"/><path d="M6 9 L8 11 L12 6"/></svg></span>AI-102 · Jan 2026</span>
     </div>
-    <div class="stat-row">
-      <div class="stat-card"><div class="n" id="years-it-count">—</div><div class="l">Years in IT</div></div>
-      <a href="#devops-section" class="stat-card"><div class="n" id="years-azure-count">—</div><div class="l">Years Azure &amp; Kubernetes</div></a>
-      <div class="stat-card"><div class="n" id="site-visit-count">—</div><div class="l">Site visits</div></div>
-      <a href="#certifications-section" class="stat-card"><div class="n">7</div><div class="l">Certifications</div></a>
-      <a href="#ai-section" class="stat-card"><div class="n">6</div><div class="l">Applied AI projects</div></a>
-      <a href="#side-projects-section" class="stat-card"><div class="n" id="side-project-count">—</div><div class="l">Side projects</div></a>
-      <a href="https://blog.koorevaar.com/" target="_blank" rel="noopener noreferrer" class="stat-card"><div class="n" id="blog-article-count">—</div><div class="l">Blog articles</div></a>
-      <a href="#ai-section" class="stat-card"><div class="n" id="ai-messages-count">—</div><div class="l">Questions answered</div></a>
-      <a href="#ai-section" class="stat-card"><div class="n" id="embeddings-count">—</div><div class="l">Embeddings stored</div></a>
+    <div class="stat-block">
+      <div class="stat-group-label">About me</div>
+      <div class="stat-row stat-row-about">
+        <div class="stat-card"><div class="n" id="years-it-count">—</div><div class="l">Years in IT</div></div>
+        <a href="#devops-section" class="stat-card"><div class="n" id="years-azure-count">—</div><div class="l">Years Azure &amp; Kubernetes</div></a>
+        <div class="stat-card"><div class="n" id="ai-dev-months-count">—</div><div class="l">Months AI-assisted development</div></div>
+        <a href="#certifications-section" class="stat-card"><div class="n" id="certifications-count">—</div><div class="l">Certifications</div></a>
+        <a href="#ai-section" class="stat-card"><div class="n" id="applied-ai-count">—</div><div class="l">Applied AI projects</div></a>
+        <a href="#side-projects-section" class="stat-card"><div class="n" id="side-project-count">—</div><div class="l">Side projects</div></a>
+      </div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-group-label">Site Statistics</div>
+      <div class="stat-row">
+        <div class="stat-card"><div class="n" id="site-visit-count">—</div><div class="l">Visits</div></div>
+        <a href="https://blog.koorevaar.com/" target="_blank" rel="noopener noreferrer" class="stat-card"><div class="n" id="blog-article-count">—</div><div class="l">Blog articles</div></a>
+        <a href="#ai-section" class="stat-card"><div class="n" id="ai-messages-count">—</div><div class="l">Questions answered</div></a>
+        <a href="#ai-section" class="stat-card"><div class="n" id="embeddings-count">—</div><div class="l">Embeddings stored</div></a>
+        <a href="#devops-section" class="stat-card"><div class="n" id="aca-apps-count">—</div><div class="l">Azure Container Apps</div></a>
+        <a href="#devops-section" class="stat-card"><div class="n" id="azure-functions-count">—</div><div class="l">Azure Functions</div></a>
+        <a href="#devops-section" class="stat-card"><div class="n" id="cloudflare-workers-count">—</div><div class="l">Cloudflare Workers</div></a>
+      </div>
     </div>
     <a id="most-viewed-article" class="mv-article" href="https://blog.koorevaar.com/" target="_blank" rel="noopener noreferrer">
       <div class="mv-label">Most-read article</div>
@@ -915,7 +931,9 @@
 </script>
 
 <script defer src="count-up.js"></script>
+<script defer src="static-stat-counters.js"></script>
 <script defer src="tenure-counter.js"></script>
+<script defer src="ai-dev-counter.js"></script>
 <script defer src="human-counter.js"></script>
 <script defer src="blog-counter.js"></script>
 <script defer src="most-viewed-article.js"></script>
