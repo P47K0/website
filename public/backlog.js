@@ -30,16 +30,11 @@
     return date.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
   }
 
-  // Non-Done items first, then Done items, each half grouped by the board's
-  // Tag field (project type: blog / lab / website) with groups ordered
-  // alphabetically. Array.prototype.sort is stable, so items keep their
-  // original relative order within a tag group.
-  function sortItems(items) {
+  // Groups items by the board's Tag field (project type: blog / lab /
+  // website), tag groups ordered alphabetically. Array.prototype.sort is
+  // stable, so items keep their original relative order within a group.
+  function sortByTag(items) {
     return items.slice().sort(function (a, b) {
-      const doneA = isDoneStatus(a.status) ? 1 : 0;
-      const doneB = isDoneStatus(b.status) ? 1 : 0;
-      if (doneA !== doneB) return doneA - doneB;
-
       const tagA = (a.tag || "").trim().toLowerCase();
       const tagB = (b.tag || "").trim().toLowerCase();
       return tagA.localeCompare(tagB);
@@ -94,22 +89,44 @@
     return col;
   }
 
+  // Done items are collapsed into their own closed-by-default section so the
+  // overview reads as "what's next", not a mix of open and finished work.
+  function wireDoneToggle(doneCount) {
+    const toggle = document.getElementById("backlog-done-toggle");
+    const detail = document.getElementById("backlog-done-detail");
+    const label = document.getElementById("backlog-done-toggle-label");
+    if (!toggle || !detail || !label || doneCount === 0) return;
+
+    label.textContent = "Show completed (" + doneCount + ")";
+    toggle.style.display = "";
+    toggle.addEventListener("click", function () {
+      const nowOpen = detail.classList.toggle("open");
+      toggle.classList.toggle("open", nowOpen);
+      toggle.setAttribute("aria-expanded", nowOpen ? "true" : "false");
+      label.textContent = (nowOpen ? "Hide completed (" : "Show completed (") + doneCount + ")";
+    });
+  }
+
   fetch("/api/backlog")
     .then(function (r) { return r.json(); })
     .then(function (data) {
       const items = Array.isArray(data.items) ? data.items : [];
       const list = document.getElementById("backlog-list");
+      const doneList = document.getElementById("backlog-done-list");
       const empty = document.getElementById("backlog-empty");
-      if (!list || !empty) return;
+      if (!list || !doneList || !empty) return;
 
-      if (items.length === 0) {
+      const activeItems = sortByTag(items.filter(function (i) { return !isDoneStatus(i.status); }));
+      const doneItems = sortByTag(items.filter(function (i) { return isDoneStatus(i.status); }));
+
+      if (activeItems.length === 0) {
         empty.classList.remove("d-none");
-        return;
+      } else {
+        activeItems.forEach(function (item) { list.appendChild(buildCard(item)); });
       }
 
-      sortItems(items).forEach(function (item) {
-        list.appendChild(buildCard(item));
-      });
+      doneItems.forEach(function (item) { doneList.appendChild(buildCard(item)); });
+      wireDoneToggle(doneItems.length);
     })
     .catch(function () {
       const section = document.getElementById("backlog-section");
