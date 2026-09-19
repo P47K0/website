@@ -50,6 +50,9 @@
   // apart on a future edit.
   var AVATAR_SIZE = 100; // px, square
   var AVATAR_PANEL_GAP = 12; // px, gap between the avatar's top edge and the panel
+  // Must match the delay in the idle-animation section's cleanup timeout
+  // below, which uses this same constant -- see the comment there.
+  var AVATAR_TRANSITION_MS = 350;
   var LAUNCHER_BOTTOM_DESKTOP = 20; // px, launcher's own offset from the viewport edge
   var LAUNCHER_BOTTOM_MOBILE = 76; // px, extra room for the mobile nav bar below it
   var PANEL_BOTTOM_DESKTOP = LAUNCHER_BOTTOM_DESKTOP + AVATAR_SIZE + AVATAR_PANEL_GAP;
@@ -70,7 +73,7 @@
     // Stacked, crossfaded via opacity so a state change never flashes the
     // wrong still mid-swap -- see the avatar idle animation section below.
     '.aw-avatar-img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;',
-    'object-position:bottom;opacity:0;transition:opacity .4s ease;pointer-events:none;}',
+    'object-position:bottom;opacity:0;transition:opacity ' + AVATAR_TRANSITION_MS + 'ms ease;pointer-events:none;}',
     '.aw-avatar-img.aw-avatar-on{opacity:1;}',
     '.aw-panel{position:fixed;right:20px;bottom:' + PANEL_BOTTOM_DESKTOP + 'px;',
     'bottom:calc(' + PANEL_BOTTOM_DESKTOP + 'px + env(safe-area-inset-bottom));',
@@ -207,12 +210,42 @@
     { state: 'turnRight', weight: 2, holdMin: 900, holdMax: 1600 }
   ];
 
+  // Fading the outgoing still down while the incoming one fades up at the
+  // same time (i.e. toggling the class on every layer at once) looks wrong:
+  // alpha-compositing two simultaneously semi-transparent layers doesn't
+  // sum back to fully opaque, so right at the transition's midpoint the
+  // avatar is genuinely more translucent and the page's dark background
+  // shows through -- visible as a brief darkening on every swap. Instead,
+  // the outgoing still is kept fully opaque underneath until the incoming
+  // one has completely finished fading in on top of it, and only then gets
+  // cut away -- by then it's fully covered, so the cut is invisible, and
+  // the stack's combined alpha never drops below 1.
+  var avatarTransitionToken = 0;
+
   function setAvatarState(state) {
-    for (var key in avatarImgs) {
-      if (Object.prototype.hasOwnProperty.call(avatarImgs, key)) {
-        avatarImgs[key].classList.toggle('aw-avatar-on', key === state);
-      }
+    var img = avatarImgs[state];
+    if (!img || img.classList.contains('aw-avatar-on')) {
+      return;
     }
+    // Move to the end so it paints on top of whatever's currently visible,
+    // regardless of which direction this transition is (e.g. blink1 back
+    // to rest needs rest on top just as much as rest to blink1 does).
+    launcher.appendChild(img);
+    img.classList.add('aw-avatar-on');
+    var token = ++avatarTransitionToken;
+    setTimeout(function () {
+      // A newer state change already fired before this one settled --
+      // leave the older still(s) alone; whichever transition finishes last
+      // is responsible for cleaning up everything behind it.
+      if (token !== avatarTransitionToken) {
+        return;
+      }
+      for (var key in avatarImgs) {
+        if (Object.prototype.hasOwnProperty.call(avatarImgs, key) && key !== state) {
+          avatarImgs[key].classList.remove('aw-avatar-on');
+        }
+      }
+    }, AVATAR_TRANSITION_MS);
   }
 
   function pickIdleBeat() {
