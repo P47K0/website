@@ -204,10 +204,18 @@
   // not a percentage); "rest" itself isn't listed here since it's the
   // baseline the avatar returns to between beats, not something the loop
   // picks. Blinking is weighted far more likely than a turn.
+  //
+  // transitionMs is per-beat, not shared: a blink needs to actually read as
+  // a blink. Since the anti-darkening fix below keeps the outgoing still
+  // fully visible for the *entire* fade-back transition (not just the
+  // nominal hold), reusing the slower turn-speed crossfade for blinks meant
+  // "eyes closed" lasted holdMax + a full 350ms tail on top -- up to
+  // ~730ms, closer to a wince than a blink. A snappy transition tied to the
+  // blink beat itself keeps that tail short.
   var AVATAR_IDLE_BEATS = [
-    { state: 'blink1', weight: 6, holdMin: 180, holdMax: 380 },
-    { state: 'turnLeft', weight: 2, holdMin: 900, holdMax: 1600 },
-    { state: 'turnRight', weight: 2, holdMin: 900, holdMax: 1600 }
+    { state: 'blink1', weight: 6, holdMin: 90, holdMax: 180, transitionMs: 90 },
+    { state: 'turnLeft', weight: 2, holdMin: 900, holdMax: 1600, transitionMs: AVATAR_TRANSITION_MS },
+    { state: 'turnRight', weight: 2, holdMin: 900, holdMax: 1600, transitionMs: AVATAR_TRANSITION_MS }
   ];
 
   // Fading the outgoing still down while the incoming one fades up at the
@@ -222,11 +230,15 @@
   // the stack's combined alpha never drops below 1.
   var avatarTransitionToken = 0;
 
-  function setAvatarState(state) {
+  function setAvatarState(state, transitionMs) {
     var img = avatarImgs[state];
     if (!img || img.classList.contains('aw-avatar-on')) {
       return;
     }
+    var duration = transitionMs || AVATAR_TRANSITION_MS;
+    // Overrides the CSS rule's default duration for just this element/swap
+    // -- inline style wins over the stylesheet rule at equal specificity.
+    img.style.transitionDuration = duration + 'ms';
     // Move to the end so it paints on top of whatever's currently visible,
     // regardless of which direction this transition is (e.g. blink1 back
     // to rest needs rest on top just as much as rest to blink1 does).
@@ -245,7 +257,7 @@
           avatarImgs[key].classList.remove('aw-avatar-on');
         }
       }
-    }, AVATAR_TRANSITION_MS);
+    }, duration);
   }
 
   function pickIdleBeat() {
@@ -273,10 +285,11 @@
 
   function runAvatarBeat() {
     var beat = pickIdleBeat();
-    setAvatarState(beat.state);
+    setAvatarState(beat.state, beat.transitionMs);
     var hold = beat.holdMin + Math.random() * (beat.holdMax - beat.holdMin);
     setTimeout(function () {
-      setAvatarState('rest');
+      // Same speed back -- a blink needs to open as fast as it closed.
+      setAvatarState('rest', beat.transitionMs);
       scheduleNextAvatarBeat();
     }, hold);
   }
