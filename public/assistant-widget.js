@@ -41,30 +41,57 @@
   // (see public/index.html's :root custom properties) rather than a
   // generic stock palette, so the widget reads as part of the page
   // instead of a bolted-on chat box.
+  // The launcher is the avatar itself -- no button chrome, just the
+  // character standing in the corner (see assistant-avatar-*.webp below).
+  // Its footprint is AVATAR_SIZE square; the panel's own "bottom" offset is
+  // derived from that plus a fixed gap so the avatar always stays fully
+  // visible above the launcher's own base offset on both breakpoints,
+  // rather than two sets of hand-matched magic numbers that could drift
+  // apart on a future edit.
+  var AVATAR_SIZE = 100; // px, square
+  var AVATAR_PANEL_GAP = 12; // px, gap between the avatar's top edge and the panel
+  var LAUNCHER_BOTTOM_DESKTOP = 20; // px, launcher's own offset from the viewport edge
+  var LAUNCHER_BOTTOM_MOBILE = 76; // px, extra room for the mobile nav bar below it
+  var PANEL_BOTTOM_DESKTOP = LAUNCHER_BOTTOM_DESKTOP + AVATAR_SIZE + AVATAR_PANEL_GAP;
+  var PANEL_BOTTOM_MOBILE = LAUNCHER_BOTTOM_MOBILE + AVATAR_SIZE + AVATAR_PANEL_GAP;
+  // Extra breathing room above the panel itself, unrelated to avatar size --
+  // kept from the original desktop/mobile values.
+  var PANEL_TOP_MARGIN_DESKTOP = 32;
+  var PANEL_TOP_MARGIN_MOBILE = 36;
+  var PANEL_MAX_HEIGHT_SUBTRACT_DESKTOP = PANEL_BOTTOM_DESKTOP + PANEL_TOP_MARGIN_DESKTOP;
+  var PANEL_MAX_HEIGHT_SUBTRACT_MOBILE = PANEL_BOTTOM_MOBILE + PANEL_TOP_MARGIN_MOBILE;
+
   var STYLE = [
-    '.aw-launcher{position:fixed;right:20px;bottom:20px;bottom:calc(20px + env(safe-area-inset-bottom));',
-    'width:56px;height:56px;border-radius:50%;',
-    'background:linear-gradient(90deg,#2E8FEF,#63C7FF);color:#04101F;border:none;',
-    'box-shadow:0 4px 14px rgba(0,0,0,.35);cursor:pointer;',
-    'font-size:24px;line-height:56px;text-align:center;z-index:9999;padding:0;}',
-    '.aw-launcher:hover{filter:brightness(1.08);}',
-    '.aw-panel{position:fixed;right:20px;bottom:88px;bottom:calc(88px + env(safe-area-inset-bottom));',
+    '.aw-launcher{position:fixed;right:20px;bottom:' + LAUNCHER_BOTTOM_DESKTOP + 'px;',
+    'bottom:calc(' + LAUNCHER_BOTTOM_DESKTOP + 'px + env(safe-area-inset-bottom));',
+    'width:' + AVATAR_SIZE + 'px;height:' + AVATAR_SIZE + 'px;border:none;background:none;padding:0;',
+    'cursor:pointer;z-index:9999;filter:drop-shadow(0 6px 16px rgba(0,0,0,.45));}',
+    '.aw-launcher:hover{filter:drop-shadow(0 6px 16px rgba(0,0,0,.45)) brightness(1.08);}',
+    // Stacked, crossfaded via opacity so a state change never flashes the
+    // wrong still mid-swap -- see the avatar idle animation section below.
+    '.aw-avatar-img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;',
+    'object-position:bottom;opacity:0;transition:opacity .4s ease;pointer-events:none;}',
+    '.aw-avatar-img.aw-avatar-on{opacity:1;}',
+    '.aw-panel{position:fixed;right:20px;bottom:' + PANEL_BOTTOM_DESKTOP + 'px;',
+    'bottom:calc(' + PANEL_BOTTOM_DESKTOP + 'px + env(safe-area-inset-bottom));',
     'width:340px;max-width:calc(100vw - 40px);',
-    'height:460px;max-height:calc(100vh - 120px);max-height:calc(100dvh - 120px);',
+    'height:460px;max-height:calc(100vh - ' + PANEL_MAX_HEIGHT_SUBTRACT_DESKTOP + 'px);',
+    'max-height:calc(100dvh - ' + PANEL_MAX_HEIGHT_SUBTRACT_DESKTOP + 'px);',
     'background:rgba(15,26,48,.9);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.14);border-radius:16px;',
     'box-shadow:0 8px 30px rgba(0,0,0,.45);display:none;flex-direction:column;overflow:hidden;',
     'font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;font-size:14px;color:#F2F6FC;z-index:9999;}',
     '.aw-panel.aw-open{display:flex;}',
     '@media (max-width:600px){',
-    '.aw-launcher{bottom:calc(76px + env(safe-area-inset-bottom));}',
-    '.aw-panel{bottom:calc(144px + env(safe-area-inset-bottom));right:12px;max-width:calc(100vw - 24px);',
+    '.aw-launcher{bottom:calc(' + LAUNCHER_BOTTOM_MOBILE + 'px + env(safe-area-inset-bottom));}',
+    '.aw-panel{bottom:calc(' + PANEL_BOTTOM_MOBILE + 'px + env(safe-area-inset-bottom));right:12px;max-width:calc(100vw - 24px);',
     // Shorter than the 460px desktop panel: on a phone, the on-screen
     // keyboard eats a big chunk of vertical space the moment the message
     // field is focused (which happens automatically on open), and a tall
     // fixed-height panel can end up with its header and welcome message
     // pushed out of view above the keyboard. A shorter panel leaves enough
     // headroom for that not to happen.
-    'height:360px;max-height:calc(100vh - 180px);max-height:calc(100dvh - 180px);}',
+    'height:360px;max-height:calc(100vh - ' + PANEL_MAX_HEIGHT_SUBTRACT_MOBILE + 'px);',
+    'max-height:calc(100dvh - ' + PANEL_MAX_HEIGHT_SUBTRACT_MOBILE + 'px);}',
     '}',
     '.aw-header{background:linear-gradient(90deg,#2E8FEF,#63C7FF);color:#04101F;padding:12px 16px;display:flex;',
     'justify-content:space-between;align-items:center;flex-shrink:0;}',
@@ -107,7 +134,36 @@
   launcher.className = 'aw-launcher';
   launcher.setAttribute('aria-label', 'Ask a question about Patrick');
   launcher.setAttribute('aria-expanded', 'false');
-  launcher.textContent = '\u{1F4AC}'; // speech balloon emoji
+
+  // The launcher's visible content is 4 stacked, crossfaded stills of
+  // Patrick himself (waist-up, transparent background) rather than an
+  // emoji -- see the "Avatar idle animation" section below for how they're
+  // swapped. Built here so the "rest" still is already in the DOM (and
+  // fetching) before that section runs.
+  var AVATAR_FILES = {
+    rest: 'assistant-avatar-rest.webp',
+    blink1: 'assistant-avatar-blink-1.webp',
+    turnLeft: 'assistant-avatar-turn-left.webp',
+    turnRight: 'assistant-avatar-turn-right.webp'
+  };
+  var prefersReducedMotion = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  var avatarImgs = {};
+  for (var avatarState in AVATAR_FILES) {
+    if (Object.prototype.hasOwnProperty.call(AVATAR_FILES, avatarState)) {
+      var avatarImg = document.createElement('img');
+      avatarImg.className = 'aw-avatar-img' + (avatarState === 'rest' ? ' aw-avatar-on' : '');
+      avatarImg.alt = '';
+      avatarImg.setAttribute('aria-hidden', 'true');
+      // Reduced motion: only "rest" ever gets shown, so only it gets
+      // fetched -- no point spending bandwidth on stills the loop below
+      // will never pick.
+      if (avatarState === 'rest' || !prefersReducedMotion) {
+        avatarImg.src = '/' + AVATAR_FILES[avatarState];
+      }
+      launcher.appendChild(avatarImg);
+      avatarImgs[avatarState] = avatarImg;
+    }
+  }
 
   var panel = document.createElement('div');
   panel.className = 'aw-panel';
@@ -122,7 +178,7 @@
     '<div class="aw-messages" aria-live="polite"></div>' +
     '<div class="aw-footer">' +
     '<div class="aw-input-row">' +
-    '<textarea class="aw-input" rows="1" placeholder="Ask something about Patrick..." aria-label="Your question"></textarea>' +
+    '<textarea class="aw-input" rows="1" placeholder="Ask me something" aria-label="Your question"></textarea>' +
     '<button class="aw-send">Send</button>' +
     '</div>' +
     '<label class="aw-consent">' +
@@ -133,6 +189,68 @@
 
   document.body.appendChild(launcher);
   document.body.appendChild(panel);
+
+  // ---------------------------------------------------------------------
+  // Avatar idle animation -- crossfades the launcher between its 4 stills.
+  // Sits on "rest" most of the time; occasionally blinks, or glances left
+  // or right, then eases back. Deliberately driven by randomized delays via
+  // nested setTimeout rather than setInterval -- a fixed cadence reads as
+  // robotic almost immediately.
+  // ---------------------------------------------------------------------
+  // Each entry is one idle "beat" the loop can fire (weight is relative,
+  // not a percentage); "rest" itself isn't listed here since it's the
+  // baseline the avatar returns to between beats, not something the loop
+  // picks. Blinking is weighted far more likely than a turn.
+  var AVATAR_IDLE_BEATS = [
+    { state: 'blink1', weight: 6, holdMin: 180, holdMax: 380 },
+    { state: 'turnLeft', weight: 2, holdMin: 900, holdMax: 1600 },
+    { state: 'turnRight', weight: 2, holdMin: 900, holdMax: 1600 }
+  ];
+
+  function setAvatarState(state) {
+    for (var key in avatarImgs) {
+      if (Object.prototype.hasOwnProperty.call(avatarImgs, key)) {
+        avatarImgs[key].classList.toggle('aw-avatar-on', key === state);
+      }
+    }
+  }
+
+  function pickIdleBeat() {
+    var totalWeight = 0;
+    var i;
+    for (i = 0; i < AVATAR_IDLE_BEATS.length; i++) {
+      totalWeight += AVATAR_IDLE_BEATS[i].weight;
+    }
+    var r = Math.random() * totalWeight;
+    for (i = 0; i < AVATAR_IDLE_BEATS.length; i++) {
+      var beat = AVATAR_IDLE_BEATS[i];
+      if (r < beat.weight) {
+        return beat;
+      }
+      r -= beat.weight;
+    }
+    return AVATAR_IDLE_BEATS[AVATAR_IDLE_BEATS.length - 1];
+  }
+
+  function scheduleNextAvatarBeat() {
+    // Randomized 3-9s gap between beats.
+    var delay = 3000 + Math.random() * 6000;
+    setTimeout(runAvatarBeat, delay);
+  }
+
+  function runAvatarBeat() {
+    var beat = pickIdleBeat();
+    setAvatarState(beat.state);
+    var hold = beat.holdMin + Math.random() * (beat.holdMax - beat.holdMin);
+    setTimeout(function () {
+      setAvatarState('rest');
+      scheduleNextAvatarBeat();
+    }, hold);
+  }
+
+  if (!prefersReducedMotion) {
+    scheduleNextAvatarBeat();
+  }
 
   var messagesEl = panel.querySelector('.aw-messages');
   var inputEl = panel.querySelector('.aw-input');
@@ -155,7 +273,7 @@
     if (open) {
       inputEl.focus();
       if (messagesEl.children.length === 0) {
-        addMessage("Hi! I'm an AI assistant that can answer questions about Patrick's background, skills, or projects.", 'system');
+        addMessage("Hi! I am Patrick, your AI assistant that can answer questions about my background, skills, or projects.", 'system');
       }
     }
   }
