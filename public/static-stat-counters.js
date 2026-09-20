@@ -15,5 +15,5 @@
   animate("applied-ai-count", 6);
   animate("aca-apps-count", 8);
   animate("azure-functions-count", 4);
-  animate("cloudflare-workers-count", 12);
+  animate("cloudflare-workers-count", 13);
 })();
