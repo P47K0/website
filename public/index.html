@@ -140,6 +140,12 @@
   .mv-article .mv-title{font-size:14.5px;font-weight:700;font-family:'Sora',sans-serif;margin-top:4px;}
   .mv-article .mv-summary{font-size:12.5px;color:var(--text-dim);margin-top:4px;}
 
+  .recent-answers{display:none;margin-bottom:24px;background:var(--glass);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:12px;padding:16px 18px;}
+  .recent-answers .ra-label{font-size:11px;font-weight:700;letter-spacing:0.02em;text-transform:uppercase;color:var(--azure-light);margin-bottom:10px;}
+  .recent-answers .ra-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px;}
+  .recent-answers .ra-list li{font-size:13px;line-height:1.5;color:var(--text-dim);padding-left:14px;position:relative;}
+  .recent-answers .ra-list li::before{content:"";position:absolute;left:0;top:7px;width:5px;height:5px;border-radius:50%;background:var(--azure-light);}
+
   .section{padding:64px 0;border-top:1px solid var(--border);}
   .section-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:30px;flex-wrap:wrap;gap:8px;}
   .section-head h2{font-size:24px;font-weight:700;margin:0;}
@@ -375,6 +381,10 @@
     <div class="section-head">
       <h2><span class="sec-ic"><svg viewBox="0 0 18 18"><path fill="currentColor" d="M9 1 L10.6 7.4 L17 9 L10.6 10.6 L9 17 L7.4 10.6 L1 9 L7.4 7.4 Z"/></svg></span>Applied AI, running live</h2>
       <div class="note">Cloudflare Workers AI · self-hosted Ollama · multi-agent orchestration</div>
+    </div>
+    <div id="recent-answers" class="recent-answers">
+      <div class="ra-label">Recently answered by the AI assistant</div>
+      <ul class="ra-list" id="recent-answers-list"></ul>
     </div>
     <div class="grid3">
       <div class="app-card" data-project>
@@ -964,6 +974,7 @@
 <script defer src="most-viewed-article.js"></script>
 <script defer src="ai-messages-counter.js"></script>
 <script defer src="embeddings-counter.js"></script>
+<script defer src="recent-answers.js"></script>
 <script defer src="side-project-counter.js"></script>
 <script defer src="backlog.js"></script>
 <script defer src="lab-access.js"></script>
