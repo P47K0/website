@@ -28,6 +28,11 @@
  *                            assistant-worker's internal endpoint (see
  *                            handleEmbeddingsCount below) -- not meant to be
  *                            called directly from the browser.
+ * - GET  /api/recent-answers    last few real "Ask about Patrick" answers,
+ *                            proxied server-side from assistant-worker's
+ *                            internal endpoint (see handleRecentAnswers
+ *                            below) -- not meant to be called directly from
+ *                            the browser.
  * - /go/sitemap-index       honeypot: never linked visibly, disallowed in
  *                            robots.txt; anything that requests it gets logged
  *                            separately and excluded from the human count.
@@ -68,6 +73,9 @@ export default {
     }
     if (url.pathname === "/api/embeddings-count" && request.method === "GET") {
       return handleEmbeddingsCount(env);
+    }
+    if (url.pathname === "/api/recent-answers" && request.method === "GET") {
+      return handleRecentAnswers(env);
     }
     if (url.pathname === "/go/sitemap-index") {
       return handleHoneypot(request, env);
@@ -404,6 +412,35 @@ async function handleEmbeddingsCount(env) {
   } catch (err) {
     console.error("embeddings-count error:", err.message);
     return Response.json({ count: 0 });
+  }
+}
+
+// Last few real "Ask about Patrick" answers, for a homepage fact box. Same
+// trust level and call shape as handleEmbeddingsCount above -- deliberately
+// internal-only on assistant-worker's side (no CORS, secret-gated behind
+// X-Recent-Answers-Key), so this fetch happens server-to-server.
+// RECENT_ANSWERS_SECRET must be configured as a secret on this Worker
+// (`wrangler secret put RECENT_ANSWERS_SECRET`), matching the same value set
+// as RECENT_ANSWERS_SECRET on assistant-worker. The buffer is fed only by
+// real visitor traffic (no backfill), so an empty result is "nothing cached
+// yet" rather than an error -- passed through as 204, same as
+// handleMostViewedArticle.
+async function handleRecentAnswers(env) {
+  try {
+    const res = await fetch("https://ai-assistant.koorevaar.com/internal/recent-answers", {
+      headers: { "X-Recent-Answers-Key": env.RECENT_ANSWERS_SECRET }
+    });
+    if (!res.ok) throw new Error(`assistant-worker responded ${res.status}`);
+    const data = await res.json();
+    const answers = Array.isArray(data.answers) ? data.answers.filter(a => typeof a === "string") : [];
+    if (answers.length === 0) return new Response(null, { status: 204 });
+    return Response.json(
+      { answers },
+      { headers: { "Cache-Control": "public, max-age=60" } }
+    );
+  } catch (err) {
+    console.error("recent-answers error:", err.message);
+    return new Response(null, { status: 204 });
   }
 }
 
