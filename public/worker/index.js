@@ -185,7 +185,13 @@ async function handleMostViewedArticle(env) {
         slug: data.slug,
         title: data.title,
         summary: data.summary,
-        viewCount: typeof data.viewCount === "number" ? data.viewCount : 0
+        viewCount: typeof data.viewCount === "number" ? data.viewCount : 0,
+        // Only ever an https URL; anything else is dropped rather than
+        // handed to the homepage as an <img src>.
+        coverImageUrl:
+          typeof data.coverImageUrl === "string" && data.coverImageUrl.startsWith("https://")
+            ? data.coverImageUrl
+            : null
       },
       { headers: { "Cache-Control": "public, max-age=300" } }
     );
