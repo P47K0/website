@@ -29,7 +29,7 @@
         thumb.src = data.coverImageUrl;
         thumb.hidden = false;
       }
-      el.style.display = "flex";
+      el.style.display = "block";
     })
     .catch(function () {});
 })();
