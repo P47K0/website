@@ -13,7 +13,10 @@ Also validates the markers and fails (exit 1) on:
   - a marker outside a section, a nested section or item, a section without
     data-md-title, an item without exactly one title, or a marker in the
     wrong place (tag/meta/title outside an item, stat inside one)
-  - a stat without a label or value, or a link that isn't an http(s) URL
+  - a project card, certification or work-style item without data-md-item
+    (see REQUIRED_ITEMS)
+  - a stat without a label, or without a numeric value (date-based stats
+    use a "Month YYYY" start date instead), or a link that isn't an http(s) URL
   - a stat value that no longer matches the counter script that renders it
 
 Usage: python3 scripts/export_about_md.py [path/to/index.html] > about.md
@@ -31,6 +34,24 @@ MARKERS = {"section", "title", "item", "meta", "text", "tag", "link", "stat", "l
 VOID = {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "source", "track", "wbr"}
 SKIP_TEXT = {"script", "style", "svg"}
 ITEM_PARTS = ("title", "meta", "text", "tag", "link")
+
+# Homepage elements that must be exported as items (CLAUDE.md rule): project
+# cards, certifications and work-style cards are .app-card or .cert; the
+# "Other side projects" rows only when they carry data-project (the CKA lab
+# and K8s automation rows are exported from their DevOps cards instead).
+REQUIRED_ITEMS = ("app-card", "cert")
+REQUIRED_ITEMS_IF_PROJECT = ("mp-item",)
+
+# Stats whose counters are computed in the browser from a start date. They
+# export that start date ("Month YYYY"), since a number would go stale at the
+# next anniversary; every other stat value must be numeric.
+DATE_STATS = [
+    ("years-it-count", "tenure-counter.js", r"yearsInIT = fullYearsSince\(new Date\((\d{4}),\s*(\d{1,2})"),
+    ("years-azure-count", "tenure-counter.js", r"yearsAzure = fullYearsSince\(new Date\((\d{4}),\s*(\d{1,2})"),
+    ("ai-dev-months-count", "ai-dev-counter.js", r"fullMonthsSince\(new Date\((\d{4}),\s*(\d{1,2})"),
+]
+NUMERIC = re.compile(r"\d+(\.\d+)?")
+MONTH_YEAR = re.compile(r"(January|February|March|April|May|June|July|August|September|October|November|December) \d{4}")
 
 
 class Node:
@@ -115,7 +136,13 @@ class Exporter:
         self.errors.append(f"line {node.line}: <{node.tag}> {msg}")
 
     def validate(self):
+        date_stat_ids = {counter_id for counter_id, _, _ in DATE_STATS}
         for node in self.root.iter():
+            classes = node.attrs.get("class", "").split()
+            required = any(c in classes for c in REQUIRED_ITEMS) or (
+                "data-project" in node.attrs and any(c in classes for c in REQUIRED_ITEMS_IF_PROJECT))
+            if required and not node.md("item"):
+                self.error(node, f"{'.'.join([''] + classes)} must be exported: add data-md-item")
             for attr in node.attrs:
                 if attr.startswith("data-md-") and attr[len("data-md-"):] not in MARKERS:
                     self.error(node, f"unknown marker {attr}")
@@ -151,8 +178,13 @@ class Exporter:
                 if item:
                     self.error(node, "stat inside an item")
                 label, value = clean(node.attrs.get("data-md-label", "")), clean(node.attrs.get("data-md-value", ""))
-                if not label or not value or value in ("—", "-"):
-                    self.error(node, "stat needs a non-empty data-md-label and a build-time data-md-value")
+                is_date_stat = any(n.attrs.get("id") in date_stat_ids for n in node.iter())
+                if not label:
+                    self.error(node, "stat needs a non-empty data-md-label")
+                if is_date_stat and not MONTH_YEAR.fullmatch(value):
+                    self.error(node, f"date-based stat needs a 'Month YYYY' data-md-value, got {value!r}")
+                elif not is_date_stat and not NUMERIC.fullmatch(value):
+                    self.error(node, f"stat needs a numeric data-md-value, got {value!r}")
             elif role == "link" and not resolve(node.attrs.get("href", "")):
                 self.error(node, "data-md-link needs an http(s) href")
             if role in ("title", "meta", "text", "tag", "link") and not clean(text_of(node)):
@@ -189,12 +221,7 @@ class Exporter:
         for counter_id, number in re.findall(r'animate\("([\w-]+)",\s*(\d+)', read("static-stat-counters.js")):
             expect(counter_id, number, "static-stat-counters.js")
 
-        start_dates = [
-            ("years-it-count", "tenure-counter.js", r"yearsInIT = fullYearsSince\(new Date\((\d{4}),\s*(\d{1,2})"),
-            ("years-azure-count", "tenure-counter.js", r"yearsAzure = fullYearsSince\(new Date\((\d{4}),\s*(\d{1,2})"),
-            ("ai-dev-months-count", "ai-dev-counter.js", r"fullMonthsSince\(new Date\((\d{4}),\s*(\d{1,2})"),
-        ]
-        for counter_id, script, pattern in start_dates:
+        for counter_id, script, pattern in DATE_STATS:
             found = re.search(pattern, read(script))
             if not found:
                 self.errors.append(f"{script}: start date for #{counter_id} not found; update this check")

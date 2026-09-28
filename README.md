@@ -111,4 +111,4 @@ Stat values must be known at build time, because the counters render as `—` in
 python3 scripts/export_about_md.py > about.md
 ```
 
-It fails on invalid markers and on stat values that no longer match the counter scripts (`static-stat-counters.js`, the start dates in `tenure-counter.js` / `ai-dev-counter.js`, and the `[data-project]` count). The **about.md export markers** workflow runs it on every PR that touches the homepage or the counters, and puts the resulting Markdown in the job summary.
+It fails on invalid markers, on a project card, certification or work-style item without `data-md-item` (see the rule in CLAUDE.md), on a stat value that isn't numeric (date-based stats: a `Month YYYY` start date), and on stat values that no longer match the counter scripts (`static-stat-counters.js`, the start dates in `tenure-counter.js` / `ai-dev-counter.js`, and the `[data-project]` count). The **about.md export markers** workflow runs it on every PR that touches the homepage or the counters, and puts the resulting Markdown in the job summary.
