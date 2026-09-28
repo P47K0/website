@@ -1,0 +1,46 @@
+# Validates the data-md-* export markers on the homepage and publishes the
+# Markdown they produce (the about.md content) to the job summary and as an
+# artifact, so every PR shows how its homepage change lands in about.md.
+name: about.md export markers
+
+on:
+  pull_request:
+    paths:
+      - "public/index.html"
+      - "public/*-counter*.js"
+      - "scripts/export_about_md.py"
+      - ".github/workflows/about-md-markers.yml"
+  push:
+    branches: [main]
+    paths:
+      - "public/index.html"
+      - "public/*-counter*.js"
+      - "scripts/export_about_md.py"
+      - ".github/workflows/about-md-markers.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate markers and export Markdown
+        run: python3 scripts/export_about_md.py public/index.html > about.md
+
+      - name: Preview in job summary
+        run: |
+          {
+            echo "## about.md preview"
+            echo
+            echo '````markdown'
+            cat about.md
+            echo '````'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: about-md
+          path: about.md

@@ -87,3 +87,28 @@ This repository may later contain:
 - a tools subdomain or related mini-apps
 
 The first milestone is simple: publish a solid personal homepage that represents Patrick Koorevaar well.
+
+## about.md export markers
+
+[about.md](https://blog.koorevaar.com/about.md) is generated from the homepage, so the two can't drift apart. Elements in `public/index.html` that belong in it carry `data-md-*` attributes. The attributes have no styling or behaviour, so they cause no visual change. Export is opt-in: anything unmarked (nav, buttons, chat widget, Turnstile, live counters) is ignored.
+
+| Marker | Where | Becomes |
+|---|---|---|
+| `data-md-section` + `data-md-title="…"` | a block of content; not nested | `## …` heading |
+| `data-md-item` | inside a section; not nested | a `### title` block when it has text, otherwise one `- **title**: meta · tags` bullet |
+| `data-md-title` | inside an item, exactly one | the item's title |
+| `data-md-meta` | inside an item | status or date line (italic), or the bullet's detail |
+| `data-md-text` | in an item or directly in a section | a paragraph; inline `<a>` links are kept as Markdown links |
+| `data-md-tag` | inside an item | `Tags:` list |
+| `data-md-link` | on an `<a>` with an http(s) href | `[label](url)`; relative hrefs resolve against www.koorevaar.com |
+| `data-md-stat` + `data-md-label` / `data-md-value` | directly in a section | `- label: value` |
+
+Stat values must be known at build time, because the counters render as `—` in the raw HTML. Date-based counters are exported as their start date ("In IT since: January 2000") so they never go stale. Live stats (visits, blog articles, questions answered, embeddings) stay unmarked. The document title comes from `<title>`.
+
+`scripts/export_about_md.py` is the reference exporter (Python stdlib only):
+
+```
+python3 scripts/export_about_md.py > about.md
+```
+
+It fails on invalid markers and on stat values that no longer match the counter scripts (`static-stat-counters.js`, the start dates in `tenure-counter.js` / `ai-dev-counter.js`, and the `[data-project]` count). The **about.md export markers** workflow runs it on every PR that touches the homepage or the counters, and puts the resulting Markdown in the job summary.
