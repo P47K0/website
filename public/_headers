@@ -1,0 +1,7 @@
+# Cloudflare static assets serve .txt as bare "text/plain"; add the charset
+# so llms.txt (and robots.txt) are read as UTF-8.
+/llms.txt
+  Content-Type: text/plain; charset=utf-8
+
+/robots.txt
+  Content-Type: text/plain; charset=utf-8
