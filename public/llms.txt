@@ -1,0 +1,18 @@
+# Patrick Koorevaar
+
+> Patrick Koorevaar is a senior Azure DevOps Engineer working with AKS, Azure Container Apps (ACA) and CI/CD pipelines. Running production AKS and CI/CD by day, and shipping live LLM applications on Cloudflare Workers AI as side projects.
+
+## Profile
+
+- [About (Markdown)](https://blog.koorevaar.com/about.md): CV-style profile with skills, certifications and projects
+- [Contact](https://contact.koorevaar.com/): contact form, also the place to request the full CV
+
+## Blog
+
+- [Blog](https://blog.koorevaar.com/): notes and write-ups on Azure, Kubernetes, DevOps and live LLM side projects
+- [All articles as Markdown](https://blog.koorevaar.com/llms.txt): the blog's own llms.txt, listing every article's raw Markdown URL
+
+## Optional
+
+- [GitHub](https://github.com/P47K0)
+- [LinkedIn](https://www.linkedin.com/in/patrickkoorevaar)
