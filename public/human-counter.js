@@ -23,9 +23,28 @@
     }).catch(() => {});
   }
 
+  // Turnstile is only loaded once the visitor interacts (see loadTurnstile in
+  // index.html): a visit can't count without an interaction anyway, and
+  // this keeps its ~900 KB challenge out of the page load.
+  function renderTurnstile() {
+    if (!window.loadTurnstile) return;
+    window.loadTurnstile()
+      .then(function (turnstile) {
+        turnstile.render("#turnstile-container", {
+          sitekey: "0x4AAAAAAElQdCZJAeoJJRls",
+          size: "invisible",
+          callback: function (token) {
+            if (window.onTurnstileSuccess) window.onTurnstileSuccess(token);
+          }
+        });
+      })
+      .catch(function () {});
+  }
+
   const interactionEvents = ["scroll", "pointermove", "keydown", "touchstart"];
   function onInteract() {
     interacted = true;
+    renderTurnstile();
     maybeFire(window.__turnstileToken);
     interactionEvents.forEach(evt => window.removeEventListener(evt, onInteract));
   }

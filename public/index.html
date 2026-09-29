@@ -30,18 +30,29 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
-  <!-- Cloudflare Turnstile (invisible mode, no visible challenge) -->
-  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onTurnstileLoad" async defer></script>
+  <!-- Cloudflare Turnstile (invisible mode, no visible challenge), loaded on
+       demand rather than with the page: its challenge downloads ~900 KB and
+       competed with the page's own scripts and LCP image. loadTurnstile()
+       injects api.js once and resolves with window.turnstile.
+       human-counter.js calls it on the visitor's first interaction,
+       assistant-widget.js when the chat is opened or a question is sent. -->
   <script>
-    function onTurnstileLoad() {
-      turnstile.render('#turnstile-container', {
-        sitekey: '0x4AAAAAAElQdCZJAeoJJRls',
-        size: 'invisible',
-        callback: function (token) {
-          if (window.onTurnstileSuccess) window.onTurnstileSuccess(token);
-        }
-      });
-    }
+    window.loadTurnstile = function () {
+      if (!window.__turnstileLoading) {
+        window.__turnstileLoading = new Promise(function (resolve, reject) {
+          window.onTurnstileLoad = function () { resolve(window.turnstile); };
+          var s = document.createElement('script');
+          s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onTurnstileLoad&render=explicit';
+          s.async = true;
+          s.onerror = function (e) {
+            window.__turnstileLoading = null; // allow a retry later
+            reject(e);
+          };
+          document.head.appendChild(s);
+        });
+      }
+      return window.__turnstileLoading;
+    };
   </script>
 
   <script type="application/ld+json">
