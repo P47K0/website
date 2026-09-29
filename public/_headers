@@ -13,3 +13,8 @@
 
 /sitemap.xml
   Content-Type: application/xml; charset=utf-8
+
+# Self-hosted fonts: the file name carries the upstream version, so they
+# never change in place.
+/fonts/*.woff2
+  Cache-Control: public, max-age=31536000, immutable
