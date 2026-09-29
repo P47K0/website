@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Indexable pages only: /privacy is noindex, /llms-full.txt is
+     X-Robots-Tag: noindex, /go/* is the honeypot. The blog has its own
+     sitemap (https://blog.koorevaar.com/sitemap.xml), listed in robots.txt. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://www.koorevaar.com/</loc>
+  </url>
+</urlset>
