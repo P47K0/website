@@ -51,7 +51,8 @@
     const body = document.createElement("div");
     body.className = "card-body";
 
-    const title = document.createElement("h5");
+    // h3: sits under the section's h2, so no heading level is skipped.
+    const title = document.createElement("h3");
     title.className = "card-title";
     title.textContent = item.title;
     body.appendChild(title);
