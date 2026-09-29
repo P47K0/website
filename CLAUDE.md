@@ -15,3 +15,14 @@ When adding or changing homepage content, add the markers in the same change so 
 ## llms-full.txt
 
 `public/llms-full.txt` is the exporter's output, committed as-is: the same Markdown as about.md. After any change that affects the export (homepage content, markers, counter scripts, the exporter), regenerate it in the same change with `python3 scripts/export_about_md.py > public/llms-full.txt`. The about.md workflow fails when it's out of date. Never edit it by hand.
+
+## Assistant knowledge base: sync after homepage changes
+
+The blog's "Ask about Patrick" assistant answers from KnowledgeBase embeddings of the `about` article (Pat.Aca.BlogServiceApi), not from this repo. After a homepage change that changes `public/llms-full.txt` is merged and deployed, run the sync from the blog repo so the assistant catches up:
+
+```
+python3 scripts/export_about_md.py > /tmp/about.md
+cd <Pat.Aca.BlogServiceApi> && python3 tools/about-sync/sync_about.py /tmp/about.md
+```
+
+It needs the blog repo's `.secrets/claude-tokens.env` and local Ollama (`bge-m3`), and does nothing when the content is unchanged. If it prints `STALE` chunk ids, pass them on to the user to delete. This is manual for now. Moving it to a workflow that embeds with Cloudflare Workers AI is an open backlog item.
