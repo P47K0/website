@@ -9,11 +9,13 @@
  * visitor could actually read on the blog.
  */
 (function () {
-  fetch("/api/blog-count")
-    .then(function (r) { return r.json(); })
-    .then(function (data) {
-      const el = document.getElementById("blog-article-count");
-      window.animateCountUp(el, data.count ?? 0);
-    })
-    .catch(function () {});
+  window.afterLoad(function () {
+    fetch("/api/blog-count")
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        const el = document.getElementById("blog-article-count");
+        window.animateCountUp(el, data.count ?? 0);
+      })
+      .catch(function () {});
+  });
 })();
