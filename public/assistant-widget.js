@@ -157,15 +157,28 @@
       avatarImg.className = 'aw-avatar-img' + (avatarState === 'rest' ? ' aw-avatar-on' : '');
       avatarImg.alt = '';
       avatarImg.setAttribute('aria-hidden', 'true');
-      // Reduced motion: only "rest" ever gets shown, so only it gets
-      // fetched -- no point spending bandwidth on stills the loop below
-      // will never pick.
-      if (avatarState === 'rest' || !prefersReducedMotion) {
+      // Only "rest" is fetched right away (the host page may preload it).
+      // The other stills wait for the window load event so they don't
+      // compete with "rest" and the page's own resources; setAvatarState
+      // skips any still that hasn't finished loading yet. Reduced motion:
+      // only "rest" ever gets shown, so the others are never fetched.
+      if (avatarState === 'rest') {
         avatarImg.src = '/' + AVATAR_FILES[avatarState];
       }
       launcher.appendChild(avatarImg);
       avatarImgs[avatarState] = avatarImg;
     }
+  }
+  if (!prefersReducedMotion) {
+    var loadIdleStills = function () {
+      for (var state in avatarImgs) {
+        if (Object.prototype.hasOwnProperty.call(avatarImgs, state) && state !== 'rest') {
+          avatarImgs[state].src = '/' + AVATAR_FILES[state];
+        }
+      }
+    };
+    if (document.readyState === 'complete') loadIdleStills();
+    else window.addEventListener('load', loadIdleStills, { once: true });
   }
 
   var panel = document.createElement('div');
@@ -232,7 +245,9 @@
 
   function setAvatarState(state, transitionMs) {
     var img = avatarImgs[state];
-    if (!img || img.classList.contains('aw-avatar-on')) {
+    // Not loaded yet (the idle stills are fetched after page load): skip
+    // this beat rather than fade to an empty image.
+    if (!img || img.classList.contains('aw-avatar-on') || !img.complete || !img.naturalWidth) {
       return;
     }
     var duration = transitionMs || AVATAR_TRANSITION_MS;
