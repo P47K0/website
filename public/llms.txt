@@ -5,6 +5,7 @@
 ## Profile
 
 - [About (Markdown)](https://blog.koorevaar.com/about.md): CV-style profile with skills, certifications and projects
+- [Full profile](https://www.koorevaar.com/llms-full.txt): the same profile, served from this site
 - [Contact](https://contact.koorevaar.com/): contact form, also the place to request the full CV
 
 ## Blog

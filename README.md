@@ -112,3 +112,5 @@ python3 scripts/export_about_md.py > about.md
 ```
 
 It fails on invalid markers, on a project card, certification or work-style item without `data-md-item` (see the rule in CLAUDE.md), on a stat value that isn't numeric (date-based stats: a `Month YYYY` start date), and on stat values that no longer match the counter scripts (`static-stat-counters.js`, the start dates in `tenure-counter.js` / `ai-dev-counter.js`, and the `[data-project]` count). The **about.md export markers** workflow runs it on every PR that touches the homepage or the counters, and puts the resulting Markdown in the job summary.
+
+`public/llms-full.txt` (https://www.koorevaar.com/llms-full.txt) serves that same Markdown from this site, as the full-text companion to `llms.txt`. It's a committed copy of the exporter's output, since the site has no build step. Regenerate it with `python3 scripts/export_about_md.py > public/llms-full.txt`; the workflow fails when it's out of date.

@@ -1,6 +1,8 @@
 # Validates the data-md-* export markers on the homepage and publishes the
 # Markdown they produce (the about.md content) to the job summary and as an
 # artifact, so every PR shows how its homepage change lands in about.md.
+# public/llms-full.txt is a committed copy of that Markdown; the job fails
+# when it no longer matches.
 name: about.md export markers
 
 on:
@@ -9,6 +11,7 @@ on:
       - "public/index.html"
       - "public/*-counter*.js"
       - "scripts/export_about_md.py"
+      - "public/llms-full.txt"
       - ".github/workflows/about-md-markers.yml"
   push:
     branches: [main]
@@ -16,6 +19,7 @@ on:
       - "public/index.html"
       - "public/*-counter*.js"
       - "scripts/export_about_md.py"
+      - "public/llms-full.txt"
       - ".github/workflows/about-md-markers.yml"
 
 permissions:
@@ -29,6 +33,13 @@ jobs:
 
       - name: Validate markers and export Markdown
         run: python3 scripts/export_about_md.py public/index.html > about.md
+
+      - name: Check public/llms-full.txt is up to date
+        run: |
+          if ! diff -u public/llms-full.txt about.md; then
+            echo "::error file=public/llms-full.txt::public/llms-full.txt is out of date. Run: python3 scripts/export_about_md.py > public/llms-full.txt"
+            exit 1
+          fi
 
       - name: Preview in job summary
         run: |
