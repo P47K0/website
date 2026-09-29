@@ -326,6 +326,8 @@
 
   launcher.addEventListener('click', function () {
     setOpen(!panel.classList.contains('aw-open'));
+    // Warm up Turnstile while the visitor types their first question.
+    ensureTurnstileWidget().catch(function () {});
   });
   closeBtn.addEventListener('click', function () {
     setOpen(false);
@@ -352,9 +354,13 @@
   // single question since each server-side siteverify call consumes its
   // token. See Cloudflare's own "invisible, execution: execute" pattern for
   // action-triggered (not form-submit) flows.
+  //
+  // Loaded lazily: nothing is fetched until the chat is opened or a
+  // question is sent, so Turnstile's ~900 KB challenge stays out of the
+  // host page's load.
   // ---------------------------------------------------------------------
   var turnstileWidgetId = null;
-  var turnstileReady = false;
+  var turnstileWidgetPromise = null;
   var pendingTokenResolve = null;
   var pendingTokenReject = null;
 
@@ -403,47 +409,59 @@
         }
       },
     });
-    turnstileReady = true;
   }
 
-  (function loadTurnstile() {
-    // The host page may already load the Turnstile script itself for some
-    // other widget (e.g. an invisible human-visitor check). Reuse that
-    // instead of injecting a second <script src="...api.js"> tag -- two
-    // copies of the same script both trying to define window.turnstile is
-    // unnecessary and untested, and Turnstile happily renders multiple
-    // independent widgets off a single loaded script.
-    if (window.turnstile) {
-      renderAssistantTurnstileWidget();
-      return;
-    }
-    if (document.querySelector('script[src*="challenges.cloudflare.com/turnstile"]')) {
-      var poll = setInterval(function () {
-        if (window.turnstile) {
-          clearInterval(poll);
-          renderAssistantTurnstileWidget();
-        }
-      }, 50);
-      return;
-    }
-    window.__assistantWidgetOnTurnstileLoad = renderAssistantTurnstileWidget;
-    var s = document.createElement('script');
-    s.src = TURNSTILE_SCRIPT_SRC + '?onload=__assistantWidgetOnTurnstileLoad&render=explicit';
-    s.async = true;
-    s.defer = true;
-    document.head.appendChild(s);
-  })();
-
-  function getFreshTurnstileToken() {
+  function loadTurnstileScript() {
+    // The host page may load the Turnstile script itself for some other
+    // widget (e.g. an invisible human-visitor check). Reuse that instead of
+    // injecting a second <script src="...api.js"> tag -- two copies of the
+    // same script both trying to define window.turnstile is unnecessary and
+    // untested, and Turnstile happily renders multiple independent widgets
+    // off a single loaded script. www.koorevaar.com exposes its shared lazy
+    // loader as window.loadTurnstile.
+    if (window.loadTurnstile) return window.loadTurnstile();
+    if (window.turnstile) return Promise.resolve(window.turnstile);
     return new Promise(function (resolve, reject) {
-      if (!turnstileReady || turnstileWidgetId === null) {
-        reject(new Error('turnstile-not-ready'));
+      if (document.querySelector('script[src*="challenges.cloudflare.com/turnstile"]')) {
+        var poll = setInterval(function () {
+          if (window.turnstile) {
+            clearInterval(poll);
+            resolve(window.turnstile);
+          }
+        }, 50);
         return;
       }
-      pendingTokenResolve = resolve;
-      pendingTokenReject = reject;
-      window.turnstile.reset(turnstileWidgetId);
-      window.turnstile.execute(turnstileWidgetId);
+      window.__assistantWidgetOnTurnstileLoad = function () { resolve(window.turnstile); };
+      var s = document.createElement('script');
+      s.src = TURNSTILE_SCRIPT_SRC + '?onload=__assistantWidgetOnTurnstileLoad&render=explicit';
+      s.async = true;
+      s.onerror = reject;
+      document.head.appendChild(s);
+    });
+  }
+
+  // Loads the script and renders this widget's Turnstile instance once;
+  // a failed load is forgotten so the next attempt retries.
+  function ensureTurnstileWidget() {
+    if (!turnstileWidgetPromise) {
+      turnstileWidgetPromise = loadTurnstileScript()
+        .then(renderAssistantTurnstileWidget)
+        .catch(function (err) {
+          turnstileWidgetPromise = null;
+          throw err;
+        });
+    }
+    return turnstileWidgetPromise;
+  }
+
+  function getFreshTurnstileToken() {
+    return ensureTurnstileWidget().then(function () {
+      return new Promise(function (resolve, reject) {
+        pendingTokenResolve = resolve;
+        pendingTokenReject = reject;
+        window.turnstile.reset(turnstileWidgetId);
+        window.turnstile.execute(turnstileWidgetId);
+      });
     });
   }
 
