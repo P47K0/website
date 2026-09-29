@@ -28,6 +28,10 @@
   <meta name="twitter:image" content="https://www.koorevaar.com/og-image.jpg">
 
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <!-- The chat avatar's "rest" still is the mobile LCP element, but
+       assistant-widget.js only adds it late; preload it so it isn't
+       discovered after every deferred script has run. -->
+  <link rel="preload" as="image" href="/assistant-avatar-rest.webp" fetchpriority="high">
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
   <!-- Cloudflare Turnstile (invisible mode, no visible challenge), loaded on
