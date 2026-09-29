@@ -6,11 +6,13 @@
  * from the browser.
  */
 (function () {
-  fetch("/api/embeddings-count")
-    .then(function (r) { return r.json(); })
-    .then(function (data) {
-      const el = document.getElementById("embeddings-count");
-      window.animateCountUp(el, data.count ?? 0);
-    })
-    .catch(function () {});
+  window.afterLoad(function () {
+    fetch("/api/embeddings-count")
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        const el = document.getElementById("embeddings-count");
+        window.animateCountUp(el, data.count ?? 0);
+      })
+      .catch(function () {});
+  });
 })();
