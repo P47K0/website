@@ -1,0 +1,236 @@
+# Patrick Koorevaar - Azure DevOps Engineer
+
+## About
+
+Patrick Koorevaar is a senior Azure DevOps Engineer focused on cloud-native infrastructure, DevOps automation, and container orchestration. At Q-Vend B.V. he leads end-to-end Azure infrastructure, automation, and scalable deployments across AKS, ACA, CI/CD, and production platforms. In his side projects, he has built a delivery pipeline in which AI agents do the routine work, with the guardrails in code and the final review his own. Currently studying for the CKA.
+
+Before publishing full projects on GitHub, I spent years helping others on [Stack Overflow](https://stackoverflow.com/users/1122629/patrick-koorevaar): 59 questions answered, 1.4k reputation, mostly C#, Git, and Azure/Kubernetes scenarios.
+
+Every side project starts from "what can the free tiers cover" — Cloudflare Workers AI, Cosmos DB free tier, Container Apps scaled to zero. VS Code for frontend, VS Pro for backends, same split at work and on side projects.
+
+## Key facts
+
+- In IT since: January 2000
+- Azure and Kubernetes since: November 2020
+- AI-assisted development since: April 2025
+- Certifications: 7
+- Live AI projects: 6
+- Side projects: 15
+
+## Site statistics
+
+- Azure Container Apps: 8
+- Azure Functions: 5
+- Cloudflare Workers: 13
+
+## Applied AI, running live
+
+Cloudflare Workers AI · self-hosted Ollama · multi-agent orchestration
+
+### "Ask about Patrick" chat assistant
+
+*Live · Sep 2026*
+
+The floating chat button on this page — a retrieval-augmented assistant that answers questions about my background from a knowledge base built entirely by Claude Code.
+
+- Tags: Workers AI · RAG · Cosmos DB
+- Links: [Source](https://github.com/P47K0/Pat.Aca.BlogServiceApi)
+
+### Blog comment moderation
+
+*Live · Sep 2026*
+
+Every comment on the blog is scored by an LLM via a Cosmos DB change-feed-triggered Azure Function, calling Cloudflare Workers AI cross-cloud.
+
+- Tags: Change feed · Azure Function · ACA
+- Links: [Try it](https://blog.koorevaar.com/) · [Source](https://github.com/P47K0/Pat.Aca.BlogServiceApi)
+
+### AKS/ACA capacity advisor
+
+*Live demo · Jul 2026*
+
+Turns cluster telemetry into plain-language capacity recommendations using Workers AI.
+
+- Tags: AIOps · Telemetry · ACA
+- Links: [View demo](https://capacity-advisor-demo.koorevaar.com/) · [Source](https://github.com/P47K0/Pat.Containers.CapacityAdvisor)
+
+### AI text analysis
+
+*Live demo · May 2026*
+
+Sentiment and language detection served live over a Cloudflare Workers AI endpoint.
+
+- Tags: Workers AI · .NET 10 · ACA
+- Links: [View demo](https://text-analysis-demo.koorevaar.com/)
+
+### Multi-agent hangman
+
+*Live demo · May 2026*
+
+Two Workers AI agents compete live; game state streamed over SignalR on Azure Container Apps. Join in as a third human player.
+
+- Tags: Multi-agent · SignalR · ACA
+- Links: [View demo](https://llm-hangman-demo.koorevaar.com/) · [Source](https://github.com/P47K0/Pat.Aca.HangmanApi)
+
+### CV request generator
+
+*Live · May 2026*
+
+A button on my contact page asks an LLM to write a personalized message requesting my CV — an AI gimmick that's actually live.
+
+- Tags: Workers AI · Llama 3.1
+- Links: [Try it](https://contact.koorevaar.com/)
+
+## Other side projects
+
+### Multi-tenant website platform running entirely on Cloudflare
+
+Deployed via an AI-assisted pipeline: changes live within 5 minutes of approval · Sep 2026
+
+- Links: [Demo 1](https://demo1.koorevaar.com/) · [Write-up](https://blog.koorevaar.com/articles/end-to-end-site-deployment-with-claude)
+
+### Blog platform (blog.koorevaar.com)
+
+Cosmos DB content + comments, Azure Functions, two Cloudflare Workers · May–Sep 2026
+
+- Links: [Visit](https://blog.koorevaar.com/) · [Source](https://github.com/P47K0/Pat.Aca.BlogServiceApi)
+
+### LinkedIn import pipeline
+
+Claude for Chrome + Claude Code authoring workflow, 86 articles imported · Sep 2026
+
+- Links: [Write-up](https://blog.koorevaar.com/articles/efficiently-import-linkedin-posts-with-claude)
+
+### YouTube channel monitor
+
+ACA scheduled job + YouTube API + Azure Communication Services email alert · Jul 2026
+
+- Links: [Source](https://github.com/P47K0/Pat.Containers.Job.YoutubeChannelGuard)
+
+### Personal website (koorevaar.com)
+
+Built with Aider, Qwen2.5 and Claude Code; Cloudflare-delivered · May 2026
+
+- Links: [Source](https://github.com/P47K0/website)
+
+### Sentiment analysis platform (AKS)
+
+Self-hosted Ollama, blue/green + canary deploys · May 2026
+
+- Links: [Source](https://github.com/P47K0/sentiment-aks-ollama)
+
+### Multi-agent hangman (source)
+
+Console application, Semantic Kernel and Agent Framework versions · Jan 2026
+
+- Links: [Source (SK)](https://github.com/P47K0/SKOrchestrationPractice) · [Source (AF)](https://github.com/P47K0/AgentFrameworkPractice)
+
+## Infrastructure & DevOps
+
+### Production AKS at scale
+
+*Production*
+
+30+ microservices per namespace on production AKS clusters, including two full blue/green cluster migrations (2022, 2025).
+
+- Tags: AKS · Ingress
+
+### CI/CD pipelines
+
+*Production*
+
+Azure DevOps YAML pipelines, automated test with a manual production gate, plus blue/green and canary rollouts via Traefik and feature flags.
+
+- Tags: Azure DevOps · Canary
+
+### Infrastructure as code
+
+*Production*
+
+Terraform and Bicep, deployed via GitHub Actions with OIDC and least-privilege roles kept out of the CI pipeline by design.
+
+- Tags: Terraform · Bicep
+
+### K8s cluster automation
+
+*Side project · Aug 2026*
+
+Fully automated two-node Kubernetes cluster in an Azure sandbox, provisioned with Bash and Bicep, standing up end-to-end in under 7 minutes with Calico CNI over VXLAN.
+
+- Tags: Automation · Calico · Bash · Bicep
+- Links: [Source](https://github.com/P47K0/k8s-whizlabs-sandbox)
+
+### CKA practice lab
+
+*Side project · Live, login required · Aug 2026*
+
+A real Linux shell relayed live to a cloudshell-style browser terminal over SignalR, shimmed kubectl/kubeadm, gated by Cloudflare Zero Trust.
+
+- Tags: SignalR · Zero Trust · ACA
+- Links: [Visit lab](https://lab.koorevaar.com/)
+
+- **Monitoring & observability**: Prometheus, Grafana, PromQL dashboards
+- **Messaging & data**: Azure Service Bus, Storage queues, Azure SQL Database
+
+## Skills
+
+- **Cloud**: Azure
+- **Containers**: Docker · Kubernetes · AKS (production, work) · Azure Container Apps
+- **Integration**: Azure Service Bus · Storage queues
+- **CI/CD**: Azure DevOps · YAML pipelines · GitHub Actions
+- **Infrastructure**: Terraform · Helm · Ingress · Networking
+- **Deployment strategies**: Blue/green · Canary · Feature flags (Azure App Config)
+- **Languages & scripts**: C# · Python · Bash · PowerShell
+- **Monitoring & observability**: Prometheus · Grafana
+- **AI / LLM**: IPEX Ollama (local) · Cloudflare Workers AI · Semantic Kernel · Agent Framework · Multi-agent orchestration · RAG
+- **AI-assisted engineering**: Architecture and design ownership · AI-managed backlog from design discussions · Claude and Claude Code (skills, CLAUDE.md) · Human-reviewed AI pull requests
+- **Frameworks**: .NET 10 · SignalR · ASP.NET Core · Entity Framework · gRPC · REST · React · Bootstrap
+- **Database**: Azure SQL Database
+- **Tools**: VS Pro · VS Code · GitHub · Cloudflare (Workers, Workers AI, Web Analytics, DNS)
+- **OIDC**: Keycloak · Azure Entra ID
+
+## Certifications
+
+- **AZ-400**: DevOps Engineer Expert
+- **AZ-305**: Solutions Architect Expert
+- **AI-102**: AI Engineer Associate
+- **AZ-204**: Azure Developer Associate
+- **AZ-104**: Azure Administrator Associate
+- **AI-900**: Azure AI Fundamentals
+- **AZ-900**: Azure Fundamentals
+
+## My work style
+
+### Building with AI, not just prompting it
+
+I build my automation in a back and forth with Claude Code. It proposes the design, writes the code, tests and docs, and asks me numbered questions with a recommendation when a decision is mine. I create what only I can (Cloudflare tokens, GitHub environments and secrets), review every PR, and push back when something doesn't fit. In one day of that loop we built an end to end, AI-operated deployment for client sites: I give Claude a site name and a request, and after my review and merge the pipeline puts it live.
+
+### Agentic backlog management
+
+Ideas and the feature backlog live on a private GitHub Projects board. Claude Code files and updates items directly via the GitHub GraphQL API during planning conversations, capturing decisions and open questions as they're made.
+
+### Blog content pipeline
+
+Posts are written as Markdown, stored in Cosmos DB, served through an ACA API. I ask Claude to insert or update articles directly; deleting a post is deliberately left to me only. A Cloudflare Worker converts Markdown to HTML on the way out.
+
+### Building this website
+
+Started out built with Aider paired with a local Qwen2.5 model running via IPEX Ollama. Ongoing iteration — new sections, project cards, fixes — now runs through Claude Code instead.
+
+### Everyday tool stack
+
+VS Code for frontend work, Visual Studio Pro for backends — the same split at work and on side projects.
+
+- Tags: Work: Azure Repos/DevOps/Registry, AKS · Side projects: GitHub Actions/Registry, ACA
+
+### Cost-conscious architecture
+
+Every side project starts from "what can the free tiers cover" — Cloudflare Workers/DNS/Web Analytics, Cosmos DB free tier, Container Apps scaled to zero, Entra ID plus Cloudflare Zero Trust for auth. Workers AI over Azure AI Foundry for the same reason. Anything bigger runs briefly on the Azure credit from my VS Pro subscription, then gets torn down.
+
+## Links
+
+- [LinkedIn](https://www.linkedin.com/in/patrickkoorevaar)
+- [GitHub](https://github.com/P47K0)
+- [Docker Hub](https://hub.docker.com/repositories/p47r1ck75)
+- [Stack Overflow](https://stackoverflow.com/users/1122629/patrick-koorevaar)
+- [Contact](https://contact.koorevaar.com/)
