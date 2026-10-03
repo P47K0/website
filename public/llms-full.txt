@@ -14,18 +14,27 @@ Every side project starts from "what can the free tiers cover" — Cloudflare Wo
 - Azure and Kubernetes since: November 2020
 - AI-assisted development since: April 2025
 - Certifications: 7
-- Live AI projects: 6
-- Side projects: 15
+- Live AI projects: 7
+- Side projects: 16
 
 ## Site statistics
 
 - Azure Container Apps: 8
-- Azure Functions: 5
-- Cloudflare Workers: 13
+- Azure Functions: 10
+- Cloudflare Workers: 14
 
 ## Applied AI, running live
 
 Cloudflare Workers AI · self-hosted Ollama · multi-agent orchestration
+
+### Instagram reply agent
+
+*Live · Oct 2026*
+
+Claude Haiku drafts replies to Instagram Reel comments in my tone. Nothing is posted until I approve it on a page behind Cloudflare Access.
+
+- Tags: Claude API · Azure Functions · Instagram API
+- Links: [Write-up](https://blog.koorevaar.com/articles/instagram-reply-agent-the-setup-was-the-hard-part)
 
 ### "Ask about Patrick" chat assistant
 
