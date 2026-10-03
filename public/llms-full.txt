@@ -25,7 +25,7 @@ Every side project starts from "what can the free tiers cover" — Cloudflare Wo
 
 ## Applied AI, running live
 
-Cloudflare Workers AI · self-hosted Ollama · multi-agent orchestration
+Cloudflare Workers AI · Claude API · self-hosted Ollama · multi-agent orchestration
 
 ### Instagram reply agent
 
@@ -187,11 +187,11 @@ A real Linux shell relayed live to a cloudshell-style browser terminal over Sign
 - **Containers**: Docker · Kubernetes · AKS (production, work) · Azure Container Apps
 - **Integration**: Azure Service Bus · Storage queues
 - **CI/CD**: Azure DevOps · YAML pipelines · GitHub Actions
-- **Infrastructure**: Terraform · Helm · Ingress · Networking
+- **Infrastructure**: Terraform · Bicep · Helm · Ingress · Networking
 - **Deployment strategies**: Blue/green · Canary · Feature flags (Azure App Config)
 - **Languages & scripts**: C# · Python · Bash · PowerShell
 - **Monitoring & observability**: Prometheus · Grafana
-- **AI / LLM**: IPEX Ollama (local) · Cloudflare Workers AI · Semantic Kernel · Agent Framework · Multi-agent orchestration · RAG
+- **AI / LLM**: IPEX Ollama (local) · Cloudflare Workers AI · Claude API · Semantic Kernel · Agent Framework · Multi-agent orchestration · RAG
 - **AI-assisted engineering**: Architecture and design ownership · AI-managed backlog from design discussions · Claude and Claude Code (skills, CLAUDE.md) · Human-reviewed AI pull requests
 - **Frameworks**: .NET 10 · SignalR · ASP.NET Core · Entity Framework · gRPC · REST · React · Bootstrap
 - **Database**: Azure SQL Database
