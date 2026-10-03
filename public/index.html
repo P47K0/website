@@ -377,8 +377,8 @@
         <a href="#devops-section" class="stat-card" data-md-stat data-md-label="Azure and Kubernetes since" data-md-value="November 2020"><div class="n" id="years-azure-count">—</div><div class="l">Years Azure &amp; Kubernetes</div></a>
         <div class="stat-card" data-md-stat data-md-label="AI-assisted development since" data-md-value="April 2025"><div class="n" id="ai-dev-months-count">—</div><div class="l">Months AI-assisted development</div></div>
         <a href="#certifications-section" class="stat-card" data-md-stat data-md-label="Certifications" data-md-value="7"><div class="n" id="certifications-count">—</div><div class="l">Certifications</div></a>
-        <a href="#ai-section" class="stat-card" data-md-stat data-md-label="Live AI projects" data-md-value="6"><div class="n" id="applied-ai-count">—</div><div class="l">Live AI projects</div></a>
-        <a href="#side-projects-section" class="stat-card" data-md-stat data-md-label="Side projects" data-md-value="15"><div class="n" id="side-project-count">—</div><div class="l">Side projects</div></a>
+        <a href="#ai-section" class="stat-card" data-md-stat data-md-label="Live AI projects" data-md-value="7"><div class="n" id="applied-ai-count">—</div><div class="l">Live AI projects</div></a>
+        <a href="#side-projects-section" class="stat-card" data-md-stat data-md-label="Side projects" data-md-value="16"><div class="n" id="side-project-count">—</div><div class="l">Side projects</div></a>
       </div>
     </div>
     <div class="stat-block" data-md-section data-md-title="Site statistics">
@@ -389,8 +389,8 @@
         <a href="#ai-section" class="stat-card"><div class="n" id="ai-messages-count">—</div><div class="l">Questions answered</div></a>
         <a href="#ai-section" class="stat-card"><div class="n" id="embeddings-count">—</div><div class="l">Embeddings stored</div></a>
         <a href="#devops-section" class="stat-card" data-md-stat data-md-label="Azure Container Apps" data-md-value="8"><div class="n" id="aca-apps-count">—</div><div class="l">Azure Container Apps</div></a>
-        <a href="#devops-section" class="stat-card" data-md-stat data-md-label="Azure Functions" data-md-value="5"><div class="n" id="azure-functions-count">—</div><div class="l">Azure Functions</div></a>
-        <a href="#devops-section" class="stat-card" data-md-stat data-md-label="Cloudflare Workers" data-md-value="13"><div class="n" id="cloudflare-workers-count">—</div><div class="l">Cloudflare Workers</div></a>
+        <a href="#devops-section" class="stat-card" data-md-stat data-md-label="Azure Functions" data-md-value="10"><div class="n" id="azure-functions-count">—</div><div class="l">Azure Functions</div></a>
+        <a href="#devops-section" class="stat-card" data-md-stat data-md-label="Cloudflare Workers" data-md-value="14"><div class="n" id="cloudflare-workers-count">—</div><div class="l">Cloudflare Workers</div></a>
       </div>
     </div>
     <div id="recent-answers" class="recent-answers">
@@ -413,9 +413,19 @@
   <div class="wrap">
     <div class="section-head">
       <h2><span class="sec-ic"><svg viewBox="0 0 18 18"><path fill="currentColor" d="M9 1 L10.6 7.4 L17 9 L10.6 10.6 L9 17 L7.4 10.6 L1 9 L7.4 7.4 Z"/></svg></span>Applied AI, running live</h2>
-      <div class="note" data-md-text>Cloudflare Workers AI · self-hosted Ollama · multi-agent orchestration</div>
+      <div class="note" data-md-text>Cloudflare Workers AI · Claude API · self-hosted Ollama · multi-agent orchestration</div>
     </div>
     <div class="grid3">
+      <div class="app-card" data-project data-md-item>
+        <span class="status-badge live" data-md-meta><span class="dot"></span>Live · Oct 2026</span>
+        <h3 data-md-title>Instagram reply agent</h3>
+        <p data-md-text>Claude Haiku drafts replies to Instagram Reel comments in my tone. Nothing is posted until I approve it on a page behind Cloudflare Access.</p>
+        <div class="app-tags"><span class="tag" data-md-tag>Claude API</span><span class="tag" data-md-tag>Azure Functions</span><span class="tag" data-md-tag>Instagram API</span></div>
+        <div class="app-links">
+          <a class="app-link" data-md-link href="https://blog.koorevaar.com/articles/instagram-reply-agent-the-setup-was-the-hard-part" target="_blank" rel="noopener noreferrer">Write-up →</a>
+          <button class="detail-btn" aria-label="Show details" onclick="toggleDetail('reply-agent', this.closest('.app-card'))"><span class="chevron">+</span></button>
+        </div>
+      </div>
       <div class="app-card" data-project data-md-item>
         <span class="status-badge live" data-md-meta><span class="dot"></span>Live · Sep 2026</span>
         <h3 data-md-title>"Ask about Patrick" chat assistant</h3>
@@ -676,7 +686,7 @@
       </div>
       <div class="chip-group" data-md-item>
         <div class="label" data-md-title>Infrastructure</div>
-        <div class="chips"><span class="chip" data-md-tag>Terraform</span><span class="chip" data-md-tag>Helm</span><span class="chip" data-md-tag>Ingress</span><span class="chip" data-md-tag>Networking</span></div>
+        <div class="chips"><span class="chip" data-md-tag>Terraform</span><span class="chip" data-md-tag>Bicep</span><span class="chip" data-md-tag>Helm</span><span class="chip" data-md-tag>Ingress</span><span class="chip" data-md-tag>Networking</span></div>
       </div>
       <div class="chip-group" data-md-item>
         <div class="label" data-md-title>Deployment strategies</div>
@@ -692,7 +702,7 @@
       </div>
       <div class="chip-group" data-md-item>
         <div class="label" data-md-title>AI / LLM</div>
-        <div class="chips"><span class="chip" data-md-tag>IPEX Ollama (local)</span><span class="chip" data-md-tag>Cloudflare Workers AI</span><span class="chip" data-md-tag>Semantic Kernel</span><span class="chip" data-md-tag>Agent Framework</span><span class="chip" data-md-tag>Multi-agent orchestration</span><span class="chip" data-md-tag>RAG</span></div>
+        <div class="chips"><span class="chip" data-md-tag>IPEX Ollama (local)</span><span class="chip" data-md-tag>Cloudflare Workers AI</span><span class="chip" data-md-tag>Claude API</span><span class="chip" data-md-tag>Semantic Kernel</span><span class="chip" data-md-tag>Agent Framework</span><span class="chip" data-md-tag>Multi-agent orchestration</span><span class="chip" data-md-tag>RAG</span></div>
       </div>
       <div class="chip-group" data-md-item>
         <div class="label" data-md-title>AI-assisted engineering</div>
@@ -882,6 +892,10 @@
   });
 
   var DETAILS = {
+    'reply-agent': { title: 'Instagram reply agent', body:
+      '<p>An agent that drafts replies to comments on Instagram Reels and posts them only after a human approves them. It started with a Business Requirements Document written together with Claude, then nine pull requests built with Claude Code.</p>' +
+      '<ul><li>Five .NET 10 isolated Azure Functions on Flex Consumption: a poller every 5 minutes, a weekly Instagram token refresh, and the approval page with its approve and skip actions</li><li>Claude Haiku 4.5 drafts each reply with structured output: a reply in the language of the comment, or a skip with a reason for spam and emoji-only comments</li><li>Only the comment text and the Reel caption are sent to the model, and comments are treated as data, never as instructions</li><li>Approval page behind a Cloudflare Worker and Cloudflare Access (one-time PIN); the Function checks both an origin secret and the Access token, so its own Azure address returns 403</li><li>Secrets in Key Vault via managed identity, infrastructure in Bicep, deployed with GitHub Actions</li><li>Comments already answered in the app are skipped, so no Claude call is spent on them</li></ul>' +
+      '<a href="https://blog.koorevaar.com/articles/instagram-reply-agent-the-setup-was-the-hard-part" target="_blank" rel="noopener noreferrer">Write-up →</a>' },
     'ai-text-analysis': { title: 'AI text analysis', body:
       '<p>A live client calling a Cloudflare Workers AI endpoint to score sentiment and detect language in real time.</p>' +
       '<ul><li>Sentiment scoring on arbitrary input text</li><li>Language detection as an additional API feature</li><li>.NET 10 backend calling Workers AI</li><li>Blue/green deployment: ACA revision-based setup enabling fast rollback to the stable blue revision</li><li>Canary rollout: a text summarization feature was gradually enabled via Azure App Config feature flags within the green revision</li></ul>' +
