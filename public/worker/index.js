@@ -77,6 +77,9 @@ export default {
     if (url.pathname === "/api/recent-answers" && request.method === "GET") {
       return handleRecentAnswers(env);
     }
+    if (url.pathname === "/" && (request.method === "GET" || request.method === "HEAD")) {
+      return handleHome(request, env);
+    }
     if (url.pathname === "/go/sitemap-index") {
       return handleHoneypot(request, env);
     }
@@ -84,6 +87,27 @@ export default {
     return env.ASSETS.fetch(request);
   }
 };
+
+// Free alternative to Cloudflare's "Markdown for Agents" (Pro plan only): an
+// agent asking for the homepage with Accept: text/markdown gets llms-full.txt,
+// the CI-checked Markdown export of this same page. Browsers never send
+// text/markdown, so they get index.html as before. Both variants carry
+// Vary: Accept so a cache can't serve one in place of the other.
+async function handleHome(request, env) {
+  const accept = (request.headers.get("Accept") || "").toLowerCase();
+  if (accept.includes("text/markdown")) {
+    const asset = await env.ASSETS.fetch(new Request(new URL("/llms-full.txt", request.url), { method: request.method }));
+    const response = new Response(asset.body, asset);
+    response.headers.set("Content-Type", "text/markdown; charset=utf-8");
+    response.headers.delete("X-Robots-Tag");
+    response.headers.set("Vary", "Accept");
+    return response;
+  }
+  const asset = await env.ASSETS.fetch(request);
+  const response = new Response(asset.body, asset);
+  response.headers.append("Vary", "Accept");
+  return response;
+}
 
 async function handleVisit(request, env) {
   try {
