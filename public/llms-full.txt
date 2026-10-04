@@ -96,7 +96,7 @@ A button on my contact page asks an LLM to write a personalized message requesti
 
 Deployed via an AI-assisted pipeline: changes live within 5 minutes of approval · Sep 2026
 
-- Links: [Demo 1](https://demo1.koorevaar.com/) · [Write-up](https://blog.koorevaar.com/articles/end-to-end-site-deployment-with-claude)
+- Links: [Demo 1](https://tenant-sites.koorevaar.com/pizzeria/) · [Write-up](https://blog.koorevaar.com/articles/end-to-end-site-deployment-with-claude)
 
 ### Blog platform (blog.koorevaar.com)
 
