@@ -7,6 +7,9 @@
  * - GET  /api/visit-stats   public aggregate counts for the homepage stat tile.
  * - GET  /api/blog-count    published blog article count, proxied server-side
  *                            from blog-api-proxy (see handleBlogCount below).
+ * - GET  /api/feed-subscribers  estimated RSS subscriber count of the blog,
+ *                            proxied server-side from blog-ui-worker (see
+ *                            handleFeedSubscribers below).
  * - GET  /api/most-viewed-article  most-viewed published blog article, for a
  *                            homepage link to it, proxied server-side from
  *                            blog-api-proxy (see handleMostViewedArticle
@@ -55,6 +58,9 @@ export default {
     }
     if (url.pathname === "/api/blog-count" && request.method === "GET") {
       return handleBlogCount(env);
+    }
+    if (url.pathname === "/api/feed-subscribers" && request.method === "GET") {
+      return handleFeedSubscribers();
     }
     if (url.pathname === "/api/most-viewed-article" && request.method === "GET") {
       return handleMostViewedArticle(env);
@@ -186,6 +192,25 @@ async function handleBlogCount(env) {
     );
   } catch (err) {
     console.error("blog-count error:", err.message);
+    return Response.json({ count: 0 });
+  }
+}
+
+// Estimated RSS subscriber count of the blog: blog-ui-worker derives it from
+// who polls /feed.xml (hosted readers report their subscriber count in the
+// User-Agent) and caches it for an hour. Server-to-server like
+// handleBlogCount; 0 on any failure, which keeps the tile hidden.
+async function handleFeedSubscribers() {
+  try {
+    const res = await fetch("https://blog.koorevaar.com/feed-subscribers.json");
+    if (!res.ok) throw new Error(`blog-ui-worker responded ${res.status}`);
+    const data = await res.json();
+    return Response.json(
+      { count: typeof data.count === "number" ? data.count : 0 },
+      { headers: { "Cache-Control": "public, max-age=300" } }
+    );
+  } catch (err) {
+    console.error("feed-subscribers error:", err.message);
     return Response.json({ count: 0 });
   }
 }
