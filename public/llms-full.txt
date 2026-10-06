@@ -15,7 +15,7 @@ Every side project starts from "what can the free tiers cover" — Cloudflare Wo
 - AI-assisted development since: April 2025
 - Certifications: 7
 - Live AI projects: 7
-- Side projects: 16
+- Side projects: 17
 
 ## Site statistics
 
@@ -97,6 +97,12 @@ A button on my contact page asks an LLM to write a personalized message requesti
 Deployed via an AI-assisted pipeline: changes live within 5 minutes of approval · Sep 2026
 
 - Links: [Demo 1](https://tenant-sites.koorevaar.com/pizzeria/) · [Write-up](https://blog.koorevaar.com/articles/end-to-end-site-deployment-with-claude)
+
+### Gated RAG assistant on Cloudflare Workers
+
+Workers AI, Vectorize and a Durable Object; the contact offer is decided by code, not the model · Oct 2026
+
+- Links: [Write-up](https://blog.koorevaar.com/articles/gated-rag-assistant-on-cloudflare-workers)
 
 ### Blog platform (blog.koorevaar.com)
 
