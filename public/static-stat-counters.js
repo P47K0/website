@@ -12,7 +12,7 @@
   }
 
   animate("certifications-count", 7);
-  animate("applied-ai-count", 7);
+  animate("applied-ai-count", 8);
   animate("aca-apps-count", 8);
   animate("azure-functions-count", 10);
   animate("cloudflare-workers-count", 14);
