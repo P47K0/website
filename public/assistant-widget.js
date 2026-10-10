@@ -722,6 +722,27 @@
     el.textContent = (current + 1).toLocaleString();
   }
 
+  // The generation model does not officially support Dutch and now and then
+  // slips an English word into a Dutch answer ("seven" for "zeven"). Say so
+  // once, playfully, the first time a visitor writes in Dutch. Words that are
+  // Dutch and not also common English, two hits or one strong marker.
+  var DUTCH_WORDS = ('de het een wat hoe welke wie waar waarom heeft hebben niet voor ook naar bij kan kun ' +
+    'ervaring werkt werkte zijn deze dat dit maar nog wel geen hij zij haar jouw mijn ' +
+    'vaardigheden certificeringen projecten bedankt alsjeblieft').split(' ');
+  var DUTCH_STRONG = { wat: 1, hoe: 1, welke: 1, heeft: 1, hebben: 1, ervaring: 1, vaardigheden: 1, certificeringen: 1, werkt: 1, waarom: 1 };
+  var dutchNoteShown = false;
+
+  function looksDutch(text) {
+    var hits = 0, strong = false;
+    String(text).toLowerCase().split(/[^a-z\u00e0-\u00ff]+/).forEach(function (w) {
+      if (DUTCH_WORDS.indexOf(w) !== -1) {
+        hits += 1;
+        if (DUTCH_STRONG[w]) strong = true;
+      }
+    });
+    return hits >= 2 || (hits >= 1 && strong);
+  }
+
   function handleSend() {
     if (sending) {
       return;
@@ -734,6 +755,10 @@
     sending = true;
     sendBtn.disabled = true;
     addMessage(question, 'user');
+    if (!dutchNoteShown && looksDutch(question)) {
+      dutchNoteShown = true;
+      addMessage('I prefer to use English, but I will do my best if you ask in Dutch.', 'system');
+    }
     inputEl.value = '';
     inputEl.style.height = 'auto';
     var thinkingEl = addMessage('Thinking...', 'system');
