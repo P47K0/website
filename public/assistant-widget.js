@@ -107,6 +107,7 @@
     '.aw-msg-source{align-self:flex-start;margin-top:-4px;font-size:12px;}',
     '.aw-msg-source a{color:#63C7FF;text-decoration:underline;}',
     '.aw-msg-source a:hover{color:#F2F6FC;}',
+    '.aw-flash{outline:2px solid #63C7FF;outline-offset:4px;border-radius:12px;}',
     '.aw-msg-system{align-self:center;background:none;color:#93A0B4;font-size:12px;font-style:italic;}',
     '.aw-footer{border-top:1px solid rgba(255,255,255,.12);padding:8px 12px;flex-shrink:0;}',
     '.aw-input-row{display:flex;gap:6px;}',
@@ -328,40 +329,149 @@
     return el;
   }
 
-  // Link under an answer, from the Worker's own `source` field (built from a
-  // real article slug or a stored section id, never model text). Two kinds:
-  // an https blog.koorevaar.com article URL, opened in a new tab, or a
-  // homepage section id (this widget lives on that page), scrolled to in
-  // place. Anything else is ignored.
+  // ---------------------------------------------------------------------
+  // Finding the answer on this page
+  // ---------------------------------------------------------------------
+  // The assistant widget lives on the homepage the `about` answers come from,
+  // so instead of trusting retrieval to name a section (a heading-only chunk
+  // wins most "Patrick" questions, see the assistant-worker's source-link.ts),
+  // match the question and answer text against the page's own marked items
+  // (data-md-item: project cards, skill groups, certifications...) and scroll
+  // to the clearest winner. Lexical on purpose: no model call, always in sync
+  // with the page. No clear winner means no link.
+  var STOPWORDS = {};
+  ('a an and are as at be been but by can could did do does for from had has have he her his how i if in into is it its ' +
+   'me more most my no not of on one or our out she so than that the their them then there these they this to up us ' +
+   'was we were what when where which who will with would you your about also any over some such very patrick ' +
+   'patricks koorevaar experience work works worked working has have having used use using ' +
+   'de het een en van in is op te dat die voor met zijn heeft hij wat hoe welke waar wie ook naar bij aan om als ' +
+   'blog contact directly check feel free ask help background skill project enough information ' +
+   'ervaring werkt gewerkt').split(' ').forEach(function (w) { STOPWORDS[w] = true; });
+
+  function stems(text) {
+    var seen = {};
+    var out = [];
+    String(text || '').toLowerCase().split(/[^a-z0-9]+/).forEach(function (w) {
+      if (w.length < 2 || STOPWORDS[w] || /^[0-9]+$/.test(w)) return;
+      if (w.length > 4 && w.charAt(w.length - 1) === 's') w = w.slice(0, -1);
+      if (!seen[w]) { seen[w] = true; out.push(w); }
+    });
+    return out;
+  }
+
+  var pageIndex = null;
+  function getPageIndex() {
+    if (pageIndex) return pageIndex;
+    var items = [];
+    var df = {};
+    Array.prototype.forEach.call(document.querySelectorAll('[data-md-item]'), function (el) {
+      var titleEl = el.querySelector('[data-md-title]');
+      var title = titleEl ? titleEl.textContent.trim() : '';
+      var tokens = stems(el.textContent);
+      var titleTokens = {};
+      stems(title).forEach(function (t) { titleTokens[t] = true; });
+      var set = {};
+      tokens.forEach(function (t) { set[t] = true; df[t] = (df[t] || 0) + 1; });
+      items.push({ el: el, title: title, set: set, titleTokens: titleTokens });
+    });
+    pageIndex = { items: items, df: df };
+    return pageIndex;
+  }
+
+  // Tuned against the real homepage with a handful of questions, not traffic.
+  var MATCH_MIN_SCORE = 12;
+  var MATCH_MIN_TERMS = 2;
+  var MATCH_MIN_LEAD = 1.3;
+
+  function findOnPage(question, answer) {
+    var idx = getPageIndex();
+    var n = idx.items.length;
+    if (!n) return null;
+    var weights = {};
+    stems(answer).forEach(function (t) { weights[t] = 1; });
+    stems(question).forEach(function (t) { weights[t] = 2; });
+    var scored = idx.items.map(function (item) {
+      var score = 0, terms = 0;
+      for (var t in weights) {
+        if (item.set[t]) {
+          var idf = Math.log(1 + n / idx.df[t]);
+          score += weights[t] * idf * (item.titleTokens[t] ? 2 : 1);
+          terms += 1;
+        }
+      }
+      return { item: item, score: score, terms: terms };
+    }).sort(function (a, b) { return b.score - a.score; });
+    var best = scored[0];
+    if (!best || best.score < MATCH_MIN_SCORE || best.terms < MATCH_MIN_TERMS) return null;
+    // Cards in one section back each other up, so the lead is over the best
+    // item in a different section.
+    var bestSection = best.item.el.closest('[data-md-section]');
+    var rival = scored.filter(function (r) { return r.item.el.closest('[data-md-section]') !== bestSection; })[0];
+    if (rival && best.score < rival.score * MATCH_MIN_LEAD) return null;
+    var target = best.item.el;
+    var label = best.item.title;
+    // Skill groups and certifications sit in collapsed panels: point at the
+    // section head instead of an element with no box.
+    if (target.getClientRects().length === 0) {
+      target = bestSection || target;
+      label = target.getAttribute('data-md-title') || label;
+    }
+    return { el: target, label: label };
+  }
+
+  // Link under an answer. Three kinds, first match wins: a blog article from
+  // the Worker's `source` (an https blog.koorevaar.com article URL, opened in
+  // a new tab); a homepage section id from the Worker's `source`; otherwise
+  // whatever findOnPage() clearly matches on this page. Anything else is
+  // ignored. Article and section sources are built Worker-side from real
+  // slugs/ids, never model text.
   var ARTICLE_URL_PREFIX = 'https://blog.koorevaar.com/articles/';
 
-  function addSourceLink(source) {
-    if (!source) {
-      return;
+  function flash(el) {
+    el.classList.add('aw-flash');
+    setTimeout(function () { el.classList.remove('aw-flash'); }, 2500);
+  }
+
+  function scrollToOnPage(target) {
+    // On phones the panel covers most of the page, so get it out of the way.
+    if (window.innerWidth <= 600) {
+      setOpen(false);
     }
+    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    flash(target);
+  }
+
+  function addSourceLink(source, question, answer) {
     var a = document.createElement('a');
-    if (source.type === 'article' && typeof source.url === 'string' &&
+    var target = null;
+    var label = null;
+    if (source && source.type === 'article' && typeof source.url === 'string' &&
         source.url.indexOf(ARTICLE_URL_PREFIX) === 0) {
       a.href = source.url;
       a.target = '_blank';
       a.rel = 'noopener';
-      a.textContent = 'Read more on the blog \u2192';
-    } else if (source.type === 'section' && typeof source.anchor === 'string' &&
-               /^#[a-z][a-z-]*-section$/.test(source.anchor) &&
-               document.getElementById(source.anchor.slice(1))) {
-      var target = document.getElementById(source.anchor.slice(1));
-      a.href = source.anchor;
-      a.textContent = 'See this on the page \u2193';
+      a.textContent = 'Read more on the blog →';
+    } else {
+      if (source && source.type === 'section' && typeof source.anchor === 'string' &&
+          /^#[a-z][a-z-]*-section$/.test(source.anchor)) {
+        target = document.getElementById(source.anchor.slice(1));
+      }
+      if (!target) {
+        var found = findOnPage(question, answer);
+        if (found) {
+          target = found.el;
+          label = found.label;
+        }
+      }
+      if (!target) {
+        return;
+      }
+      a.href = '#' + (target.id || '');
+      a.textContent = (label ? 'See “' + label + '” on the page' : 'See this on the page') + ' ↓';
       a.addEventListener('click', function (e) {
         e.preventDefault();
-        // On phones the panel covers most of the page, so get it out of the way.
-        if (window.innerWidth <= 600) {
-          setOpen(false);
-        }
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        scrollToOnPage(target);
       });
-    } else {
-      return;
     }
     var el = document.createElement('div');
     el.className = 'aw-msg-source';
@@ -619,7 +729,7 @@
         }
         return response.json().then(function (data) {
           addMessage(data.answer, 'assistant');
-          addSourceLink(data.source);
+          addSourceLink(data.source, question, data.answer);
           logAssistantUsage();
         });
       })
