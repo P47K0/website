@@ -367,12 +367,19 @@
     Array.prototype.forEach.call(document.querySelectorAll('[data-md-item]'), function (el) {
       var titleEl = el.querySelector('[data-md-title]');
       var title = titleEl ? titleEl.textContent.trim() : '';
-      var tokens = stems(el.textContent);
+      // data-kw: hand-written extra terms (Dutch names, synonyms) on an item or
+      // its section, matched like the visible text but not shown or exported.
+      var sectionEl = el.closest('[data-md-section]');
+      var kwTokens = stems((el.getAttribute('data-kw') || '') + ' ' +
+        (sectionEl ? sectionEl.getAttribute('data-kw') || '' : ''));
+      var tokens = stems(el.textContent).concat(kwTokens);
       var titleTokens = {};
       stems(title).forEach(function (t) { titleTokens[t] = true; });
       var set = {};
       tokens.forEach(function (t) { set[t] = true; df[t] = (df[t] || 0) + 1; });
-      items.push({ el: el, title: title, set: set, titleTokens: titleTokens });
+      var kwSet = {};
+      kwTokens.forEach(function (t) { kwSet[t] = true; });
+      items.push({ el: el, title: title, set: set, titleTokens: titleTokens, kwSet: kwSet });
     });
     pageIndex = { items: items, df: df };
     return pageIndex;
@@ -382,6 +389,7 @@
   var MATCH_MIN_SCORE = 12;
   var MATCH_MIN_TERMS = 2;
   var MATCH_MIN_LEAD = 1.3;
+  var KW_TERM_WORTH = 6;
 
   function findOnPage(question, answer) {
     var idx = getPageIndex();
@@ -389,14 +397,19 @@
     if (!n) return null;
     var weights = {};
     stems(answer).forEach(function (t) { weights[t] = 1; });
-    stems(question).forEach(function (t) { weights[t] = 2; });
+    stems(question).forEach(function (t) { weights[t] = 3; });
     var scored = idx.items.map(function (item) {
       var score = 0, terms = 0;
       for (var t in weights) {
         if (item.set[t]) {
           var idf = Math.log(1 + n / idx.df[t]);
-          score += weights[t] * idf * (item.titleTokens[t] ? 2 : 1);
-          terms += 1;
+          var part = idf * (item.titleTokens[t] ? 2 : 1);
+          // Curated keywords are spread over a whole section, which drags
+          // their idf down; give them a flat worth instead.
+          if (item.kwSet[t]) part = Math.max(part, KW_TERM_WORTH);
+          score += weights[t] * part;
+          // A curated keyword is evidence enough on its own: counts double.
+          terms += item.kwSet[t] ? 2 : 1;
         }
       }
       return { item: item, score: score, terms: terms };
@@ -410,9 +423,14 @@
     if (rival && best.score < rival.score * MATCH_MIN_LEAD) return null;
     var target = best.item.el;
     var label = best.item.title;
-    // Skill groups and certifications sit in collapsed panels: point at the
-    // section head instead of an element with no box.
-    if (target.getClientRects().length === 0) {
+    // Many cards tied (a match on a section-wide keyword, e.g. "projects"):
+    // no single card is the answer, so point at the section. Skill groups and
+    // certifications sit in collapsed panels: same, an element with no box
+    // can't be scrolled to.
+    var tied = scored.filter(function (r) {
+      return r.score >= best.score * 0.9 && r.item.el.closest('[data-md-section]') === bestSection;
+    }).length;
+    if (tied >= 3 || target.getClientRects().length === 0) {
       target = bestSection || target;
       label = target.getAttribute('data-md-title') || label;
     }
