@@ -439,9 +439,8 @@
 
   // Link under an answer. Three kinds, first match wins: a blog article from
   // the Worker's `source` (an https blog.koorevaar.com article URL, opened in
-  // a new tab); a homepage section id from the Worker's `source`; otherwise
-  // whatever findOnPage() clearly matches on this page. Anything else is
-  // ignored. Article and section sources are built Worker-side from real
+  // a new tab); whatever findOnPage() clearly matches on this page; otherwise
+  // the homepage section id the Worker voted for. Anything else is ignored. Article and section sources are built Worker-side from real
   // slugs/ids, never model text.
   var ARTICLE_URL_PREFIX = 'https://blog.koorevaar.com/articles/';
 
@@ -470,16 +469,16 @@
       a.rel = 'noopener';
       a.textContent = 'Read more on the blog →';
     } else {
-      if (source && source.type === 'section' && typeof source.anchor === 'string' &&
-          /^#[a-z][a-z-]*-section$/.test(source.anchor)) {
+      // The page match first: it reads the live page, so when it has a clear
+      // winner it beats the Worker's voted section, which can still point at
+      // a heading chunk's section. The vote is the fallback.
+      var found = findOnPage(question, answer);
+      if (found) {
+        target = found.el;
+        label = found.label;
+      } else if (source && source.type === 'section' && typeof source.anchor === 'string' &&
+                 /^#[a-z][a-z-]*-section$/.test(source.anchor)) {
         target = document.getElementById(source.anchor.slice(1));
-      }
-      if (!target) {
-        var found = findOnPage(question, answer);
-        if (found) {
-          target = found.el;
-          label = found.label;
-        }
       }
       if (!target) {
         return;
