@@ -107,6 +107,9 @@
     '.aw-msg-assistant{align-self:flex-start;background:rgba(255,255,255,.07);color:#F2F6FC;',
     'border:1px solid rgba(255,255,255,.12);border-bottom-left-radius:2px;}',
     '.aw-msg-error{align-self:flex-start;background:rgba(239,68,68,.12);color:#FCA5A5;border:1px solid rgba(252,165,165,.35);}',
+    '.aw-msg-source{align-self:flex-start;margin-top:-4px;font-size:12px;}',
+    '.aw-msg-source a{color:#63C7FF;text-decoration:underline;}',
+    '.aw-msg-source a:hover{color:#F2F6FC;}',
     '.aw-msg-system{align-self:center;background:none;color:#93A0B4;font-size:12px;font-style:italic;}',
     '.aw-footer{border-top:1px solid rgba(255,255,255,.12);padding:8px 12px;flex-shrink:0;}',
     '.aw-input-row{display:flex;gap:6px;}',
@@ -326,6 +329,26 @@
     messagesEl.appendChild(el);
     messagesEl.scrollTop = messagesEl.scrollHeight;
     return el;
+  }
+
+  // "Read more" link under an answer. The URL comes from the Worker's own
+  // `source` field (built from a real article slug, never model text); only
+  // an https blog.koorevaar.com article URL is ever rendered as a link.
+  function addSourceLink(source) {
+    if (!source || typeof source.url !== 'string' ||
+        source.url.indexOf('https://blog.koorevaar.com/articles/') !== 0) {
+      return;
+    }
+    var el = document.createElement('div');
+    el.className = 'aw-msg-source';
+    var a = document.createElement('a');
+    a.href = source.url;
+    a.target = '_blank';
+    a.rel = 'noopener';
+    a.textContent = 'Read more on the blog \u2192';
+    el.appendChild(a);
+    messagesEl.appendChild(el);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
   }
 
   function setOpen(open) {
@@ -552,6 +575,7 @@
         }
         return response.json().then(function (data) {
           addMessage(data.answer, 'assistant');
+          addSourceLink(data.source);
           logAssistantUsage();
         });
       })
