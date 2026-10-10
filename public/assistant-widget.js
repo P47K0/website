@@ -87,12 +87,9 @@
     '@media (max-width:600px){',
     '.aw-launcher{bottom:calc(' + LAUNCHER_BOTTOM_MOBILE + 'px + env(safe-area-inset-bottom));}',
     '.aw-panel{bottom:calc(' + PANEL_BOTTOM_MOBILE + 'px + env(safe-area-inset-bottom));right:12px;max-width:calc(100vw - 24px);',
-    // Shorter than the 460px desktop panel: on a phone, the on-screen
-    // keyboard eats a big chunk of vertical space the moment the message
-    // field is focused (which happens automatically on open), and a tall
-    // fixed-height panel can end up with its header and welcome message
-    // pushed out of view above the keyboard. A shorter panel leaves enough
-    // headroom for that not to happen.
+    // Shorter than the 460px desktop panel to fit a phone screen. Keeping
+    // the header visible while the on-screen keyboard is open is handled by
+    // fitToScreen() in the script below.
     'height:360px;max-height:calc(100vh - ' + PANEL_MAX_HEIGHT_SUBTRACT_MOBILE + 'px);',
     'max-height:calc(100dvh - ' + PANEL_MAX_HEIGHT_SUBTRACT_MOBILE + 'px);}',
     '}',
@@ -373,11 +370,36 @@
     messagesEl.scrollTop = messagesEl.scrollHeight;
   }
 
+  // On touch screens, focusing the message field on open pops up the
+  // keyboard straight away and Safari scrolls the header off screen, so
+  // focus the close button there instead and let the visitor tap the field.
+  var touch = !!(window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
+  var vv = window.visualViewport;
+
+  // While the keyboard is open, pin the panel to the visible part of the
+  // viewport so the header stays in view.
+  function fitToScreen() {
+    var s = panel.style;
+    if (vv && panel.classList.contains('aw-open') && vv.height < window.innerHeight - 100) {
+      s.top = (vv.offsetTop + 8) + 'px';
+      s.bottom = 'auto';
+      s.height = Math.min(360, vv.height - 16) + 'px'; // 360 = mobile panel height in the CSS
+      s.maxHeight = 'none';
+    } else {
+      s.top = s.bottom = s.height = s.maxHeight = '';
+    }
+  }
+  if (vv) {
+    vv.addEventListener('resize', fitToScreen);
+    vv.addEventListener('scroll', fitToScreen);
+  }
+
   function setOpen(open) {
     panel.classList.toggle('aw-open', open);
     launcher.setAttribute('aria-expanded', open ? 'true' : 'false');
+    fitToScreen();
     if (open) {
-      inputEl.focus();
+      (touch ? closeBtn : inputEl).focus();
       if (messagesEl.children.length === 0) {
         addMessage("Hi! I am Patrick, your AI assistant that can answer questions about my background, skills, or projects.", 'system');
       }
