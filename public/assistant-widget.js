@@ -331,21 +331,43 @@
     return el;
   }
 
-  // "Read more" link under an answer. The URL comes from the Worker's own
-  // `source` field (built from a real article slug, never model text); only
-  // an https blog.koorevaar.com article URL is ever rendered as a link.
+  // Link under an answer, from the Worker's own `source` field (built from a
+  // real article slug or a stored section id, never model text). Two kinds:
+  // an https blog.koorevaar.com article URL, opened in a new tab, or a
+  // homepage section id (this widget lives on that page), scrolled to in
+  // place. Anything else is ignored.
+  var ARTICLE_URL_PREFIX = 'https://blog.koorevaar.com/articles/';
+
   function addSourceLink(source) {
-    if (!source || typeof source.url !== 'string' ||
-        source.url.indexOf('https://blog.koorevaar.com/articles/') !== 0) {
+    if (!source) {
+      return;
+    }
+    var a = document.createElement('a');
+    if (source.type === 'article' && typeof source.url === 'string' &&
+        source.url.indexOf(ARTICLE_URL_PREFIX) === 0) {
+      a.href = source.url;
+      a.target = '_blank';
+      a.rel = 'noopener';
+      a.textContent = 'Read more on the blog \u2192';
+    } else if (source.type === 'section' && typeof source.anchor === 'string' &&
+               /^#[a-z][a-z-]*-section$/.test(source.anchor) &&
+               document.getElementById(source.anchor.slice(1))) {
+      var target = document.getElementById(source.anchor.slice(1));
+      a.href = source.anchor;
+      a.textContent = 'See this on the page \u2193';
+      a.addEventListener('click', function (e) {
+        e.preventDefault();
+        // On phones the panel covers most of the page, so get it out of the way.
+        if (window.innerWidth <= 600) {
+          setOpen(false);
+        }
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    } else {
       return;
     }
     var el = document.createElement('div');
     el.className = 'aw-msg-source';
-    var a = document.createElement('a');
-    a.href = source.url;
-    a.target = '_blank';
-    a.rel = 'noopener';
-    a.textContent = 'Read more on the blog \u2192';
     el.appendChild(a);
     messagesEl.appendChild(el);
     messagesEl.scrollTop = messagesEl.scrollHeight;
