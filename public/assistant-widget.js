@@ -104,6 +104,9 @@
     '.aw-msg-assistant{align-self:flex-start;background:rgba(255,255,255,.07);color:#F2F6FC;',
     'border:1px solid rgba(255,255,255,.12);border-bottom-left-radius:2px;}',
     '.aw-msg-error{align-self:flex-start;background:rgba(239,68,68,.12);color:#FCA5A5;border:1px solid rgba(252,165,165,.35);}',
+    '.aw-msg-source{align-self:flex-start;margin-top:-4px;font-size:12px;}',
+    '.aw-msg-source a{color:#63C7FF;text-decoration:underline;}',
+    '.aw-msg-source a:hover{color:#F2F6FC;}',
     '.aw-msg-system{align-self:center;background:none;color:#93A0B4;font-size:12px;font-style:italic;}',
     '.aw-footer{border-top:1px solid rgba(255,255,255,.12);padding:8px 12px;flex-shrink:0;}',
     '.aw-input-row{display:flex;gap:6px;}',
@@ -323,6 +326,48 @@
     messagesEl.appendChild(el);
     messagesEl.scrollTop = messagesEl.scrollHeight;
     return el;
+  }
+
+  // Link under an answer, from the Worker's own `source` field (built from a
+  // real article slug or a stored section id, never model text). Two kinds:
+  // an https blog.koorevaar.com article URL, opened in a new tab, or a
+  // homepage section id (this widget lives on that page), scrolled to in
+  // place. Anything else is ignored.
+  var ARTICLE_URL_PREFIX = 'https://blog.koorevaar.com/articles/';
+
+  function addSourceLink(source) {
+    if (!source) {
+      return;
+    }
+    var a = document.createElement('a');
+    if (source.type === 'article' && typeof source.url === 'string' &&
+        source.url.indexOf(ARTICLE_URL_PREFIX) === 0) {
+      a.href = source.url;
+      a.target = '_blank';
+      a.rel = 'noopener';
+      a.textContent = 'Read more on the blog \u2192';
+    } else if (source.type === 'section' && typeof source.anchor === 'string' &&
+               /^#[a-z][a-z-]*-section$/.test(source.anchor) &&
+               document.getElementById(source.anchor.slice(1))) {
+      var target = document.getElementById(source.anchor.slice(1));
+      a.href = source.anchor;
+      a.textContent = 'See this on the page \u2193';
+      a.addEventListener('click', function (e) {
+        e.preventDefault();
+        // On phones the panel covers most of the page, so get it out of the way.
+        if (window.innerWidth <= 600) {
+          setOpen(false);
+        }
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    } else {
+      return;
+    }
+    var el = document.createElement('div');
+    el.className = 'aw-msg-source';
+    el.appendChild(a);
+    messagesEl.appendChild(el);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
   }
 
   // On touch screens, focusing the message field on open pops up the
@@ -574,6 +619,7 @@
         }
         return response.json().then(function (data) {
           addMessage(data.answer, 'assistant');
+          addSourceLink(data.source);
           logAssistantUsage();
         });
       })
