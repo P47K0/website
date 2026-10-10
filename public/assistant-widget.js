@@ -437,12 +437,20 @@
     return { el: target, label: label };
   }
 
-  // Link under an answer. Three kinds, first match wins: a blog article from
+  // Link under an answer. First match wins: a contact link from the Worker's
+  // `source` (contact.koorevaar.com, for contact intent, a CV request or a
+  // question it could not answer); a blog article from
   // the Worker's `source` (an https blog.koorevaar.com article URL, opened in
   // a new tab); whatever findOnPage() clearly matches on this page; otherwise
   // the homepage section id the Worker voted for. Anything else is ignored. Article and section sources are built Worker-side from real
   // slugs/ids, never model text.
   var ARTICLE_URL_PREFIX = 'https://blog.koorevaar.com/articles/';
+  var CONTACT_URL_PREFIX = 'https://contact.koorevaar.com';
+  var CONTACT_LABELS = {
+    contact: 'Contact Patrick',
+    cv: 'Request the CV',
+    unanswered: 'Ask Patrick directly'
+  };
 
   function flash(el) {
     el.classList.add('aw-flash');
@@ -468,6 +476,14 @@
       a.target = '_blank';
       a.rel = 'noopener';
       a.textContent = 'Read more on the blog →';
+    } else if (source && source.type === 'contact' && typeof source.url === 'string' &&
+               (source.url === CONTACT_URL_PREFIX || source.url.indexOf(CONTACT_URL_PREFIX + '/') === 0)) {
+      // The Worker only sends this for contact intent, a CV request or a
+      // question it could not answer, and it replaces any other link.
+      a.href = source.url;
+      a.target = '_blank';
+      a.rel = 'noopener';
+      a.textContent = (CONTACT_LABELS[source.reason] || CONTACT_LABELS.contact) + ' →';
     } else {
       // The page match first: it reads the live page, so when it has a clear
       // winner it beats the Worker's voted section, which can still point at
