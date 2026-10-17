@@ -20,7 +20,7 @@ Every side project starts from "what can the free tiers cover" — Cloudflare Wo
 ## Site statistics
 
 - Azure Container Apps: 8
-- Azure Functions: 10
+- Azure Functions: 12
 - Cloudflare Workers: 14
 
 ## Applied AI, running live
