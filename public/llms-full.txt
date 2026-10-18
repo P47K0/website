@@ -103,7 +103,7 @@ A button on my contact page asks an LLM to write a personalized message requesti
 
 ### Multi-tenant website platform running entirely on Cloudflare
 
-Deployed via an AI-assisted pipeline: changes live within 5 minutes of approval · Sep 2026
+Deployed via an AI-assisted pipeline: changes live within 5 minutes of approval · 300 pull requests merged and 3,000 tests written by Claude in one month · Sep 2026
 
 - Links: [Demo 1](https://tenant-sites.koorevaar.com/pizzeria/) · [Write-up](https://blog.koorevaar.com/articles/end-to-end-site-deployment-with-claude)
 
