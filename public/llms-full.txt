@@ -109,7 +109,7 @@ Workers AI · Mistral Small · gpt-oss-120b · GitHub Actions · D1 · Oct 2026
 
 ### Multi-tenant website platform running entirely on Cloudflare
 
-Deployed via an AI-assisted pipeline: changes live within 5 minutes of approval · 300 pull requests merged and 3,000 tests written by Claude in one month · Sep 2026
+AI-assisted pipeline: live within 5 minutes of approval · 300 PRs and 3,000 tests by Claude in a month · Sep 2026
 
 - Links: [Demo 1](https://tenant-sites.koorevaar.com/pizzeria/) · [Write-up](https://blog.koorevaar.com/articles/end-to-end-site-deployment-with-claude)
 
