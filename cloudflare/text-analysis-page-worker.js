@@ -40,6 +40,11 @@ export default {
           body: request.body,
         });
 
+        // 5xx from the ingress means the container did not start (e.g. Azure credits ran out).
+        if (response.status >= 500) {
+          return demoUnavailableResponse();
+        }
+
         const newResponse = new Response(response.body, response);
 
         // Add CORS headers
@@ -50,16 +55,26 @@ export default {
         return newResponse;
 
       } catch (err) {
-        return new Response("Proxy Error: " + err.message, { 
-          status: 502,
-          headers: { "Access-Control-Allow-Origin": "*" }
-        });
+        console.error("ACA unreachable:", err);
+        return demoUnavailableResponse();
       }
     }
 
     return new Response("Not Found", { status: 404 });
   }
 };
+
+function demoUnavailableResponse() {
+  return new Response(JSON.stringify({ unavailable: true, message: "Demo currently not available" }), {
+    status: 503,
+    headers: {
+      "Content-Type": "application/json",
+      "Cache-Control": "no-store",
+      "Retry-After": "3600",
+      "Access-Control-Allow-Origin": "*"
+    }
+  });
+}
 
 async function maybeWarm(env) {  
     const lastStr = await env.KV.get(LAST_CALL_KEY);
@@ -133,6 +148,11 @@ const demoHTML = `<!DOCTYPE html>
         });
 
         const data = await res.json();
+
+        if (res.status === 503 && data.unavailable) {
+          resultDiv.innerHTML = \`<div class="p-6 bg-amber-50 border-2 border-amber-400 rounded-2xl text-center"><p class="text-lg font-bold text-amber-800">Demo currently not available</p><p class="text-sm text-amber-700 mt-1">The hosting behind this demo is paused for now. Please check back later.</p></div>\`;
+          return;
+        }
 
         if (type === 'sentiment') {
           resultDiv.innerHTML = \`<div class="p-6 rounded-2xl border-l-8 border-blue-500 bg-white"><strong class="text-3xl">\${data.sentiment || 'NEUTRAL'}</strong></div>\`;
