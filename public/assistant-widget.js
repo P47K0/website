@@ -208,6 +208,30 @@
   document.body.appendChild(panel);
 
   // ---------------------------------------------------------------------
+  // Availability -- the worker's GET /status says whether the assistant may
+  // show (it is switched off when its Cosmos lookup fails, or by hand). The
+  // launcher stays hidden until that answer is in, and stays hidden when the
+  // answer is "not available". The page's own "Ask" / "Try it" links still
+  // click the hidden launcher, so those open the panel with a notice instead.
+  // A failing status call fails open: the assistant shows as usual.
+  // ---------------------------------------------------------------------
+  var STATUS_URL = API_URL.replace(/\/ask$/, '/status');
+  var UNAVAILABLE_TEXT = 'The assistant is currently not available. Please check back later.';
+  var unavailable = false;
+
+  launcher.style.display = 'none';
+  fetch(STATUS_URL)
+    .then(function (response) { return response.ok ? response.json() : { available: true }; })
+    .catch(function () { return { available: true }; })
+    .then(function (status) {
+      if (status && status.available === false) {
+        markUnavailable();
+      } else {
+        launcher.style.display = '';
+      }
+    });
+
+  // ---------------------------------------------------------------------
   // Avatar idle animation -- crossfades the launcher between its 4 stills.
   // Sits on "rest" most of the time; occasionally blinks, or glances left
   // or right, then eases back. Deliberately driven by randomized delays via
@@ -537,13 +561,26 @@
     vv.addEventListener('scroll', fitToScreen);
   }
 
+  function markUnavailable() {
+    var first = !unavailable;
+    unavailable = true;
+    launcher.style.display = 'none';
+    inputEl.disabled = true;
+    sendBtn.disabled = true;
+    if (first && messagesEl.children.length > 0) {
+      addMessage(UNAVAILABLE_TEXT, 'error');
+    }
+  }
+
   function setOpen(open) {
     panel.classList.toggle('aw-open', open);
     launcher.setAttribute('aria-expanded', open ? 'true' : 'false');
     fitToScreen();
     if (open) {
       (touch ? closeBtn : inputEl).focus();
-      if (messagesEl.children.length === 0) {
+      if (messagesEl.children.length === 0 && unavailable) {
+        addMessage(UNAVAILABLE_TEXT, 'error');
+      } else if (messagesEl.children.length === 0) {
         addMessage("Hi! I am Patrick, your AI assistant that can answer questions about my background, skills, or projects.", 'system');
       }
     }
@@ -551,6 +588,9 @@
 
   launcher.addEventListener('click', function () {
     setOpen(!panel.classList.contains('aw-open'));
+    if (unavailable) {
+      return;
+    }
     // Warm up Turnstile while the visitor types their first question.
     ensureTurnstileWidget().catch(function () {});
   });
@@ -781,6 +821,10 @@
           addMessage("You've asked a lot of questions in a short time. Please wait a bit and try again.", 'error');
           return;
         }
+        if (response.status === 503) {
+          markUnavailable();
+          return;
+        }
         if (!response.ok) {
           addMessage('Something went wrong answering that. Please try again in a moment.', 'error');
           return;
@@ -797,7 +841,7 @@
       })
       .finally(function () {
         sending = false;
-        sendBtn.disabled = false;
+        sendBtn.disabled = unavailable;
       });
   }
 })();
