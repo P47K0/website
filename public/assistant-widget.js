@@ -100,6 +100,12 @@
     '.aw-close:hover{opacity:1;}',
     '.aw-messages{flex:1;overflow-y:auto;padding:12px 16px;display:flex;flex-direction:column;gap:10px;}',
     '.aw-msg{max-width:85%;padding:8px 12px;border-radius:12px;white-space:pre-wrap;line-height:1.4;}',
+    '.aw-md{white-space:normal;}',
+    '.aw-md p{margin:0 0 6px;}',
+    '.aw-md ul{margin:2px 0 6px;padding-left:18px;}',
+    '.aw-md li{margin:2px 0;}',
+    '.aw-md code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.92em;background:rgba(255,255,255,.1);padding:1px 4px;border-radius:4px;}',
+    '.aw-md > :last-child{margin-bottom:0;}',
     '.aw-msg-user{align-self:flex-end;background:linear-gradient(90deg,#2E8FEF,#63C7FF);color:#04101F;border-bottom-right-radius:2px;}',
     '.aw-msg-assistant{align-self:flex-start;background:rgba(255,255,255,.07);color:#F2F6FC;',
     'border:1px solid rgba(255,255,255,.12);border-bottom-left-radius:2px;}',
@@ -347,7 +353,11 @@
   function addMessage(text, kind) {
     var el = document.createElement('div');
     el.className = 'aw-msg aw-msg-' + kind;
-    el.textContent = text;
+    if (kind === 'assistant' && window.renderAssistantMarkdown) {
+      window.renderAssistantMarkdown(el, text);
+    } else {
+      el.textContent = text;
+    }
     messagesEl.appendChild(el);
     messagesEl.scrollTop = messagesEl.scrollHeight;
     return el;
