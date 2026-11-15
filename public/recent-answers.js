@@ -17,7 +17,13 @@
       if (!el || !list) return;
       data.answers.forEach(function (answer) {
         const li = document.createElement("li");
-        li.textContent = answer;
+        // Same small Markdown subset as the chat widget (assistant-markdown.js,
+        // loaded before this script); plain text if it is missing.
+        if (window.renderAssistantMarkdown) {
+          window.renderAssistantMarkdown(li, answer);
+        } else {
+          li.textContent = answer;
+        }
         list.appendChild(li);
       });
       el.style.display = "block";

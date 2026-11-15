@@ -170,6 +170,11 @@
   .recent-answers{display:none;margin-top:12px;background:var(--glass);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:12px;padding:16px 18px;}
   .recent-answers .ra-label{font-size:11px;font-weight:700;letter-spacing:0.02em;text-transform:uppercase;color:var(--azure-light);margin-bottom:10px;}
   .recent-answers .ra-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px;}
+  .recent-answers .aw-md{white-space:normal;}
+  .recent-answers .aw-md p{margin:0 0 4px;}
+  .recent-answers .aw-md ul{margin:2px 0 4px;padding-left:16px;}
+  .recent-answers .aw-md > :last-child{margin-bottom:0;}
+  .recent-answers .aw-md code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.92em;}
   .recent-answers .ra-list li{font-size:13px;line-height:1.5;color:var(--text-dim);padding-left:14px;position:relative;}
   .recent-answers .ra-list li::before{content:"";position:absolute;left:0;top:7px;width:5px;height:5px;border-radius:50%;background:var(--azure-light);}
 
@@ -1059,6 +1064,7 @@
 <script defer src="most-viewed-article.js"></script>
 <script defer src="ai-messages-counter.js"></script>
 <script defer src="embeddings-counter.js"></script>
+<script defer src="assistant-markdown.js"></script>
 <script defer src="recent-answers.js"></script>
 <script defer src="side-project-counter.js"></script>
 <script defer src="backlog.js"></script>
