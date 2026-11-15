@@ -100,6 +100,12 @@
     '.aw-close:hover{opacity:1;}',
     '.aw-messages{flex:1;overflow-y:auto;padding:12px 16px;display:flex;flex-direction:column;gap:10px;}',
     '.aw-msg{max-width:85%;padding:8px 12px;border-radius:12px;white-space:pre-wrap;line-height:1.4;}',
+    '.aw-md{white-space:normal;}',
+    '.aw-md p{margin:0 0 6px;}',
+    '.aw-md ul{margin:2px 0 6px;padding-left:18px;}',
+    '.aw-md li{margin:2px 0;}',
+    '.aw-md code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.92em;background:rgba(255,255,255,.1);padding:1px 4px;border-radius:4px;}',
+    '.aw-md > :last-child{margin-bottom:0;}',
     '.aw-msg-user{align-self:flex-end;background:linear-gradient(90deg,#2E8FEF,#63C7FF);color:#04101F;border-bottom-right-radius:2px;}',
     '.aw-msg-assistant{align-self:flex-start;background:rgba(255,255,255,.07);color:#F2F6FC;',
     'border:1px solid rgba(255,255,255,.12);border-bottom-left-radius:2px;}',
@@ -344,10 +350,72 @@
   var closeBtn = panel.querySelector('.aw-close');
   var consentCheckbox = panel.querySelector('.aw-consent-checkbox');
 
+  // The assistant answers in a small Markdown subset (gemma-4 does that by
+  // default): **bold**, *italic*, `code`, "- " / "* " bullet lists, "#"
+  // headings (shown as bold) and paragraphs. Built from DOM nodes, never
+  // innerHTML, so nothing the model (or a chunk it quotes) writes can inject
+  // markup. Anything else, links included, stays literal text.
+  function appendInline(parent, text) {
+    var re = /(`[^`\n]+`|\*\*[^*\n]+\*\*|\*[^*\s][^*\n]*\*(?![*\w])|_[^_\s][^_\n]*_(?![_\w]))/g;
+    var last = 0, m;
+    while ((m = re.exec(text)) !== null) {
+      if (m.index > last) parent.appendChild(document.createTextNode(text.slice(last, m.index)));
+      var tok = m[0], node;
+      if (tok.charAt(0) === '`') {
+        node = document.createElement('code'); node.textContent = tok.slice(1, -1);
+      } else if (tok.indexOf('**') === 0) {
+        node = document.createElement('strong'); appendInline(node, tok.slice(2, -2));
+      } else {
+        node = document.createElement('em'); appendInline(node, tok.slice(1, -1));
+      }
+      parent.appendChild(node);
+      last = m.index + tok.length;
+    }
+    if (last < text.length) parent.appendChild(document.createTextNode(text.slice(last)));
+  }
+
+  function renderMarkdown(el, text) {
+    el.classList.add('aw-md');
+    var list = null, para = null;
+    text.split('\n').forEach(function (raw) {
+      var line = raw.replace(/\s+$/, '');
+      var item = /^\s*[-*+]\s+(.*)$/.exec(line);
+      if (item) {
+        para = null;
+        if (!list) { list = document.createElement('ul'); el.appendChild(list); }
+        var li = document.createElement('li');
+        appendInline(li, item[1]);
+        list.appendChild(li);
+        return;
+      }
+      list = null;
+      if (line.trim() === '') { para = null; return; }
+      var heading = /^\s*#{1,6}\s+(.*)$/.exec(line);
+      if (!para || heading) {
+        para = document.createElement('p');
+        el.appendChild(para);
+      } else {
+        para.appendChild(document.createElement('br'));
+      }
+      if (heading) {
+        var b = document.createElement('strong');
+        appendInline(b, heading[1]);
+        para.appendChild(b);
+        para = null;
+      } else {
+        appendInline(para, line.trim());
+      }
+    });
+  }
+
   function addMessage(text, kind) {
     var el = document.createElement('div');
     el.className = 'aw-msg aw-msg-' + kind;
-    el.textContent = text;
+    if (kind === 'assistant') {
+      renderMarkdown(el, text);
+    } else {
+      el.textContent = text;
+    }
     messagesEl.appendChild(el);
     messagesEl.scrollTop = messagesEl.scrollHeight;
     return el;
